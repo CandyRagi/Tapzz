@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "211781287654",
+    "project_id": "tapthehuzz",
+    "storage_bucket": "tapthehuzz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211781287654:android:253c4ea1ab71e759954527",
+        "android_client_info": {
+          "package_name": "com.project.tapthehuzz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXmDolhpkBg55sHsiyhKoKN3S7wba-4F0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
