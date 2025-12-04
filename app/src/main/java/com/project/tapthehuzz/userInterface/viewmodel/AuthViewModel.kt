@@ -42,6 +42,10 @@ class AuthViewModel : ViewModel() {
     fun resetState() {
         _authState.value = AuthState.Idle
     }
+
+    fun isUserLoggedIn(): Boolean {
+        return repository.getCurrentUser() != null
+    }
 }
 
 sealed class AuthState {

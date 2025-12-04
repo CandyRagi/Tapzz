@@ -10,14 +10,19 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -69,7 +74,9 @@ fun MainApp() {
     Scaffold(
         bottomBar = {
             if (showBottomBar) {
-                NavigationBar {
+                NavigationBar(
+                    modifier = Modifier.clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                ) {
                     bottomBarScreens.forEach { screen ->
                         NavigationBarItem(
                             icon = { Icon(screen.icon, contentDescription = screen.title) },
@@ -83,16 +90,24 @@ fun MainApp() {
                                     launchSingleTop = true
                                     restoreState = true
                                 }
-                            }
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                                selectedTextColor = MaterialTheme.colorScheme.primary,
+                                indicatorColor = MaterialTheme.colorScheme.primary
+                            )
                         )
                     }
                 }
             }
         }
     ) { innerPadding ->
+        val authRepository = com.project.tapthehuzz.data.repository.AuthRepository()
+        val startDestination = if (authRepository.getCurrentUser() != null) Screen.Home.route else "signIn"
+
         NavHost(
             navController = navController,
-            startDestination = "signIn",
+            startDestination = startDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable("signIn") {
