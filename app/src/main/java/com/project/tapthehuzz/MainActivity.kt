@@ -7,24 +7,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
+
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
+
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -32,7 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.project.tapthehuzz.userInterface.screens.HistoryScreen
 import com.project.tapthehuzz.userInterface.screens.HomeScreen
 import com.project.tapthehuzz.userInterface.screens.ProfileScreen
-import com.project.tapthehuzz.userInterface.screens.SearchUserScreen
+import com.project.tapthehuzz.userInterface.screens.ProfileScreen
 import com.project.tapthehuzz.userInterface.screens.SignInScreen
 import com.project.tapthehuzz.userInterface.screens.SignUpScreen
 import com.project.tapthehuzz.userInterface.theme.TapTheHuzzTheme
@@ -50,7 +44,6 @@ class MainActivity : ComponentActivity() {
 
 sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
     object Home : Screen("home", "Home", Icons.Filled.Home)
-    object Search : Screen("search", "Search", Icons.Filled.Search)
     object History : Screen("history", "History", Icons.Filled.History)
     object Profile : Screen("profile", "Profile", Icons.Filled.Person)
 }
@@ -58,49 +51,7 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
 @Composable
 fun MainApp() {
     val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-    
-    // Define screens that should show the bottom bar
-    val bottomBarScreens = listOf(
-        Screen.Home,
-        Screen.Search,
-        Screen.History,
-        Screen.Profile
-    )
-    
-    val showBottomBar = currentDestination?.route in bottomBarScreens.map { it.route }
-
     Scaffold(
-        bottomBar = {
-            if (showBottomBar) {
-                NavigationBar(
-                    modifier = Modifier.clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-                ) {
-                    bottomBarScreens.forEach { screen ->
-                        NavigationBarItem(
-                            icon = { Icon(screen.icon, contentDescription = screen.title) },
-                            label = { Text(screen.title) },
-                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                            onClick = {
-                                navController.navigate(screen.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                                selectedTextColor = MaterialTheme.colorScheme.primary,
-                                indicatorColor = MaterialTheme.colorScheme.primary
-                            )
-                        )
-                    }
-                }
-            }
-        }
     ) { innerPadding ->
         val authRepository = com.project.tapthehuzz.data.repository.AuthRepository()
         val startDestination = if (authRepository.getCurrentUser() != null) Screen.Home.route else "signIn"
@@ -130,8 +81,11 @@ fun MainApp() {
                     }
                 )
             }
-            composable(Screen.Home.route) { HomeScreen() }
-            composable(Screen.Search.route) { SearchUserScreen() }
+            composable(Screen.Home.route) {
+                HomeScreen(
+                    onProfileClick = { navController.navigate(Screen.Profile.route) }
+                )
+            }
             composable(Screen.History.route) { HistoryScreen() }
             composable(Screen.Profile.route) { ProfileScreen() }
         }
