@@ -87,7 +87,11 @@ fun MainApp() {
                 )
             }
             composable(Screen.History.route) { HistoryScreen() }
-            composable(Screen.Profile.route) { ProfileScreen() }
+            composable(Screen.Profile.route) {
+                ProfileScreen(
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
         }
     }
 }
