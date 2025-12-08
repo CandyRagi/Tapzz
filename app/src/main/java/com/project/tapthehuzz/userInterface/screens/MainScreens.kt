@@ -28,6 +28,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.project.tapthehuzz.data.model.Card
+import com.project.tapthehuzz.userInterface.components.CreateCardDialog
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
+import com.project.tapthehuzz.data.model.User
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,26 +53,40 @@ import androidx.compose.ui.unit.sp
 fun HomeScreen(onProfileClick: () -> Unit) {
     var selectedTab by remember { mutableStateOf("Cards") }
     var userPfp by remember { mutableStateOf("") }
+    var user by remember { mutableStateOf<User?>(null) }
+    var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
+    var showCreateCardDialog by remember { mutableStateOf(false) }
+    var activeCard by remember { mutableStateOf<Card?>(null) }
     val authRepository = remember { AuthRepository() }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         val currentUser = authRepository.getCurrentUser()
         if (currentUser != null) {
-             com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users")
-                .document(currentUser.uid)
-                .addSnapshotListener { snapshot, e ->
+             val userRef = com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users").document(currentUser.uid)
+             
+             userRef.addSnapshotListener { snapshot, e ->
                     if (e != null) return@addSnapshotListener
                     if (snapshot != null && snapshot.exists()) {
-                        userPfp = snapshot.getString("pfp") ?: ""
+                        user = snapshot.toObject(User::class.java)
+                        userPfp = user?.pfp ?: ""
                     }
                 }
+
+             userRef.collection("cards").addSnapshotListener { snapshot, e ->
+                 if (e != null) return@addSnapshotListener
+                 if (snapshot != null) {
+                     cards = snapshot.toObjects(Card::class.java)
+                 }
+             }
         }
     }
 
-    Scaffold(
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* TODO: Handle FAB click */ },
+                onClick = { showCreateCardDialog = true },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 shape = CircleShape,
@@ -158,13 +177,35 @@ fun HomeScreen(onProfileClick: () -> Unit) {
             // Content
             Box(modifier = Modifier.fillMaxSize()) {
                 if (selectedTab == "Cards") {
-                    CardContent()
+                    CardContent(cards, user?.username ?: "User", onCardClick = { activeCard = it })
                 } else {
                     HistoryContent()
                 }
             }
         }
     }
+
+    if (showCreateCardDialog && user != null) {
+        CreateCardDialog(
+            user = user!!,
+            onDismiss = { showCreateCardDialog = false },
+            onCreate = { newCard ->
+                scope.launch {
+                    authRepository.createCard(user!!.uid, newCard)
+                    showCreateCardDialog = false
+                }
+            }
+        )
+    }
+
+    if (activeCard != null && user != null) {
+        CardTransmissionScreen(
+            card = activeCard!!,
+            username = user!!.username,
+            onDismiss = { activeCard = null }
+        )
+    }
+}
 }
 
 @Composable
@@ -193,12 +234,100 @@ fun SwitcherItem(text: String, isSelected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun CardContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+fun CardContent(cards: List<Card>, username: String, onCardClick: (Card) -> Unit) {
+    if (cards.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("No cards yet. Tap + to create one!")
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            cards.forEach { card ->
+                CardItem(card, username, onClick = { onCardClick(card) })
+            }
+        }
+    }
+}
+
+@Composable
+fun CardItem(card: Card, username: String, onClick: () -> Unit) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(16.dp),
+        color = Color(card.backgroundColor),
+        shadowElevation = 4.dp
     ) {
-        Text("Card Content Placeholder")
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Card Name (Top Left)
+            Text(
+                text = card.name,
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(16.dp)
+            )
+
+            // Card Number (Top Right)
+            Text(
+                text = ".... ${card.cardNumber.takeLast(4)}",
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp)
+            )
+
+            // Profile Picture (Center)
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Surface(
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clip(CircleShape),
+                    color = MaterialTheme.colorScheme.surface
+                ) {
+                    if (card.imageUrl.isNotEmpty()) {
+                        AsyncImage(
+                            model = card.imageUrl,
+                            contentDescription = "Card Image",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Filled.Person,
+                            contentDescription = "Card Image",
+                            modifier = Modifier.padding(12.dp)
+                        )
+                    }
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // User Name (Below PFP)
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
+                ) {
+                    Text(
+                        text = username,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
+            }
+        }
     }
 }
 

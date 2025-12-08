@@ -78,66 +78,72 @@ class AuthRepository {
         }
     }
 
-    suspend fun uploadImageToCloudinary(imageUri: Uri, context: Context): String? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val cloudName = "dczuk4cxa"
-                val uploadPreset = "StduySage"
-                val url = URL("https://api.cloudinary.com/v1_1/$cloudName/image/upload")
-                val connection = url.openConnection() as HttpURLConnection
-                val boundary = "Boundary-" + System.currentTimeMillis()
+    suspend fun uploadImageToCloudinary(imageUri: android.net.Uri): String? {
+        return try {
+            val cloudName = "dczuk4cxa"
+            val uploadPreset = "StduySage"
+            val url = java.net.URL("https://api.cloudinary.com/v1_1/$cloudName/image/upload")
+            val connection = url.openConnection() as java.net.HttpURLConnection
+            connection.requestMethod = "POST"
+            connection.doOutput = true
+            val boundary = "Boundary-" + System.currentTimeMillis()
+            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
 
-                connection.requestMethod = "POST"
-                connection.doOutput = true
-                connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
+            val outputStream = connection.outputStream
+            val writer = java.io.PrintWriter(java.io.OutputStreamWriter(outputStream, "UTF-8"), true)
 
-                val outputStream = DataOutputStream(connection.outputStream)
-                val inputStream = context.contentResolver.openInputStream(imageUri)
-                val buffer = ByteArray(4096)
-                var bytesRead: Int
+            // Add upload_preset
+            writer.append("--$boundary").append("\r\n")
+            writer.append("Content-Disposition: form-data; name=\"upload_preset\"").append("\r\n")
+            writer.append("\r\n").append(uploadPreset).append("\r\n")
 
-                // Write file part
-                outputStream.writeBytes("--$boundary\r\n")
-                outputStream.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n")
-                outputStream.writeBytes("Content-Type: image/jpeg\r\n\r\n")
+            // Add file
+            writer.append("--$boundary").append("\r\n")
+            writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"").append("\r\n")
+            writer.append("Content-Type: image/jpeg").append("\r\n")
+            writer.append("\r\n")
+            writer.flush()
 
-                if (inputStream != null) {
-                    while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                        outputStream.write(buffer, 0, bytesRead)
-                    }
-                    inputStream.close()
+            val inputStream = java.net.URL(imageUri.toString()).openStream()
+            val buffer = ByteArray(4096)
+            var bytesRead: Int
+            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                outputStream.write(buffer, 0, bytesRead)
+            }
+            outputStream.flush()
+            inputStream.close()
+
+            writer.append("\r\n").flush()
+            writer.append("--$boundary--").append("\r\n")
+            writer.close()
+
+            val responseCode = connection.responseCode
+            if (responseCode == java.net.HttpURLConnection.HTTP_OK) {
+                val responseStream = java.io.BufferedReader(java.io.InputStreamReader(connection.inputStream))
+                val response = StringBuilder()
+                var line: String?
+                while (responseStream.readLine().also { line = it } != null) {
+                    response.append(line)
                 }
-                outputStream.writeBytes("\r\n")
-
-                // Write upload_preset part
-                outputStream.writeBytes("--$boundary\r\n")
-                outputStream.writeBytes("Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n")
-                outputStream.writeBytes("$uploadPreset\r\n")
-
-                // End of multipart
-                outputStream.writeBytes("--$boundary--\r\n")
-                outputStream.flush()
-                outputStream.close()
-
-                val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    val reader = BufferedReader(InputStreamReader(connection.inputStream))
-                    val response = StringBuilder()
-                    var line: String?
-                    while (reader.readLine().also { line = it } != null) {
-                        response.append(line)
-                    }
-                    reader.close()
-                    
-                    val jsonResponse = JSONObject(response.toString())
-                    jsonResponse.getString("secure_url")
-                } else {
-                    null
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+                responseStream.close()
+                val jsonResponse = org.json.JSONObject(response.toString())
+                jsonResponse.getString("secure_url")
+            } else {
                 null
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun createCard(userId: String, card: com.project.tapthehuzz.data.model.Card): Result<Unit> {
+        return try {
+            firestore.collection("users").document(userId).collection("cards")
+                .document(card.id).set(card).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }
