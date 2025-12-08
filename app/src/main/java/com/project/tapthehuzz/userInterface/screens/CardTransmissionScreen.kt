@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.project.tapthehuzz.data.model.Card
+import com.project.tapthehuzz.utils.CardNfcManager
 import kotlinx.coroutines.delay
 
 @Composable
@@ -34,15 +35,18 @@ fun CardTransmissionScreen(
 
     // Timer
     LaunchedEffect(Unit) {
+        CardNfcManager.currentCardUrl = card.link
         while (timeLeft > 0) {
             delay(1000L)
             timeLeft--
         }
+        CardNfcManager.currentCardUrl = null
         onDismiss()
     }
 
     // Back Handler
     BackHandler {
+        CardNfcManager.currentCardUrl = null
         onDismiss()
     }
 
