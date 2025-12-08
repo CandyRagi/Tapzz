@@ -12,7 +12,20 @@
           "package_name": "com.project.tapthehuzz"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "211781287654-q063eo3qfd6r0v9k9duc4kg3s6hkph10.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.tapthehuzz",
+            "certificate_hash": "15ec057a1e63277eda6e3e4bc137e85e231a0f69"
+          }
+        },
+        {
+          "client_id": "211781287654-i9brmll2ep548qcrsmttas4d5m54gl2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBXmDolhpkBg55sHsiyhKoKN3S7wba-4F0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211781287654-i9brmll2ep548qcrsmttas4d5m54gl2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

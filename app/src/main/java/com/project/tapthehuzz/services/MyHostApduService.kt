@@ -30,52 +30,104 @@ class MyHostApduService : HostApduService() {
         if (commandApdu == null) return UNKNOWN_CMD_SW
 
         val hexCommand = toHex(commandApdu)
+        Log.e("HCE_DEBUG", "Received APDU: $hexCommand") // Using Log.e to ensure it shows up
         
         // 1. SELECT NDEF Application
-        if (hexCommand.startsWith(SELECT_APDU_HEADER) && Arrays.equals(commandApdu.copyOfRange(5, commandApdu.size - 1), NDEF_ID)) {
-            // Prepare your URL here
-            val url = CardNfcManager.currentCardUrl ?: "https://tapthehuzz.com" // Default or fallback
-            ndefUriBytes = createNdefUri(url)
-            return SELECT_OK_SW
+        // CLA INS P1 P2 Lc [Data] [Le]
+        if (hexCommand.startsWith(SELECT_APDU_HEADER)) {
+            val lc = commandApdu[4].toInt() and 0xFF
+            // Ensure we have enough data
+            if (commandApdu.size >= 5 + lc) {
+                val aid = commandApdu.copyOfRange(5, 5 + lc)
+                if (Arrays.equals(aid, NDEF_ID)) {
+                    // Prepare your URL here
+                    val url = CardNfcManager.currentCardUrl ?: "https://tapthehuzz.com"
+                    Log.e("HCE_DEBUG", "Selected NDEF App. Serving URL: $url")
+                    ndefUriBytes = createNdefUri(url)
+                    selectedFile = FILE_NONE
+                    return SELECT_OK_SW
+                }
+            }
         }
 
         // 2. SELECT Capability Container (CC)
         if (hexCommand == "00A4000C02E103") {
+            selectedFile = FILE_CC
             return SELECT_OK_SW
         }
 
         // 3. SELECT NDEF File
         if (hexCommand == "00A4000C02E104") {
+            selectedFile = FILE_NDEF
             return SELECT_OK_SW
         }
 
         // 4. READ BINARY
         if (hexCommand.startsWith("00B0")) {
-            val length = commandApdu[4].toInt()
+            val p1 = commandApdu[2].toInt() and 0xFF
+            val p2 = commandApdu[3].toInt() and 0xFF
+            val offset = (p1 shl 8) + p2
             
-            if (length == 15) { 
-                return CC_FILE 
-            } else {
-                return ndefUriBytes 
+            var le = commandApdu[4].toInt() and 0xFF
+            if (le == 0) le = 256 // Le=0 means 256 bytes
+            
+            val dataToSend = if (selectedFile == FILE_CC) CC_FILE else ndefUriBytes
+            
+            if (offset >= dataToSend.size) {
+                return hexStringToByteArray("6A83") // Wrong parameter(s) P1 P2
             }
+            
+            val len = Math.min(le, dataToSend.size - offset)
+            val response = ByteArray(len + 2)
+            System.arraycopy(dataToSend, offset, response, 0, len)
+            System.arraycopy(SELECT_OK_SW, 0, response, len, 2)
+            
+            return response
         }
 
         return UNKNOWN_CMD_SW
     }
+    
+    // State to track which file is selected
+    private var selectedFile = 0
+    private val FILE_NONE = 0
+    private val FILE_CC = 1
+    private val FILE_NDEF = 2
 
     // --- Helper Functions ---
 
     private fun createNdefUri(url: String): ByteArray {
-        val urlBytes = url.toByteArray(Charsets.UTF_8)
-        val recordHeader = byteArrayOf(0xD1.toByte(), 0x01.toByte(), (urlBytes.size + 1).toByte(), 0x55.toByte())
-        val uriIdentifier = byteArrayOf(0x00.toByte()) // 0x00 = No prefix
+        val uriPrefix: Byte
+        val uriData: ByteArray
         
-        val fullPayload = recordHeader + uriIdentifier + urlBytes
+        if (url.startsWith("https://www.")) {
+            uriPrefix = 0x02.toByte()
+            uriData = url.substring(12).toByteArray(Charsets.UTF_8)
+        } else if (url.startsWith("https://")) {
+            uriPrefix = 0x04.toByte()
+            uriData = url.substring(8).toByteArray(Charsets.UTF_8)
+        } else if (url.startsWith("http://www.")) {
+            uriPrefix = 0x01.toByte()
+            uriData = url.substring(11).toByteArray(Charsets.UTF_8)
+        } else if (url.startsWith("http://")) {
+            uriPrefix = 0x03.toByte()
+            uriData = url.substring(7).toByteArray(Charsets.UTF_8)
+        } else {
+            uriPrefix = 0x00.toByte()
+            uriData = url.toByteArray(Charsets.UTF_8)
+        }
+
+        val payloadLength = uriData.size + 1
+        val recordHeader = byteArrayOf(0xD1.toByte(), 0x01.toByte(), payloadLength.toByte(), 0x55.toByte())
+        
+        val fullPayload = recordHeader + byteArrayOf(uriPrefix) + uriData
         
         val len = fullPayload.size
         val lenBytes = byteArrayOf((len shr 8).toByte(), (len and 0xFF).toByte())
         
-        return lenBytes + fullPayload + SELECT_OK_SW
+        // Note: We do NOT append SELECT_OK_SW here because it's file content, not an APDU response.
+        // The SW is appended in processCommandApdu when returning the data.
+        return lenBytes + fullPayload
     }
 
     private fun hexStringToByteArray(s: String): ByteArray {

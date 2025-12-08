@@ -35,6 +35,7 @@ fun CardTransmissionScreen(
 
     // Timer
     LaunchedEffect(Unit) {
+        android.util.Log.e("HCE_DEBUG", "Screen Opened. Setting URL: ${card.link}")
         CardNfcManager.currentCardUrl = card.link
         while (timeLeft > 0) {
             delay(1000L)
