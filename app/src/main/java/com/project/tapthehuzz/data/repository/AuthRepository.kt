@@ -15,6 +15,7 @@ import java.io.DataOutputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import com.project.tapthehuzz.BuildConfig
 
 class AuthRepository {
 
@@ -81,8 +82,8 @@ class AuthRepository {
     suspend fun uploadImageToCloudinary(context: Context, imageUri: android.net.Uri): String? {
         return withContext(Dispatchers.IO) {
             try {
-                val cloudName = "dczuk4cxa"
-                val uploadPreset = "StduySage"
+                val cloudName = BuildConfig.CLOUDINARY_CLOUD_NAME
+                val uploadPreset = BuildConfig.CLOUDINARY_UPLOAD_PRESET
                 val url = java.net.URL("https://api.cloudinary.com/v1_1/$cloudName/image/upload")
                 val connection = url.openConnection() as java.net.HttpURLConnection
                 connection.requestMethod = "POST"

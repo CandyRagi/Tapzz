@@ -5,6 +5,15 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
+import java.util.Properties
+import java.io.FileInputStream
+
+val envFile = rootProject.file(".env")
+val env = Properties()
+if (envFile.exists()) {
+    env.load(FileInputStream(envFile))
+}
+
 android {
     namespace = "com.project.tapthehuzz"
     compileSdk = 36
@@ -20,6 +29,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        
+        buildConfigField("String", "CLOUDINARY_CLOUD_NAME", "\"${env.getProperty("CLOUDINARY_CLOUD_NAME") ?: ""}\"")
+        buildConfigField("String", "CLOUDINARY_UPLOAD_PRESET", "\"${env.getProperty("CLOUDINARY_UPLOAD_PRESET") ?: ""}\"")
+        buildConfigField("String", "FIREBASE_API_KEY", "\"${env.getProperty("FIREBASE_API_KEY") ?: ""}\"")
     }
 
     buildTypes {
@@ -40,12 +53,16 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    
+
+
 }
 
 dependencies {
