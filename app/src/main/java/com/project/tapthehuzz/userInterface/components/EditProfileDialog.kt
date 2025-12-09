@@ -190,7 +190,7 @@ fun EditProfileDialog(
                                 }
 
                                 if (selectedImageUri != null) {
-                                    val imageUrl = authRepository.uploadImageToCloudinary(selectedImageUri!!)
+                                    val imageUrl = authRepository.uploadImageToCloudinary(context, selectedImageUri!!)
                                     if (imageUrl != null) {
                                         updates["pfp"] = imageUrl
                                     } else {

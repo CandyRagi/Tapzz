@@ -78,62 +78,66 @@ class AuthRepository {
         }
     }
 
-    suspend fun uploadImageToCloudinary(imageUri: android.net.Uri): String? {
-        return try {
-            val cloudName = "dczuk4cxa"
-            val uploadPreset = "StduySage"
-            val url = java.net.URL("https://api.cloudinary.com/v1_1/$cloudName/image/upload")
-            val connection = url.openConnection() as java.net.HttpURLConnection
-            connection.requestMethod = "POST"
-            connection.doOutput = true
-            val boundary = "Boundary-" + System.currentTimeMillis()
-            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
+    suspend fun uploadImageToCloudinary(context: Context, imageUri: android.net.Uri): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val cloudName = "dczuk4cxa"
+                val uploadPreset = "StduySage"
+                val url = java.net.URL("https://api.cloudinary.com/v1_1/$cloudName/image/upload")
+                val connection = url.openConnection() as java.net.HttpURLConnection
+                connection.requestMethod = "POST"
+                connection.doOutput = true
+                val boundary = "Boundary-" + System.currentTimeMillis()
+                connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
 
-            val outputStream = connection.outputStream
-            val writer = java.io.PrintWriter(java.io.OutputStreamWriter(outputStream, "UTF-8"), true)
+                val outputStream = connection.outputStream
+                val writer = java.io.PrintWriter(java.io.OutputStreamWriter(outputStream, "UTF-8"), true)
 
-            // Add upload_preset
-            writer.append("--$boundary").append("\r\n")
-            writer.append("Content-Disposition: form-data; name=\"upload_preset\"").append("\r\n")
-            writer.append("\r\n").append(uploadPreset).append("\r\n")
+                // Add upload_preset
+                writer.append("--$boundary").append("\r\n")
+                writer.append("Content-Disposition: form-data; name=\"upload_preset\"").append("\r\n")
+                writer.append("\r\n").append(uploadPreset).append("\r\n")
 
-            // Add file
-            writer.append("--$boundary").append("\r\n")
-            writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"").append("\r\n")
-            writer.append("Content-Type: image/jpeg").append("\r\n")
-            writer.append("\r\n")
-            writer.flush()
+                // Add file
+                writer.append("--$boundary").append("\r\n")
+                writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"").append("\r\n")
+                writer.append("Content-Type: image/jpeg").append("\r\n")
+                writer.append("\r\n")
+                writer.flush()
 
-            val inputStream = java.net.URL(imageUri.toString()).openStream()
-            val buffer = ByteArray(4096)
-            var bytesRead: Int
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                outputStream.write(buffer, 0, bytesRead)
-            }
-            outputStream.flush()
-            inputStream.close()
-
-            writer.append("\r\n").flush()
-            writer.append("--$boundary--").append("\r\n")
-            writer.close()
-
-            val responseCode = connection.responseCode
-            if (responseCode == java.net.HttpURLConnection.HTTP_OK) {
-                val responseStream = java.io.BufferedReader(java.io.InputStreamReader(connection.inputStream))
-                val response = StringBuilder()
-                var line: String?
-                while (responseStream.readLine().also { line = it } != null) {
-                    response.append(line)
+                val inputStream = context.contentResolver.openInputStream(imageUri)
+                if (inputStream == null) return@withContext null
+                
+                val buffer = ByteArray(4096)
+                var bytesRead: Int
+                while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                    outputStream.write(buffer, 0, bytesRead)
                 }
-                responseStream.close()
-                val jsonResponse = org.json.JSONObject(response.toString())
-                jsonResponse.getString("secure_url")
-            } else {
+                outputStream.flush()
+                inputStream.close()
+
+                writer.append("\r\n").flush()
+                writer.append("--$boundary--").append("\r\n")
+                writer.close()
+
+                val responseCode = connection.responseCode
+                if (responseCode == java.net.HttpURLConnection.HTTP_OK) {
+                    val responseStream = java.io.BufferedReader(java.io.InputStreamReader(connection.inputStream))
+                    val response = StringBuilder()
+                    var line: String?
+                    while (responseStream.readLine().also { line = it } != null) {
+                        response.append(line)
+                    }
+                    responseStream.close()
+                    val jsonResponse = org.json.JSONObject(response.toString())
+                    jsonResponse.getString("secure_url")
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
                 null
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
         }
     }
 
