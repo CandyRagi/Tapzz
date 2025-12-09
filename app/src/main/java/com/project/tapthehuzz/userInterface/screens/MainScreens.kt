@@ -127,48 +127,52 @@ fun HomeScreen(onProfileClick: () -> Unit) {
                     .padding(start = 16.dp, top = 12.dp, end = 16.dp)
             ) {
                 // Header
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "My Wallet",
-                    style = MaterialTheme.typography.headlineLarge.copy(
-                        fontWeight = FontWeight.ExtraBold,
-                        letterSpacing = (-1).sp
+            if (selectedTab != "All Cards") {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "My Wallet",
+                        style = MaterialTheme.typography.headlineLarge.copy(
+                            fontWeight = FontWeight.ExtraBold,
+                            letterSpacing = (-1).sp
+                        )
                     )
-                )
-                
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Profile Picture
-                    Surface(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .clickable { onProfileClick() },
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                    ) {
-                        if (userPfp.isNotEmpty()) {
-                            AsyncImage(
-                                model = userPfp,
-                                contentDescription = "Profile",
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Filled.Person,
-                                contentDescription = "Profile",
-                                modifier = Modifier.padding(10.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
+                    
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        // Profile Picture
+                        Surface(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .clickable { onProfileClick() },
+                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                        ) {
+                            if (userPfp.isNotEmpty()) {
+                                AsyncImage(
+                                    model = userPfp,
+                                    contentDescription = "Profile",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Filled.Person,
+                                    contentDescription = "Profile",
+                                    modifier = Modifier.padding(10.dp),
+                                    tint = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
                         }
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            if (selectedTab != "All Cards") {
+                Spacer(modifier = Modifier.height(32.dp))
+            }
 
             // Content
             Box(modifier = Modifier.fillMaxSize()) {
