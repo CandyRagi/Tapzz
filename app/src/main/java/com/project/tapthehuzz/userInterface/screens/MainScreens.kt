@@ -2,6 +2,7 @@ package com.project.tapthehuzz.userInterface.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -262,76 +263,90 @@ fun CardContent(
                 )
             }
         } else {
-            if (viewMode == "Quick Access") {
-                // Horizontal List
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
-                    val flingBehavior = androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior(lazyListState = listState)
-                    
-                    androidx.compose.foundation.layout.BoxWithConstraints(
-                        modifier = Modifier.fillMaxWidth(),
+            androidx.compose.animation.AnimatedContent(
+                targetState = viewMode,
+                transitionSpec = {
+                    if (targetState == "All Cards") {
+                        androidx.compose.animation.slideInHorizontally { width -> width } + androidx.compose.animation.fadeIn() togetherWith
+                        androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
+                    } else {
+                        androidx.compose.animation.slideInHorizontally { width -> -width } + androidx.compose.animation.fadeIn() togetherWith
+                        androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
+                    }
+                },
+                label = "Tab Animation"
+            ) { targetViewMode ->
+                if (targetViewMode == "Quick Access") {
+                    // Horizontal List
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        val screenWidth = maxWidth
-
-                        val cardWidth = if (screenWidth > 480.dp) 450.dp else screenWidth - 20.dp
-                        val horizontalPadding = (screenWidth - cardWidth) / 2
+                        val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+                        val flingBehavior = androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior(lazyListState = listState)
                         
-                        androidx.compose.foundation.lazy.LazyRow(
-                            state = listState,
-                            flingBehavior = flingBehavior,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 100.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding)
+                        androidx.compose.foundation.layout.BoxWithConstraints(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
                         ) {
-                            items(cards.size) { index ->
-                                val card = cards[index]
-                                val scale by remember(index) {
-                                    derivedStateOf {
-                                        val currentItem = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
-                                        if (currentItem != null) {
-                                            val viewportCenter = listState.layoutInfo.viewportEndOffset / 2f
-                                            val itemCenter = currentItem.offset + currentItem.size / 2f
-                                            val distance = kotlin.math.abs(viewportCenter - itemCenter)
-                                            val maxDistance = viewportCenter 
-                                            val scale = 1f - (distance / maxDistance) * 0.2f 
-                                            scale.coerceIn(0.8f, 1f)
-                                        } else {
-                                            0.8f 
+                            val screenWidth = maxWidth
+
+                            val cardWidth = if (screenWidth > 480.dp) 450.dp else screenWidth - 20.dp
+                            val horizontalPadding = (screenWidth - cardWidth) / 2
+                            
+                            androidx.compose.foundation.lazy.LazyRow(
+                                state = listState,
+                                flingBehavior = flingBehavior,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 100.dp),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding)
+                            ) {
+                                items(cards.size) { index ->
+                                    val card = cards[index]
+                                    val scale by remember(index) {
+                                        derivedStateOf {
+                                            val currentItem = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
+                                            if (currentItem != null) {
+                                                val viewportCenter = listState.layoutInfo.viewportEndOffset / 2f
+                                                val itemCenter = currentItem.offset + currentItem.size / 2f
+                                                val distance = kotlin.math.abs(viewportCenter - itemCenter)
+                                                val maxDistance = viewportCenter 
+                                                val scale = 1f - (distance / maxDistance) * 0.2f 
+                                                scale.coerceIn(0.8f, 1f)
+                                            } else {
+                                                0.8f 
+                                            }
                                         }
                                     }
-                                }
 
-                                CardItem(
-                                    card = card, 
-                                    username = username, 
-                                    modifier = Modifier
-                                        .width(cardWidth)
-                                        .height(220.dp)
-                                        .graphicsLayer {
-                                            scaleX = scale
-                                            scaleY = scale
-                                            alpha = scale
-                                        },
-                                    onClick = { onCardClick(card) }
-                                )
+                                    CardItem(
+                                        card = card, 
+                                        username = username, 
+                                        modifier = Modifier
+                                            .width(cardWidth)
+                                            .height(220.dp)
+                                            .graphicsLayer {
+                                                scaleX = scale
+                                                scaleY = scale
+                                                alpha = scale
+                                            },
+                                        onClick = { onCardClick(card) }
+                                    )
+                                }
                             }
                         }
                     }
+                } else {
+                    // All Cards (Vertical List)
+                    AllCardsScreen(
+                        cards = cards,
+                        username = username,
+                        onCardClick = onCardClick,
+                        onAddClick = onAddClick
+                    )
                 }
-            } else {
-                // All Cards (Vertical List)
-                AllCardsScreen(
-                    cards = cards,
-                    username = username,
-                    onCardClick = onCardClick,
-                    onAddClick = onAddClick
-                )
             }
         }
     }
