@@ -24,6 +24,7 @@ import com.project.tapthehuzz.data.model.User
 import java.util.UUID
 import kotlin.random.Random
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateCardDialog(
     user: User,
@@ -32,6 +33,8 @@ fun CreateCardDialog(
 ) {
     var cardName by remember { mutableStateOf("") }
     var cardLink by remember { mutableStateOf("") }
+    var cardCategory by remember { mutableStateOf("") }
+    var customCategory by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf(Color.White) }
     var imageUrl by remember { mutableStateOf(user.pfp) } // Default to user PFP
 
@@ -75,6 +78,53 @@ fun CreateCardDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Category Dropdown
+                var expanded by remember { mutableStateOf(false) }
+                val categories = listOf("Social", "Game", "GitHub", "Business", "Custom")
+                
+                ExposedDropdownMenuBox(
+                    expanded = expanded,
+                    onExpandedChange = { expanded = !expanded },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedTextField(
+                        value = cardCategory,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Category") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                        modifier = Modifier.menuAnchor().fillMaxWidth()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        categories.forEach { category ->
+                            DropdownMenuItem(
+                                text = { Text(category) },
+                                onClick = {
+                                    cardCategory = category
+                                    expanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+
+                if (cardCategory == "Custom") {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = customCategory,
+                        onValueChange = { customCategory = it },
+                        label = { Text("Enter Custom Category") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
 
                 // Quick Link Options
                 Row(
@@ -143,7 +193,8 @@ fun CreateCardDialog(
                                 link = cardLink,
                                 backgroundColor = selectedColor.toArgb().toLong(),
                                 imageUrl = imageUrl,
-                                cardNumber = cardNumber
+                                cardNumber = cardNumber,
+                                category = if (cardCategory == "Custom") customCategory.ifEmpty { "Custom" } else cardCategory.ifEmpty { "Uncategorized" }
                             )
                             onCreate(newCard)
                         },

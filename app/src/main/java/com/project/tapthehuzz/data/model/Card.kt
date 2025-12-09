@@ -7,5 +7,6 @@ data class Card(
     val link: String = "",
     val backgroundColor: Long = 0xFFFFFFFF, // Default white
     val imageUrl: String = "",
-    val cardNumber: String = ""
+    val cardNumber: String = "",
+    val category: String = "" // Default empty category
 )

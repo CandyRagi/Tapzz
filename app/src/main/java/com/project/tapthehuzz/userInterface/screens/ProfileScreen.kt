@@ -199,7 +199,7 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                     Text(
                         text = user?.username ?: "Loading...",
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        style = MaterialTheme.typography.bodyLarge.copy(
+                        style = MaterialTheme.typography.headlineSmall.copy(
                             fontWeight = FontWeight.Bold
                         )
                     )
