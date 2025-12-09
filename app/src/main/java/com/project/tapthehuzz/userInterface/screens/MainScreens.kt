@@ -124,7 +124,7 @@ fun HomeScreen(onProfileClick: () -> Unit) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(bottom = innerPadding.calculateBottomPadding())
-                    .padding(start = 16.dp, top = 12.dp, end = 16.dp)
+                    .padding(start = 19.dp, top = 12.dp, end = 16.dp)
             ) {
                 // Header
             if (selectedTab != "All Cards") {
@@ -134,10 +134,11 @@ fun HomeScreen(onProfileClick: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "My Wallet",
+                        text = "RIZZ  Wallet",
                         style = MaterialTheme.typography.headlineLarge.copy(
                             fontWeight = FontWeight.ExtraBold,
-                            letterSpacing = (-1).sp
+                            letterSpacing = (0).sp,
+                            fontSize = 23.sp
                         )
                     )
                     
@@ -248,26 +249,6 @@ fun CardContent(
     onAddClick: () -> Unit,
     viewMode: String
 ) {
-    var searchQuery by remember { mutableStateOf("") }
-    var selectedCategoryFilter by remember { mutableStateOf("All") }
-    var showFilterMenu by remember { mutableStateOf(false) }
-    
-    // Filter and sort cards
-    val filteredCards = remember(cards, searchQuery, selectedCategoryFilter) {
-        cards.filter { card ->
-            val matchesSearch = card.name.contains(searchQuery, ignoreCase = true)
-            val matchesCategory = if (selectedCategoryFilter == "All") true else {
-                val category = card.category.ifEmpty { "Uncategorized" }
-                if (selectedCategoryFilter == "Custom") {
-                    category !in listOf("Social", "Game", "GitHub", "Business", "Uncategorized")
-                } else {
-                    category == selectedCategoryFilter
-                }
-            }
-            matchesSearch && matchesCategory
-        }.reversed()
-    }
-
     Column(modifier = Modifier.fillMaxSize()) {
         if (cards.isEmpty() && viewMode == "Quick Access") {
              Box(
@@ -345,136 +326,12 @@ fun CardContent(
                 }
             } else {
                 // All Cards (Vertical List)
-                Column(modifier = Modifier.fillMaxSize()) {
-                    // Search Bar and Add Button Row
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Search Bar
-                        Surface(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(50.dp),
-                            shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                        ) {
-                            androidx.compose.material3.TextField(
-                                value = searchQuery,
-                                onValueChange = { searchQuery = it },
-                                modifier = Modifier.fillMaxSize(),
-                                placeholder = { 
-                                    Text(
-                                        "Search cards...", 
-                                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f))
-                                    ) 
-                                },
-                                leadingIcon = { 
-                                    Icon(
-                                        imageVector = Icons.Filled.Search, 
-                                        contentDescription = "Search",
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                    ) 
-                                },
-                                singleLine = true,
-                                colors = androidx.compose.material3.TextFieldDefaults.colors(
-                                    focusedContainerColor = Color.Transparent,
-                                    unfocusedContainerColor = Color.Transparent,
-                                    disabledContainerColor = Color.Transparent,
-                                    focusedIndicatorColor = Color.Transparent,
-                                    unfocusedIndicatorColor = Color.Transparent,
-                                ),
-                                textStyle = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        // Filter Button
-                        Box {
-                            Surface(
-                                shape = CircleShape,
-                                color = MaterialTheme.colorScheme.secondaryContainer,
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .clickable { showFilterMenu = true }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.List, // Using List icon as filter/sort
-                                    contentDescription = "Filter Cards",
-                                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(12.dp)
-                                )
-                            }
-                            
-                            DropdownMenu(
-                                expanded = showFilterMenu,
-                                onDismissRequest = { showFilterMenu = false }
-                            ) {
-                                val filterOptions = listOf("All", "Social", "Game", "GitHub", "Business", "Custom", "Uncategorized")
-                                filterOptions.forEach { option ->
-                                    DropdownMenuItem(
-                                        text = { Text(option) },
-                                        onClick = {
-                                            selectedCategoryFilter = option
-                                            showFilterMenu = false
-                                        },
-                                        leadingIcon = if (selectedCategoryFilter == option) {
-                                            { Icon(Icons.Filled.Check, contentDescription = "Selected") }
-                                        } else null
-                                    )
-                                }
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        // Add Button
-                        Surface(
-                            shape = CircleShape,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .clickable { onAddClick() }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Add,
-                                contentDescription = "Add Card",
-                                tint = MaterialTheme.colorScheme.onPrimary,
-                                modifier = Modifier.padding(12.dp)
-                            )
-                        }
-                    }
-
-                    if (filteredCards.isEmpty()) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = if (searchQuery.isNotEmpty()) "No cards found" else "No cards yet",
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    } else {
-                        androidx.compose.foundation.lazy.LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                            contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 24.dp)
-                        ) {
-                            items(filteredCards) { card ->
-                                CardItem(
-                                    card = card, 
-                                    username = username, 
-                                    onClick = { onCardClick(card) }
-                                )
-                            }
-                        }
-                    }
-                }
+                AllCardsScreen(
+                    cards = cards,
+                    username = username,
+                    onCardClick = onCardClick,
+                    onAddClick = onAddClick
+                )
             }
         }
     }
