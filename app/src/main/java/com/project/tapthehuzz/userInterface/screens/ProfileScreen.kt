@@ -1,6 +1,8 @@
 package com.project.tapthehuzz.userInterface.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -71,15 +73,25 @@ fun ProfileScreen(onBackClick: () -> Unit) {
             onDismiss = { showSocialDialog = false },
             onSave = { newLink: String ->
                 if (user != null) {
-                    val fieldToUpdate = if (selectedPlatform == "Instagram") "instagramLink" else "snapchatLink"
-                    val updates: Map<String, Any> = mapOf(fieldToUpdate to newLink)
-                    scope.launch {
-                        val result = authRepository.updateUserProfile(user!!.uid, updates)
-                        if (result.isSuccess) {
-                             com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users")
-                                .document(user!!.uid).get().addOnSuccessListener { document ->
-                                    user = document.toObject(User::class.java)
-                                }
+                    val fieldToUpdate = when (selectedPlatform) {
+                        "Instagram" -> "instagramLink"
+                        "Snapchat" -> "snapchatLink"
+                        "Facebook" -> "facebookLink"
+                        "Valorant" -> "valorantLink"
+                        "Discord" -> "discordLink"
+                        "WhatsApp" -> "whatsappLink"
+                        else -> ""
+                    }
+                    if (fieldToUpdate.isNotEmpty()) {
+                        val updates: Map<String, Any> = mapOf(fieldToUpdate to newLink)
+                        scope.launch {
+                            val result = authRepository.updateUserProfile(user!!.uid, updates)
+                            if (result.isSuccess) {
+                                 com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users")
+                                    .document(user!!.uid).get().addOnSuccessListener { document ->
+                                        user = document.toObject(User::class.java)
+                                    }
+                            }
                         }
                     }
                 }
@@ -97,15 +109,25 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                 TextButton(
                     onClick = {
                         if (user != null) {
-                            val fieldToUpdate = if (selectedPlatform == "Instagram") "instagramLink" else "snapchatLink"
-                            val updates: Map<String, Any> = mapOf(fieldToUpdate to "")
-                            scope.launch {
-                                val result = authRepository.updateUserProfile(user!!.uid, updates)
-                                if (result.isSuccess) {
-                                     com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users")
-                                        .document(user!!.uid).get().addOnSuccessListener { document ->
-                                            user = document.toObject(User::class.java)
-                                        }
+                            val fieldToUpdate = when (selectedPlatform) {
+                                "Instagram" -> "instagramLink"
+                                "Snapchat" -> "snapchatLink"
+                                "Facebook" -> "facebookLink"
+                                "Valorant" -> "valorantLink"
+                                "Discord" -> "discordLink"
+                                "WhatsApp" -> "whatsappLink"
+                                else -> ""
+                            }
+                            if (fieldToUpdate.isNotEmpty()) {
+                                val updates: Map<String, Any> = mapOf(fieldToUpdate to "")
+                                scope.launch {
+                                    val result = authRepository.updateUserProfile(user!!.uid, updates)
+                                    if (result.isSuccess) {
+                                         com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users")
+                                            .document(user!!.uid).get().addOnSuccessListener { document ->
+                                                user = document.toObject(User::class.java)
+                                            }
+                                    }
                                 }
                             }
                         }
@@ -127,11 +149,11 @@ fun ProfileScreen(onBackClick: () -> Unit) {
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 16.dp)
+            modifier = Modifier.padding(top = 12.dp)
         ) {
             // Header
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -156,53 +178,55 @@ fun ProfileScreen(onBackClick: () -> Unit) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Profile Picture
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Surface(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape),
-                    color = MaterialTheme.colorScheme.surfaceVariant
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                // Profile Picture
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    if (user != null && user!!.pfp.isNotEmpty()) {
-                        AsyncImage(
-                            model = user!!.pfp,
-                            contentDescription = "Profile Picture",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Filled.Person,
-                            contentDescription = "Profile Picture",
-                            modifier = Modifier.padding(24.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                    Surface(
+                        modifier = Modifier
+                            .size(120.dp)
+                            .clip(CircleShape),
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    ) {
+                        if (user != null && user!!.pfp.isNotEmpty()) {
+                            AsyncImage(
+                                model = user!!.pfp,
+                                contentDescription = "Profile Picture",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Filled.Person,
+                                contentDescription = "Profile Picture",
+                                modifier = Modifier.padding(24.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Name
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Surface(
-                    modifier = Modifier.clip(RoundedCornerShape(8.dp)),
-                    color = MaterialTheme.colorScheme.surfaceVariant
+                // Name
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = user?.username ?: "Loading...",
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Bold
+                    Surface(
+                        modifier = Modifier.clip(RoundedCornerShape(8.dp)),
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    ) {
+                        Text(
+                            text = user?.username ?: "Loading...",
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                            style = MaterialTheme.typography.headlineSmall.copy(
+                                fontWeight = FontWeight.Bold
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -223,48 +247,131 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                     .padding(24.dp)
             ) {
                 Text(
-                    text = "Accounts",
-                    style = MaterialTheme.typography.titleMedium.copy(
+                    text = "LINKED Accounts",
+                    style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier.padding(bottom = 24.dp)
                 )
 
-                // Instagram
-                SocialAccountItem(
-                    name = "Instagram",
-                    iconUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png",
-                    link = user?.instagramLink ?: "",
-                    onLinkClick = {
-                        if (user?.instagramLink.isNullOrEmpty()) {
-                            selectedPlatform = "Instagram"
-                            currentSocialLink = ""
-                            showSocialDialog = true
-                        } else {
-                            selectedPlatform = "Instagram"
-                            showUnlinkDialog = true
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    // Instagram
+                    SocialAccountItem(
+                        name = "Instagram",
+                        iconUrl = "https://img.icons8.com/color/96/instagram-new.png",
+                        link = user?.instagramLink ?: "",
+                        onLinkClick = {
+                            if (user?.instagramLink.isNullOrEmpty()) {
+                                selectedPlatform = "Instagram"
+                                currentSocialLink = ""
+                                showSocialDialog = true
+                            } else {
+                                selectedPlatform = "Instagram"
+                                showUnlinkDialog = true
+                            }
                         }
-                    }
-                )
+                    )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
 
-                // Snapchat
-                SocialAccountItem(
-                    name = "Snapchat",
-                    iconUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/Snapchat_logo.svg/1200px-Snapchat_logo.svg.png",
-                    link = user?.snapchatLink ?: "",
-                    onLinkClick = {
-                        if (user?.snapchatLink.isNullOrEmpty()) {
-                            selectedPlatform = "Snapchat"
-                            currentSocialLink = ""
-                            showSocialDialog = true
-                        } else {
-                            selectedPlatform = "Snapchat"
-                            showUnlinkDialog = true
+                    // Snapchat
+                    SocialAccountItem(
+                        name = "Snapchat",
+                        iconUrl = "https://img.icons8.com/color/96/snapchat-circled-logo--v1.png",
+                        link = user?.snapchatLink ?: "",
+                        onLinkClick = {
+                            if (user?.snapchatLink.isNullOrEmpty()) {
+                                selectedPlatform = "Snapchat"
+                                currentSocialLink = ""
+                                showSocialDialog = true
+                            } else {
+                                selectedPlatform = "Snapchat"
+                                showUnlinkDialog = true
+                            }
                         }
-                    }
-                )
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // Facebook
+                    SocialAccountItem(
+                        name = "Facebook",
+                        iconUrl = "https://img.icons8.com/color/96/facebook-new.png",
+                        link = user?.facebookLink ?: "",
+                        onLinkClick = {
+                            if (user?.facebookLink.isNullOrEmpty()) {
+                                selectedPlatform = "Facebook"
+                                currentSocialLink = ""
+                                showSocialDialog = true
+                            } else {
+                                selectedPlatform = "Facebook"
+                                showUnlinkDialog = true
+                            }
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // Valorant
+                    SocialAccountItem(
+                        name = "Valorant",
+                        iconUrl = "https://img.icons8.com/color/96/valorant.png",
+                        link = user?.valorantLink ?: "",
+                        onLinkClick = {
+                            if (user?.valorantLink.isNullOrEmpty()) {
+                                selectedPlatform = "Valorant"
+                                currentSocialLink = ""
+                                showSocialDialog = true
+                            } else {
+                                selectedPlatform = "Valorant"
+                                showUnlinkDialog = true
+                            }
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // Discord
+                    SocialAccountItem(
+                        name = "Discord",
+                        iconUrl = "https://img.icons8.com/color/96/discord-logo.png",
+                        link = user?.discordLink ?: "",
+                        onLinkClick = {
+                            if (user?.discordLink.isNullOrEmpty()) {
+                                selectedPlatform = "Discord"
+                                currentSocialLink = ""
+                                showSocialDialog = true
+                            } else {
+                                selectedPlatform = "Discord"
+                                showUnlinkDialog = true
+                            }
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // WhatsApp
+                    SocialAccountItem(
+                        name = "WhatsApp",
+                        iconUrl = "https://img.icons8.com/color/96/whatsapp--v1.png",
+                        link = user?.whatsappLink ?: "",
+                        onLinkClick = {
+                            if (user?.whatsappLink.isNullOrEmpty()) {
+                                selectedPlatform = "WhatsApp"
+                                currentSocialLink = ""
+                                showSocialDialog = true
+                            } else {
+                                selectedPlatform = "WhatsApp"
+                                showUnlinkDialog = true
+                            }
+                        }
+                    )
+                }
             }
         }
     }

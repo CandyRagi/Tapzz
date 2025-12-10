@@ -10,6 +10,9 @@ data class User(
     val tiktokLink: String = "",
     val youtubeLink: String = "",
     val facebookLink: String = "",
+    val valorantLink: String = "",
+    val discordLink: String = "",
+    val whatsappLink: String = "",
     val bruzzList: List<String> = emptyList(),
     val huzzList: List<String> = emptyList(),
     val tapHistory: List<TapHistoryItem> = emptyList()
