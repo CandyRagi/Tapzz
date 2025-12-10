@@ -8,5 +8,6 @@ data class Card(
     val backgroundColor: Long = 0xFFFFFFFF, // Default white
     val imageUrl: String = "",
     val cardNumber: String = "",
-    val category: String = "" // Default empty category
+    val category: String = "", // Default empty category
+    val designId: String = "" // "design_one" or empty
 )

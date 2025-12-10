@@ -98,10 +98,19 @@ fun CardTransmissionScreen(
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 shape = RoundedCornerShape(16.dp),
-                color = Color(card.backgroundColor),
+                color = if (card.designId.isNotEmpty()) Color.White else Color(card.backgroundColor),
                 shadowElevation = 8.dp
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
+                    // Background Design
+                    if (card.designId == "design_one") {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                     // Card Name (Top Left)
                     Text(
                         text = card.name,

@@ -135,7 +135,7 @@ fun HomeScreen(onProfileClick: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "RIZZ  Wallet",
+                        text = " RIZZ Wallet",
                         style = MaterialTheme.typography.headlineLarge.copy(
                             fontWeight = FontWeight.ExtraBold,
                             letterSpacing = (0).sp,
@@ -363,10 +363,19 @@ fun CardItem(
         modifier = modifier
             .clickable { onClick() },
         shape = RoundedCornerShape(24.dp),
-        color = Color(card.backgroundColor),
+        color = if (card.designId.isNotEmpty()) Color.White else Color(card.backgroundColor),
         shadowElevation = 0.dp // Flat design
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            // Background Design
+            if (card.designId == "design_one") {
+                androidx.compose.foundation.Image(
+                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
             // Card Name (Top Left)
             Text(
                 text = card.name,
