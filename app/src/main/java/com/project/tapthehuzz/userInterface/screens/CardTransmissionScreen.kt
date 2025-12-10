@@ -72,6 +72,15 @@ fun CardTransmissionScreen(
         label = "alpha"
     )
 
+    // Rotation Animation
+    val rotation = remember { androidx.compose.animation.core.Animatable(0f) }
+    LaunchedEffect(Unit) {
+        rotation.animateTo(
+            targetValue = 90f,
+            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -90,10 +99,10 @@ fun CardTransmissionScreen(
         // Rotated Card
         Box(
             modifier = Modifier
-                .rotate(90f)
+                .rotate(rotation.value)
                 .scale(1.2f) // Slightly larger
-                .width(300.dp) // Fixed width for consistent look
-                .height(180.dp)
+                .width(310.dp) // Increased width
+                .height(190.dp) // Increased height
         ) {
             Surface(
                 modifier = Modifier.fillMaxSize(),

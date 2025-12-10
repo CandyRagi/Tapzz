@@ -39,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.project.tapthehuzz.data.model.Card
 import com.project.tapthehuzz.userInterface.components.CreateCardDialog
+import com.project.tapthehuzz.userInterface.components.EmptyStateCard
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 import com.project.tapthehuzz.data.model.User
@@ -256,10 +257,12 @@ fun CardContent(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "No cards yet",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                EmptyStateCard(
+                    onClick = onAddClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(bottom = 40.dp) // Move up visually
                 )
             }
         } else {
@@ -291,8 +294,8 @@ fun CardContent(
                         ) {
                             val screenWidth = maxWidth
 
-                            val cardWidth = if (screenWidth > 480.dp) 450.dp else screenWidth - 20.dp
-                            val horizontalPadding = (screenWidth - cardWidth) / 2
+                            val cardWidth = screenWidth // Full width
+                            val horizontalPadding = 0.dp
                             
                             androidx.compose.foundation.lazy.LazyRow(
                                 state = listState,
@@ -375,30 +378,56 @@ fun CardItem(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
+            } else if (card.designId == "design_two") {
+                androidx.compose.foundation.Image(
+                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else if (card.designId == "design_three") {
+                androidx.compose.foundation.Image(
+                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
             // Card Name (Top Left)
-            Text(
-                text = card.name,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black.copy(alpha = 0.7f) // Ensure contrast on colored cards
-                ),
+            Surface(
+                color = Color.Black.copy(alpha = 0.5f),
+                shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(20.dp)
-            )
+            ) {
+                Text(
+                    text = card.name,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    ),
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                )
+            }
 
             // Card Number (Top Right)
-            Text(
-                text = ".... ${card.cardNumber.takeLast(4)}",
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black.copy(alpha = 0.7f)
-                ),
+            Surface(
+                color = Color.Black.copy(alpha = 0.5f),
+                shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(20.dp)
-            )
+            ) {
+                Text(
+                    text = ".... ${card.cardNumber.takeLast(4)}",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    ),
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                )
+            }
 
             // Profile Picture (Center)
             Column(
@@ -409,7 +438,7 @@ fun CardItem(
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape),
-                    color = Color.White.copy(alpha = 0.2f)
+                    color = Color.Black.copy(alpha = 0.5f) // Dark background for pop
                 ) {
                     if (card.imageUrl.isNotEmpty()) {
                         AsyncImage(
@@ -423,7 +452,7 @@ fun CardItem(
                             imageVector = Icons.Filled.Person,
                             contentDescription = "Card Image",
                             modifier = Modifier.padding(12.dp),
-                            tint = Color.Black.copy(alpha = 0.5f)
+                            tint = Color.White
                         )
                     }
                 }
@@ -433,14 +462,14 @@ fun CardItem(
                 // User Name (Below PFP)
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Color.White.copy(alpha = 0.3f)
+                    color = Color.Black.copy(alpha = 0.5f)
                 ) {
                     Text(
                         text = username,
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                         style = MaterialTheme.typography.labelLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = Color.Black.copy(alpha = 0.8f)
+                            color = Color.White
                         )
                     )
                 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.project.tapthehuzz.data.model.Card
+import com.project.tapthehuzz.userInterface.components.EmptyStateCard
 
 @Composable
 fun AllCardsScreen(
@@ -154,11 +155,22 @@ fun AllCardsScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = if (searchQuery.isNotEmpty()) "No cards found" else "No cards yet",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                if (searchQuery.isNotEmpty()) {
+                    Text(
+                        text = "No cards found",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    EmptyStateCard(
+                        onClick = onAddClick,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 40.dp) // Move up visually
+                    )
+                }
             }
         } else {
             LazyColumn(
