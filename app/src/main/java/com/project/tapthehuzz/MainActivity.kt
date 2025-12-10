@@ -81,8 +81,7 @@ fun MainApp() {
     val navController = rememberNavController()
     Scaffold(
     ) { innerPadding ->
-        val authRepository = com.project.tapthehuzz.data.repository.AuthRepository()
-        val startDestination = if (authRepository.getCurrentUser() != null) Screen.Home.route else "signIn"
+        val startDestination = "splash"
 
         NavHost(
             navController = navController,
@@ -101,6 +100,15 @@ fun MainApp() {
                 androidx.compose.animation.slideOutHorizontally(targetOffsetX = { 1000 }) + androidx.compose.animation.fadeOut()
             }
         ) {
+            composable("splash") {
+                com.project.tapthehuzz.userInterface.screens.SplashScreen(
+                    onNavigateToNext = { route ->
+                        navController.navigate(route) {
+                            popUpTo("splash") { inclusive = true }
+                        }
+                    }
+                )
+            }
             composable("signIn") {
                 SignInScreen(
                     onNavigateToSignUp = { navController.navigate("signUp") },

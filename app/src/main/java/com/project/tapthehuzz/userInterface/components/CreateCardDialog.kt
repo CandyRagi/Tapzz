@@ -36,6 +36,7 @@ fun CreateCardDialog(
     var cardCategory by remember { mutableStateOf("") }
     var customCategory by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf(Color.White) }
+    var selectedDesign by remember { mutableStateOf("") }
     var imageUrl by remember { mutableStateOf(user.pfp) } // Default to user PFP
 
     val colors = listOf(
@@ -163,11 +164,44 @@ fun CreateCardDialog(
                                 .clip(CircleShape)
                                 .background(color)
                                 .border(
-                                    width = if (selectedColor == color) 2.dp else 0.dp,
+                                    width = if (selectedColor == color && selectedDesign.isEmpty()) 2.dp else 0.dp,
                                     color = MaterialTheme.colorScheme.primary,
                                     shape = CircleShape
                                 )
-                                .clickable { selectedColor = color }
+                                .clickable { 
+                                    selectedColor = color 
+                                    selectedDesign = "" // Reset design when color is picked
+                                }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text("Background Design", style = MaterialTheme.typography.labelLarge)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // Design One
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp, 50.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .border(
+                                width = if (selectedDesign == "design_one") 2.dp else 0.dp,
+                                color = MaterialTheme.colorScheme.primary,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .clickable { selectedDesign = "design_one" }
+                    ) {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one),
+                            contentDescription = "Design One",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                 }
@@ -194,7 +228,8 @@ fun CreateCardDialog(
                                 backgroundColor = selectedColor.toArgb().toLong(),
                                 imageUrl = imageUrl,
                                 cardNumber = cardNumber,
-                                category = if (cardCategory == "Custom") customCategory.ifEmpty { "Custom" } else cardCategory.ifEmpty { "Uncategorized" }
+                                category = if (cardCategory == "Custom") customCategory.ifEmpty { "Custom" } else cardCategory.ifEmpty { "Uncategorized" },
+                                designId = selectedDesign
                             )
                             onCreate(newCard)
                         },
