@@ -119,24 +119,56 @@ fun CardTransmissionScreen(
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
+                    } else if (card.designId == "design_two") {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else if (card.designId == "design_three") {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
                     }
                     // Card Name (Top Left)
-                    Text(
-                        text = card.name,
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    Surface(
+                        color = Color.Black,
+                        shape = RoundedCornerShape(8.dp),
                         modifier = Modifier
                             .align(Alignment.TopStart)
                             .padding(16.dp)
-                    )
+                    ) {
+                        Text(
+                            text = card.name,
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            ),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
 
                     // Card Number (Top Right)
-                    Text(
-                        text = ".... ${card.cardNumber.takeLast(4)}",
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    Surface(
+                        color = Color.Black,
+                        shape = RoundedCornerShape(8.dp),
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .padding(16.dp)
-                    )
+                    ) {
+                        Text(
+                            text = ".... ${card.cardNumber.takeLast(4)}",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            ),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
 
                     // Profile Picture (Center)
                     Column(
@@ -147,7 +179,7 @@ fun CardTransmissionScreen(
                             modifier = Modifier
                                 .size(60.dp)
                                 .clip(CircleShape),
-                            color = MaterialTheme.colorScheme.surface
+                            color = Color.Black
                         ) {
                             if (card.imageUrl.isNotEmpty()) {
                                 AsyncImage(
@@ -160,7 +192,8 @@ fun CardTransmissionScreen(
                                 Icon(
                                     imageVector = Icons.Filled.Person,
                                     contentDescription = "Card Image",
-                                    modifier = Modifier.padding(12.dp)
+                                    modifier = Modifier.padding(12.dp),
+                                    tint = Color.White
                                 )
                             }
                         }
@@ -170,12 +203,15 @@ fun CardTransmissionScreen(
                         // User Name (Below PFP)
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
+                            color = Color.Black
                         ) {
                             Text(
                                 text = username,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
                             )
                         }
                     }

@@ -1,6 +1,7 @@
 package com.project.tapthehuzz.userInterface.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.runtime.*
 import androidx.compose.foundation.clickable
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
@@ -287,25 +288,40 @@ fun CardContent(
                     ) {
                         val listState = androidx.compose.foundation.lazy.rememberLazyListState()
                         val flingBehavior = androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior(lazyListState = listState)
+                        var currentCenteredIndex by remember { mutableIntStateOf(0) }
+
+                        LaunchedEffect(listState) {
+                            snapshotFlow { listState.layoutInfo }
+                                .collect { layoutInfo ->
+                                    val viewportCenter = layoutInfo.viewportEndOffset / 2f
+                                    val centeredItem = layoutInfo.visibleItemsInfo.minByOrNull { item ->
+                                        kotlin.math.abs((item.offset + item.size / 2f) - viewportCenter)
+                                    }
+                                    if (centeredItem != null) {
+                                        currentCenteredIndex = centeredItem.index
+                                    }
+                                }
+                        }
                         
                         androidx.compose.foundation.layout.BoxWithConstraints(
                             modifier = Modifier.fillMaxWidth(),
                             contentAlignment = Alignment.Center
                         ) {
                             val screenWidth = maxWidth
-
                             val cardWidth = screenWidth // Full width
                             val horizontalPadding = 0.dp
                             
-                            androidx.compose.foundation.lazy.LazyRow(
-                                state = listState,
-                                flingBehavior = flingBehavior,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 100.dp),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding)
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
+                                androidx.compose.foundation.lazy.LazyRow(
+                                    state = listState,
+                                    flingBehavior = flingBehavior,
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                    contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding)
+                                ) {
                                 items(cards.size) { index ->
                                     val card = cards[index]
                                     val scale by remember(index) {
@@ -339,9 +355,34 @@ fun CardContent(
                                     )
                                 }
                             }
+
+                            if (cards.isNotEmpty()) {
+                                Spacer(modifier = Modifier.height(120.dp))
+                                
+                                androidx.compose.material3.FilledTonalButton(
+                                    onClick = { 
+                                        if (currentCenteredIndex in cards.indices) {
+                                            onCardClick(cards[currentCenteredIndex]) 
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .height(50.dp),
+                                    shape = CircleShape,
+                                    colors = androidx.compose.material3.ButtonDefaults.filledTonalButtonColors(
+                                        containerColor = Color.Gray,
+                                        contentColor = Color.White
+                                    )
+                                ) {
+                                    Text(
+                                        text = "Tap",
+                                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                    )
+                                }
+                            }
                         }
                     }
-                } else {
+                }
+            } else {
                     // All Cards (Vertical List)
                     AllCardsScreen(
                         cards = cards,
@@ -395,7 +436,7 @@ fun CardItem(
             }
             // Card Name (Top Left)
             Surface(
-                color = Color.Black.copy(alpha = 0.5f),
+                color = Color.Black,
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .align(Alignment.TopStart)
@@ -413,7 +454,7 @@ fun CardItem(
 
             // Card Number (Top Right)
             Surface(
-                color = Color.Black.copy(alpha = 0.5f),
+                color = Color.Black,
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -438,7 +479,7 @@ fun CardItem(
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape),
-                    color = Color.Black.copy(alpha = 0.5f) // Dark background for pop
+                    color = Color.Black // Dark background for pop
                 ) {
                     if (card.imageUrl.isNotEmpty()) {
                         AsyncImage(
@@ -462,7 +503,7 @@ fun CardItem(
                 // User Name (Below PFP)
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Color.Black.copy(alpha = 0.5f)
+                    color = Color.Black
                 ) {
                     Text(
                         text = username,
