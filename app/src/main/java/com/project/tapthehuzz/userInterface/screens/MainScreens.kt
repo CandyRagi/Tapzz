@@ -308,8 +308,8 @@ fun CardContent(
                             contentAlignment = Alignment.Center
                         ) {
                             val screenWidth = maxWidth
-                            val cardWidth = screenWidth * 0.85f // Reduced width
-                            val horizontalPadding = (screenWidth - cardWidth) / 2 // Centering padding
+                            val cardWidth = screenWidth // Full width
+                            val horizontalPadding = 0.dp
                             
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally
@@ -357,7 +357,7 @@ fun CardContent(
                             }
 
                             if (cards.isNotEmpty()) {
-                                Spacer(modifier = Modifier.height(40.dp))
+                                Spacer(modifier = Modifier.height(120.dp))
                                 
                                 androidx.compose.material3.FilledTonalButton(
                                     onClick = { 
@@ -367,7 +367,11 @@ fun CardContent(
                                     },
                                     modifier = Modifier
                                         .height(50.dp),
-                                    shape = RoundedCornerShape(12.dp)
+                                    shape = CircleShape,
+                                    colors = androidx.compose.material3.ButtonDefaults.filledTonalButtonColors(
+                                        containerColor = Color.Gray,
+                                        contentColor = Color.White
+                                    )
                                 ) {
                                     Text(
                                         text = "Tap",
