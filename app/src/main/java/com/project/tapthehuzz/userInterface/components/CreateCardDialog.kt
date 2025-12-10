@@ -204,6 +204,46 @@ fun CreateCardDialog(
                             modifier = Modifier.fillMaxSize()
                         )
                     }
+                    
+                    // Design Two
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp, 50.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .border(
+                                width = if (selectedDesign == "design_two") 2.dp else 0.dp,
+                                color = MaterialTheme.colorScheme.primary,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .clickable { selectedDesign = "design_two" }
+                    ) {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two),
+                            contentDescription = "Design Two",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
+                    // Design Three
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp, 50.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .border(
+                                width = if (selectedDesign == "design_three") 2.dp else 0.dp,
+                                color = MaterialTheme.colorScheme.primary,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .clickable { selectedDesign = "design_three" }
+                    ) {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three),
+                            contentDescription = "Design Three",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
