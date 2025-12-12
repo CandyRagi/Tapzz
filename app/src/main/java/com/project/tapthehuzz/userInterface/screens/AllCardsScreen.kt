@@ -31,8 +31,10 @@ import com.project.tapthehuzz.data.model.Card
 import com.project.tapthehuzz.data.model.User
 import com.project.tapthehuzz.userInterface.components.CardItem
 import com.project.tapthehuzz.userInterface.components.EmptyStateCard
+import androidx.compose.ui.text.font.FontWeight
+import kotlinx.coroutines.launch
 
-@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun AllCardsScreen(
     cards: List<Card>,
@@ -46,6 +48,9 @@ fun AllCardsScreen(
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategoryFilter by remember { mutableStateOf("All") }
     var showFilterMenu by remember { mutableStateOf(false) }
+    var cardForMenu by remember { mutableStateOf<Card?>(null) }
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
 
     // Filter and sort cards
     val filteredCards = remember(cards, searchQuery, selectedCategoryFilter) {
@@ -196,7 +201,6 @@ fun AllCardsScreen(
                 contentPadding = PaddingValues(top = 16.dp, bottom = 24.dp)
             ) {
                 items(filteredCards) { card ->
-                    var showMenu by remember { mutableStateOf(false) }
                     val interactionSource = remember { MutableInteractionSource() }
                     val isPressed by interactionSource.collectIsPressedAsState()
                     val scale by animateFloatAsState(if (isPressed) 1.05f else 1f)
@@ -216,42 +220,66 @@ fun AllCardsScreen(
                                     interactionSource = interactionSource,
                                     indication = null,
                                     onClick = { onCardClick(card) },
-                                    onLongClick = { showMenu = true }
+                                    onLongClick = { cardForMenu = card }
                                 )
                         )
-                        
-                        DropdownMenu(
-                            expanded = showMenu,
-                            onDismissRequest = { showMenu = false }
-                        ) {
-                            DropdownMenuItem(
-                                text = { Text("Edit Details") },
-                                onClick = {
-                                    onEditCard(card)
-                                    showMenu = false
-                                },
-                                leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = null) }
-                            )
-                            val isInQuickAccess = card.id in user.quickAccessList
-                            DropdownMenuItem(
-                                text = { Text(if (isInQuickAccess) "Remove from Quick Access" else "Add to Quick Access") },
-                                onClick = {
-                                    onToggleQuickAccess(card)
-                                    showMenu = false
-                                },
-                                leadingIcon = { Icon(if (isInQuickAccess) Icons.Filled.Star else Icons.Filled.StarBorder, contentDescription = null) }
-                            )
-                            DropdownMenuItem(
-                                text = { Text("Delete", color = MaterialTheme.colorScheme.error) },
-                                onClick = {
-                                    onDeleteCard(card)
-                                    showMenu = false
-                                },
-                                leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) }
-                            )
-                        }
                     }
                 }
+            }
+        }
+    }
+
+    if (cardForMenu != null) {
+        ModalBottomSheet(
+            onDismissRequest = { cardForMenu = null },
+            sheetState = sheetState
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 32.dp)
+            ) {
+                Text(
+                    text = cardForMenu!!.name,
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+                )
+                
+                HorizontalDivider()
+
+                ListItem(
+                    headlineContent = { Text("Edit Details") },
+                    leadingContent = { Icon(Icons.Filled.Edit, contentDescription = null) },
+                    modifier = Modifier.clickable {
+                        onEditCard(cardForMenu!!)
+                        scope.launch { sheetState.hide() }.invokeOnCompletion { 
+                            if (!sheetState.isVisible) cardForMenu = null 
+                        }
+                    }
+                )
+                
+                val isInQuickAccess = cardForMenu!!.id in user.quickAccessList
+                ListItem(
+                    headlineContent = { Text(if (isInQuickAccess) "Remove from Quick Access" else "Add to Quick Access") },
+                    leadingContent = { Icon(if (isInQuickAccess) Icons.Filled.Star else Icons.Filled.StarBorder, contentDescription = null) },
+                    modifier = Modifier.clickable {
+                        onToggleQuickAccess(cardForMenu!!)
+                        scope.launch { sheetState.hide() }.invokeOnCompletion { 
+                            if (!sheetState.isVisible) cardForMenu = null 
+                        }
+                    }
+                )
+                
+                ListItem(
+                    headlineContent = { Text("Delete", color = MaterialTheme.colorScheme.error) },
+                    leadingContent = { Icon(Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                    modifier = Modifier.clickable {
+                        onDeleteCard(cardForMenu!!)
+                        scope.launch { sheetState.hide() }.invokeOnCompletion { 
+                            if (!sheetState.isVisible) cardForMenu = null 
+                        }
+                    }
+                )
             }
         }
     }
