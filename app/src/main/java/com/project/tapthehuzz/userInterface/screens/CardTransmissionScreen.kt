@@ -5,9 +5,8 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+
+
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,12 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
+
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+
 import com.project.tapthehuzz.data.model.Card
 import com.project.tapthehuzz.utils.CardNfcManager
 import kotlinx.coroutines.delay
@@ -101,122 +99,14 @@ fun CardTransmissionScreen(
             modifier = Modifier
                 .rotate(rotation.value)
                 .scale(1.2f) // Slightly larger
-                .width(310.dp) // Increased width
-                .height(190.dp) // Increased height
+                .width(340.dp) // Adjusted width for CardItem aspect ratio
+                .height(220.dp) // Adjusted height for CardItem aspect ratio
         ) {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                shape = RoundedCornerShape(16.dp),
-                color = if (card.designId.isNotEmpty()) Color.White else Color(card.backgroundColor),
-                shadowElevation = 8.dp
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    // Background Design
-                    if (card.designId == "design_one") {
-                        androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    } else if (card.designId == "design_two") {
-                        androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    } else if (card.designId == "design_three") {
-                        androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    // Card Name (Top Left)
-                    Surface(
-                        color = Color.Black,
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = card.name,
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            ),
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
-                    }
-
-                    // Card Number (Top Right)
-                    Surface(
-                        color = Color.Black,
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = ".... ${card.cardNumber.takeLast(4)}",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            ),
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
-                    }
-
-                    // Profile Picture (Center)
-                    Column(
-                        modifier = Modifier.align(Alignment.Center),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Surface(
-                            modifier = Modifier
-                                .size(60.dp)
-                                .clip(CircleShape),
-                            color = Color.Black
-                        ) {
-                            if (card.imageUrl.isNotEmpty()) {
-                                AsyncImage(
-                                    model = card.imageUrl,
-                                    contentDescription = "Card Image",
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.Filled.Person,
-                                    contentDescription = "Card Image",
-                                    modifier = Modifier.padding(12.dp),
-                                    tint = Color.White
-                                )
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        // User Name (Below PFP)
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = Color.Black
-                        ) {
-                            Text(
-                                text = username,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                                style = MaterialTheme.typography.bodyMedium.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                            )
-                        }
-                    }
-                }
-            }
+            com.project.tapthehuzz.userInterface.components.CardItem(
+                card = card,
+                username = username,
+                modifier = Modifier.fillMaxSize()
+            )
         }
 
         // Timer at Bottom
