@@ -1,6 +1,7 @@
 package com.project.tapthehuzz.userInterface.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,23 +10,38 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.project.tapthehuzz.data.model.Card
+import com.project.tapthehuzz.data.model.User
+import com.project.tapthehuzz.userInterface.components.CardItem
 import com.project.tapthehuzz.userInterface.components.EmptyStateCard
 
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun AllCardsScreen(
     cards: List<Card>,
-    username: String,
+    user: User,
     onCardClick: (Card) -> Unit,
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    onEditCard: (Card) -> Unit,
+    onDeleteCard: (Card) -> Unit,
+    onToggleQuickAccess: (Card) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategoryFilter by remember { mutableStateOf("All") }
@@ -52,7 +68,7 @@ fun AllCardsScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                ,
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Search Bar
@@ -150,6 +166,8 @@ fun AllCardsScreen(
             }
         }
 
+        Spacer(modifier = Modifier.height(12.dp))
+
         if (filteredCards.isEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -166,9 +184,8 @@ fun AllCardsScreen(
                         onClick = onAddClick,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
-                            .padding(horizontal = 16.dp)
-                            .padding(bottom = 40.dp) // Move up visually
+                            .height(240.dp)
+                            .padding(bottom = 50.dp)
                     )
                 }
             }
@@ -176,14 +193,64 @@ fun AllCardsScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(bottom = 24.dp)
+                contentPadding = PaddingValues(top = 16.dp, bottom = 24.dp)
             ) {
                 items(filteredCards) { card ->
-                    CardItem(
-                        card = card,
-                        username = username,
-                        onClick = { onCardClick(card) }
-                    )
+                    var showMenu by remember { mutableStateOf(false) }
+                    val interactionSource = remember { MutableInteractionSource() }
+                    val isPressed by interactionSource.collectIsPressedAsState()
+                    val scale by animateFloatAsState(if (isPressed) 1.05f else 1f)
+
+                    Box {
+                        CardItem(
+                            card = card,
+                            username = user.username,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(220.dp)
+                                .graphicsLayer {
+                                    scaleX = scale
+                                    scaleY = scale
+                                }
+                                .combinedClickable(
+                                    interactionSource = interactionSource,
+                                    indication = null,
+                                    onClick = { onCardClick(card) },
+                                    onLongClick = { showMenu = true }
+                                )
+                        )
+                        
+                        DropdownMenu(
+                            expanded = showMenu,
+                            onDismissRequest = { showMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Edit Details") },
+                                onClick = {
+                                    onEditCard(card)
+                                    showMenu = false
+                                },
+                                leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = null) }
+                            )
+                            val isInQuickAccess = card.id in user.quickAccessList
+                            DropdownMenuItem(
+                                text = { Text(if (isInQuickAccess) "Remove from Quick Access" else "Add to Quick Access") },
+                                onClick = {
+                                    onToggleQuickAccess(card)
+                                    showMenu = false
+                                },
+                                leadingIcon = { Icon(if (isInQuickAccess) Icons.Filled.Star else Icons.Filled.StarBorder, contentDescription = null) }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Delete", color = MaterialTheme.colorScheme.error) },
+                                onClick = {
+                                    onDeleteCard(card)
+                                    showMenu = false
+                                },
+                                leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) }
+                            )
+                        }
+                    }
                 }
             }
         }

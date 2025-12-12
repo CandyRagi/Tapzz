@@ -1,6 +1,10 @@
 package com.project.tapthehuzz.userInterface.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.runtime.*
 import androidx.compose.foundation.clickable
 import androidx.compose.animation.togetherWith
@@ -60,6 +64,13 @@ import com.project.tapthehuzz.data.repository.AuthRepository
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import com.project.tapthehuzz.R
+
+import com.project.tapthehuzz.userInterface.components.CardItem
+
+// Removed creditCardFont as it is now in CardItem.kt
 
 @Composable
 fun HomeScreen(onProfileClick: () -> Unit) {
@@ -68,6 +79,7 @@ fun HomeScreen(onProfileClick: () -> Unit) {
     var user by remember { mutableStateOf<User?>(null) }
     var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
     var showCreateCardDialog by remember { mutableStateOf(false) }
+    var editingCard by remember { mutableStateOf<Card?>(null) }
     var activeCard by remember { mutableStateOf<Card?>(null) }
     val authRepository = remember { AuthRepository() }
     val scope = rememberCoroutineScope()
@@ -180,13 +192,53 @@ fun HomeScreen(onProfileClick: () -> Unit) {
 
             // Content
             Box(modifier = Modifier.fillMaxSize()) {
-                CardContent(
-                    cards = cards,
-                    username = user?.username ?: "User",
-                    onCardClick = { activeCard = it },
-                    onAddClick = { showCreateCardDialog = true },
-                    viewMode = selectedTab
-                )
+            if (user != null) {
+                androidx.compose.animation.AnimatedContent(
+                    targetState = selectedTab,
+                    transitionSpec = {
+                        if (targetState == "All Cards") {
+                            androidx.compose.animation.slideInHorizontally { width -> width } + androidx.compose.animation.fadeIn() togetherWith
+                            androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
+                        } else {
+                            androidx.compose.animation.slideInHorizontally { width -> -width } + androidx.compose.animation.fadeIn() togetherWith
+                            androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
+                        }
+                    },
+                    label = "Tab Content Animation"
+                ) { targetTab ->
+                    val filteredCards = if (targetTab == "Quick Access") {
+                        cards.filter { it.id in user!!.quickAccessList }
+                    } else {
+                        cards
+                    }
+
+                    CardContent(
+                        cards = filteredCards,
+                        allCards = cards,
+                        user = user!!,
+                        onCardClick = { activeCard = it },
+                        onAddClick = { 
+                            editingCard = null
+                            showCreateCardDialog = true 
+                        },
+                        onEditCard = { card ->
+                            editingCard = card
+                            showCreateCardDialog = true
+                        },
+                        onDeleteCard = { card ->
+                            scope.launch {
+                                authRepository.deleteCard(user!!.uid, card.id)
+                            }
+                        },
+                        onToggleQuickAccess = { card ->
+                            scope.launch {
+                                val isInQuickAccess = card.id in user!!.quickAccessList
+                                authRepository.toggleQuickAccess(user!!.uid, card.id, !isInQuickAccess)
+                            }
+                        },
+                        viewMode = targetTab
+                    )
+                }
             }
         }
     }
@@ -195,11 +247,19 @@ fun HomeScreen(onProfileClick: () -> Unit) {
     if (showCreateCardDialog && user != null) {
         CreateCardDialog(
             user = user!!,
-            onDismiss = { showCreateCardDialog = false },
-            onCreate = { newCard ->
+            card = editingCard,
+            onDismiss = { 
+                showCreateCardDialog = false 
+                editingCard = null
+            },
+            onSave = { newCard ->
                 scope.launch {
                     authRepository.createCard(user!!.uid, newCard)
+                    if (selectedTab == "Quick Access") {
+                        authRepository.toggleQuickAccess(user!!.uid, newCard.id, true)
+                    }
                     showCreateCardDialog = false
+                    editingCard = null
                 }
             }
         )
@@ -211,6 +271,7 @@ fun HomeScreen(onProfileClick: () -> Unit) {
             username = user!!.username,
             onDismiss = { activeCard = null }
         )
+    }
     }
 }
 
@@ -246,278 +307,184 @@ fun SwitcherItem(text: String, isSelected: Boolean, onClick: () -> Unit) {
 
 @Composable
 fun CardContent(
-    cards: List<Card>, 
-    username: String, 
+    cards: List<Card>,
+    allCards: List<Card>,
+    user: User,
     onCardClick: (Card) -> Unit,
     onAddClick: () -> Unit,
+    onEditCard: (Card) -> Unit,
+    onDeleteCard: (Card) -> Unit,
+    onToggleQuickAccess: (Card) -> Unit,
     viewMode: String
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        if (cards.isEmpty() && viewMode == "Quick Access") {
-             Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                EmptyStateCard(
-                    onClick = onAddClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .padding(bottom = 40.dp) // Move up visually
-                )
-            }
-        } else {
-            androidx.compose.animation.AnimatedContent(
-                targetState = viewMode,
-                transitionSpec = {
-                    if (targetState == "All Cards") {
-                        androidx.compose.animation.slideInHorizontally { width -> width } + androidx.compose.animation.fadeIn() togetherWith
-                        androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
-                    } else {
-                        androidx.compose.animation.slideInHorizontally { width -> -width } + androidx.compose.animation.fadeIn() togetherWith
-                        androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
-                    }
-                },
-                label = "Tab Animation"
-            ) { targetViewMode ->
-                if (targetViewMode == "Quick Access") {
-                    // Horizontal List
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        val listState = androidx.compose.foundation.lazy.rememberLazyListState()
-                        val flingBehavior = androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior(lazyListState = listState)
-                        var currentCenteredIndex by remember { mutableIntStateOf(0) }
-
-                        LaunchedEffect(listState) {
-                            snapshotFlow { listState.layoutInfo }
-                                .collect { layoutInfo ->
-                                    val viewportCenter = layoutInfo.viewportEndOffset / 2f
-                                    val centeredItem = layoutInfo.visibleItemsInfo.minByOrNull { item ->
-                                        kotlin.math.abs((item.offset + item.size / 2f) - viewportCenter)
-                                    }
-                                    if (centeredItem != null) {
-                                        currentCenteredIndex = centeredItem.index
-                                    }
-                                }
-                        }
-                        
-                        androidx.compose.foundation.layout.BoxWithConstraints(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            val screenWidth = maxWidth
-                            val cardWidth = screenWidth // Full width
-                            val horizontalPadding = 0.dp
-                            
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                androidx.compose.foundation.lazy.LazyRow(
-                                    state = listState,
-                                    flingBehavior = flingBehavior,
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                    contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding)
-                                ) {
-                                items(cards.size) { index ->
-                                    val card = cards[index]
-                                    val scale by remember(index) {
-                                        derivedStateOf {
-                                            val currentItem = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
-                                            if (currentItem != null) {
-                                                val viewportCenter = listState.layoutInfo.viewportEndOffset / 2f
-                                                val itemCenter = currentItem.offset + currentItem.size / 2f
-                                                val distance = kotlin.math.abs(viewportCenter - itemCenter)
-                                                val maxDistance = viewportCenter 
-                                                val scale = 1f - (distance / maxDistance) * 0.2f 
-                                                scale.coerceIn(0.8f, 1f)
-                                            } else {
-                                                0.8f 
-                                            }
-                                        }
-                                    }
-
-                                    CardItem(
-                                        card = card, 
-                                        username = username, 
-                                        modifier = Modifier
-                                            .width(cardWidth)
-                                            .height(220.dp)
-                                            .graphicsLayer {
-                                                scaleX = scale
-                                                scaleY = scale
-                                                alpha = scale
-                                            },
-                                        onClick = { onCardClick(card) }
-                                    )
-                                }
-                            }
-
-                            if (cards.isNotEmpty()) {
-                                Spacer(modifier = Modifier.height(120.dp))
-                                
-                                androidx.compose.material3.FilledTonalButton(
-                                    onClick = { 
-                                        if (currentCenteredIndex in cards.indices) {
-                                            onCardClick(cards[currentCenteredIndex]) 
-                                        }
-                                    },
-                                    modifier = Modifier
-                                        .height(50.dp),
-                                    shape = CircleShape,
-                                    colors = androidx.compose.material3.ButtonDefaults.filledTonalButtonColors(
-                                        containerColor = Color.Gray,
-                                        contentColor = Color.White
-                                    )
-                                ) {
-                                    Text(
-                                        text = "Tap",
-                                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                                    )
-                                }
-                            }
-                        }
-                    }
+        if (viewMode == "Quick Access") {
+            // Quick Access View (Horizontal Pager or List)
+            if (cards.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    EmptyStateCard(
+                        onClick = onAddClick,
+                        text = "Tap to create a new card\n\n- OR -\n\nLong-press a card in 'All Cards'\nto add it here",
+                        showIcon = false,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(240.dp)
+                            .padding(bottom = 50.dp)
+                    )
                 }
             } else {
-                    // All Cards (Vertical List)
-                    AllCardsScreen(
-                        cards = cards,
-                        username = username,
-                        onCardClick = onCardClick,
-                        onAddClick = onAddClick
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun CardItem(
-    card: Card, 
-    username: String, 
-    modifier: Modifier = Modifier.fillMaxWidth().height(200.dp),
-    onClick: () -> Unit
-) {
-    Surface(
-        modifier = modifier
-            .clickable { onClick() },
-        shape = RoundedCornerShape(24.dp),
-        color = if (card.designId.isNotEmpty()) Color.White else Color(card.backgroundColor),
-        shadowElevation = 0.dp // Flat design
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            // Background Design
-            if (card.designId == "design_one") {
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-            } else if (card.designId == "design_two") {
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-            } else if (card.designId == "design_three") {
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-            // Card Name (Top Left)
-            Surface(
-                color = Color.Black,
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(20.dp)
-            ) {
-                Text(
-                    text = card.name,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    ),
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
-
-            // Card Number (Top Right)
-            Surface(
-                color = Color.Black,
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(20.dp)
-            ) {
-                Text(
-                    text = ".... ${card.cardNumber.takeLast(4)}",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    ),
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
-
-            // Profile Picture (Center)
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Surface(
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(CircleShape),
-                    color = Color.Black // Dark background for pop
-                ) {
-                    if (card.imageUrl.isNotEmpty()) {
-                        AsyncImage(
-                            model = card.imageUrl,
-                            contentDescription = "Card Image",
+                androidx.compose.animation.AnimatedContent(
+                    targetState = viewMode,
+                    transitionSpec = {
+                        if (targetState == "All Cards") {
+                            androidx.compose.animation.slideInHorizontally { width -> width } + androidx.compose.animation.fadeIn() togetherWith
+                            androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
+                        } else {
+                            androidx.compose.animation.slideInHorizontally { width -> -width } + androidx.compose.animation.fadeIn() togetherWith
+                            androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
+                        }
+                    },
+                    label = "Tab Animation"
+                ) { targetViewMode ->
+                    if (targetViewMode == "Quick Access") {
+                        // Horizontal List
+                        Box(
                             modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
+                            contentAlignment = Alignment.Center
+                        ) {
+                            val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+                            val flingBehavior = androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior(lazyListState = listState)
+                            var currentCenteredIndex by remember { mutableIntStateOf(0) }
+
+                            LaunchedEffect(listState) {
+                                snapshotFlow { listState.layoutInfo }
+                                    .collect { layoutInfo ->
+                                        val viewportCenter = layoutInfo.viewportEndOffset / 2f
+                                        val centeredItem = layoutInfo.visibleItemsInfo.minByOrNull { item ->
+                                            kotlin.math.abs((item.offset + item.size / 2f) - viewportCenter)
+                                        }
+                                        if (centeredItem != null) {
+                                            currentCenteredIndex = centeredItem.index
+                                        }
+                                    }
+                            }
+                            
+                            androidx.compose.foundation.layout.BoxWithConstraints(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                val screenWidth = maxWidth
+                                val cardWidth = screenWidth // Full width
+                                val horizontalPadding = 0.dp
+                                
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    androidx.compose.foundation.lazy.LazyRow(
+                                        state = listState,
+                                        flingBehavior = flingBehavior,
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding)
+                                    ) {
+                                    items(cards.size) { index ->
+                                        val card = cards[index]
+                                        val scale by remember(index) {
+                                            derivedStateOf {
+                                                val currentItem = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
+                                                if (currentItem != null) {
+                                                    val viewportCenter = listState.layoutInfo.viewportEndOffset / 2f
+                                                    val itemCenter = currentItem.offset + currentItem.size / 2f
+                                                    val distance = kotlin.math.abs(viewportCenter - itemCenter)
+                                                    val maxDistance = viewportCenter 
+                                                    val scale = 1f - (distance / maxDistance) * 0.2f 
+                                                    scale.coerceIn(0.8f, 1f)
+                                                } else {
+                                                    0.8f 
+                                                }
+                                            }
+                                        }
+
+                                        val interactionSource = remember { MutableInteractionSource() }
+                                        val isPressed by interactionSource.collectIsPressedAsState()
+                                        val pressScale by animateFloatAsState(if (isPressed) 1.05f else 1f)
+
+                                        CardItem(
+                                            card = card, 
+                                            username = user.username, 
+                                            modifier = Modifier
+                                                .width(cardWidth)
+                                                .height(220.dp)
+                                                .graphicsLayer {
+                                                    scaleX = scale * pressScale
+                                                    scaleY = scale * pressScale
+                                                    alpha = scale
+                                                }
+                                                .clickable(
+                                                    interactionSource = interactionSource,
+                                                    indication = null,
+                                                    onClick = { onCardClick(card) }
+                                                )
+                                        )
+                                    }
+                                }
+
+                                if (cards.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(120.dp))
+                                    
+                                    androidx.compose.material3.FilledTonalButton(
+                                        onClick = { 
+                                            if (currentCenteredIndex in cards.indices) {
+                                                onCardClick(cards[currentCenteredIndex]) 
+                                            }
+                                        },
+                                        modifier = Modifier
+                                            .height(50.dp),
+                                        shape = CircleShape,
+                                        colors = androidx.compose.material3.ButtonDefaults.filledTonalButtonColors(
+                                            containerColor = Color.Gray,
+                                            contentColor = Color.White
+                                        )
+                                    ) {
+                                        Text(
+                                            text = "Tap",
+                                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                        )
+                                    }
+                                }
+                            }
+                            }
+                        }
                     } else {
-                        Icon(
-                            imageVector = Icons.Filled.Person,
-                            contentDescription = "Card Image",
-                            modifier = Modifier.padding(12.dp),
-                            tint = Color.White
+                        // All Cards (Vertical List)
+                        AllCardsScreen(
+                            cards = cards, // This will be all cards if viewMode is "All Cards"
+                            user = user,
+                            onCardClick = onCardClick,
+                            onAddClick = onAddClick,
+                            onEditCard = onEditCard,
+                            onDeleteCard = onDeleteCard,
+                            onToggleQuickAccess = onToggleQuickAccess
                         )
                     }
                 }
-                
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // User Name (Below PFP)
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color.Black
-                ) {
-                    Text(
-                        text = username,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    )
-                }
             }
+        } else {
+            // All Cards View
+            AllCardsScreen(
+                cards = cards, // This will be all cards if viewMode is "All Cards"
+                user = user,
+                onCardClick = onCardClick,
+                onAddClick = onAddClick,
+                onEditCard = onEditCard,
+                onDeleteCard = onDeleteCard,
+                onToggleQuickAccess = onToggleQuickAccess
+            )
         }
     }
 }
+
 
 @Composable
 fun HistoryContent() {
