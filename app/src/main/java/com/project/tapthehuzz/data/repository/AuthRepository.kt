@@ -175,4 +175,14 @@ class AuthRepository {
             Result.failure(e)
         }
     }
+
+    suspend fun updateQuickAccessListOrder(userId: String, newOrder: List<String>): Result<Unit> {
+        return try {
+            firestore.collection("users").document(userId)
+                .update("quickAccessList", newOrder).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

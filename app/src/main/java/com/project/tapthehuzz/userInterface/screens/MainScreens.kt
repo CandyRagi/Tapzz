@@ -7,9 +7,11 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.runtime.*
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,8 +32,15 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
@@ -46,6 +55,8 @@ import com.project.tapthehuzz.data.model.Card
 import com.project.tapthehuzz.userInterface.components.CreateCardDialog
 import com.project.tapthehuzz.userInterface.components.EmptyStateCard
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import androidx.compose.runtime.rememberCoroutineScope
 import com.project.tapthehuzz.data.model.User
 import androidx.compose.runtime.LaunchedEffect
@@ -83,26 +94,27 @@ fun HomeScreen(onProfileClick: () -> Unit) {
     var activeCard by remember { mutableStateOf<Card?>(null) }
     val authRepository = remember { AuthRepository() }
     val scope = rememberCoroutineScope()
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     LaunchedEffect(Unit) {
         val currentUser = authRepository.getCurrentUser()
         if (currentUser != null) {
-             val userRef = com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users").document(currentUser.uid)
-             
-             userRef.addSnapshotListener { snapshot, e ->
-                    if (e != null) return@addSnapshotListener
-                    if (snapshot != null && snapshot.exists()) {
-                        user = snapshot.toObject(User::class.java)
-                        userPfp = user?.pfp ?: ""
-                    }
-                }
+            val userRef = com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users").document(currentUser.uid)
 
-             userRef.collection("cards").addSnapshotListener { snapshot, e ->
-                 if (e != null) return@addSnapshotListener
-                 if (snapshot != null) {
-                     cards = snapshot.toObjects(Card::class.java)
-                 }
-             }
+            userRef.addSnapshotListener { snapshot, e ->
+                if (e != null) return@addSnapshotListener
+                if (snapshot != null && snapshot.exists()) {
+                    user = snapshot.toObject(User::class.java)
+                    userPfp = user?.pfp ?: ""
+                }
+            }
+
+            userRef.collection("cards").addSnapshotListener { snapshot, e ->
+                if (e != null) return@addSnapshotListener
+                if (snapshot != null) {
+                    cards = snapshot.toObjects(Card::class.java)
+                }
+            }
         }
     }
 
@@ -142,136 +154,149 @@ fun HomeScreen(onProfileClick: () -> Unit) {
                     .padding(start = 19.dp, top = 12.dp, end = 16.dp)
             ) {
                 // Header
-            if (selectedTab != "All Cards") {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = " RIZZ Wallet",
-                        style = MaterialTheme.typography.headlineLarge.copy(
-                            fontWeight = FontWeight.ExtraBold,
-                            letterSpacing = (0).sp,
-                            fontSize = 23.sp
+                if (selectedTab != "All Cards") {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = " RIZZ Wallet",
+                            style = MaterialTheme.typography.headlineLarge.copy(
+                                fontWeight = FontWeight.ExtraBold,
+                                letterSpacing = (0).sp,
+                                fontSize = 23.sp
+                            )
                         )
-                    )
-                    
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        // Profile Picture
-                        Surface(
-                            modifier = Modifier
-                                .size(48.dp)
-                                .clip(CircleShape)
-                                .clickable { onProfileClick() },
-                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                        ) {
-                            if (userPfp.isNotEmpty()) {
-                                AsyncImage(
-                                    model = userPfp,
-                                    contentDescription = "Profile",
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.Filled.Person,
-                                    contentDescription = "Profile",
-                                    modifier = Modifier.padding(10.dp),
-                                    tint = MaterialTheme.colorScheme.onSurface
-                                )
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            // Profile Picture
+                            Surface(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(CircleShape)
+                                    .clickable { onProfileClick() },
+                                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                            ) {
+                                if (userPfp.isNotEmpty()) {
+                                    AsyncImage(
+                                        model = userPfp,
+                                        contentDescription = "Profile",
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                } else {
+                                    Icon(
+                                        imageVector = Icons.Filled.Person,
+                                        contentDescription = "Profile",
+                                        modifier = Modifier.padding(10.dp),
+                                        tint = MaterialTheme.colorScheme.onSurface
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if (selectedTab != "All Cards") {
-                Spacer(modifier = Modifier.height(32.dp))
-            }
+                if (selectedTab != "All Cards") {
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
 
-            // Content
-            Box(modifier = Modifier.fillMaxSize()) {
-            if (user != null) {
-                androidx.compose.animation.AnimatedContent(
-                    targetState = selectedTab,
-                    transitionSpec = {
-                        if (targetState == "All Cards") {
-                            androidx.compose.animation.slideInHorizontally { width -> width } + androidx.compose.animation.fadeIn() togetherWith
-                            androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
-                        } else {
-                            androidx.compose.animation.slideInHorizontally { width -> -width } + androidx.compose.animation.fadeIn() togetherWith
-                            androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
+                // Content
+                Box(modifier = Modifier.fillMaxSize()) {
+                    if (user != null) {
+                        androidx.compose.animation.AnimatedContent(
+                            targetState = selectedTab,
+                            transitionSpec = {
+                                if (targetState == "All Cards") {
+                                    androidx.compose.animation.slideInHorizontally { width -> width } + androidx.compose.animation.fadeIn() togetherWith
+                                            androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
+                                } else {
+                                    androidx.compose.animation.slideInHorizontally { width -> -width } + androidx.compose.animation.fadeIn() togetherWith
+                                            androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
+                                }
+                            },
+                            label = "Tab Content Animation"
+                        ) { targetTab ->
+                            val filteredCards = if (targetTab == "Quick Access") {
+                                cards.filter { it.id in user!!.quickAccessList }
+                            } else {
+                                cards
+                            }
+
+                            CardContent(
+                                cards = filteredCards,
+                                allCards = cards,
+                                user = user!!,
+                                onCardClick = { activeCard = it },
+                                onAddClick = {
+                                    editingCard = null
+                                    showCreateCardDialog = true
+                                },
+                                onEditCard = { card ->
+                                    editingCard = card
+                                    showCreateCardDialog = true
+                                },
+                                onDeleteCard = { card ->
+                                    scope.launch {
+                                        authRepository.deleteCard(user!!.uid, card.id)
+                                    }
+                                },
+                                onToggleQuickAccess = { card ->
+                                    scope.launch {
+                                        val isInQuickAccess = card.id in user!!.quickAccessList
+                                        if (!isInQuickAccess && user!!.quickAccessList.size >= 9) {
+                                            android.widget.Toast.makeText(
+                                                context,
+                                                "Quick Access section full. Remove cards to add others.",
+                                                android.widget.Toast.LENGTH_SHORT
+                                            ).show()
+                                        } else {
+                                            authRepository.toggleQuickAccess(user!!.uid, card.id, !isInQuickAccess)
+                                        }
+                                    }
+                                },
+                                onReorderCards = { newOrder ->
+                                    scope.launch {
+                                        authRepository.updateQuickAccessListOrder(user!!.uid, newOrder)
+                                    }
+                                },
+                                viewMode = targetTab
+                            )
                         }
-                    },
-                    label = "Tab Content Animation"
-                ) { targetTab ->
-                    val filteredCards = if (targetTab == "Quick Access") {
-                        cards.filter { it.id in user!!.quickAccessList }
-                    } else {
-                        cards
                     }
-
-                    CardContent(
-                        cards = filteredCards,
-                        allCards = cards,
-                        user = user!!,
-                        onCardClick = { activeCard = it },
-                        onAddClick = { 
-                            editingCard = null
-                            showCreateCardDialog = true 
-                        },
-                        onEditCard = { card ->
-                            editingCard = card
-                            showCreateCardDialog = true
-                        },
-                        onDeleteCard = { card ->
-                            scope.launch {
-                                authRepository.deleteCard(user!!.uid, card.id)
-                            }
-                        },
-                        onToggleQuickAccess = { card ->
-                            scope.launch {
-                                val isInQuickAccess = card.id in user!!.quickAccessList
-                                authRepository.toggleQuickAccess(user!!.uid, card.id, !isInQuickAccess)
-                            }
-                        },
-                        viewMode = targetTab
-                    )
                 }
             }
         }
-    }
-    }
 
-    if (showCreateCardDialog && user != null) {
-        CreateCardDialog(
-            user = user!!,
-            card = editingCard,
-            onDismiss = { 
-                showCreateCardDialog = false 
-                editingCard = null
-            },
-            onSave = { newCard ->
-                scope.launch {
-                    authRepository.createCard(user!!.uid, newCard)
-                    if (selectedTab == "Quick Access") {
-                        authRepository.toggleQuickAccess(user!!.uid, newCard.id, true)
-                    }
+        if (showCreateCardDialog && user != null) {
+            CreateCardDialog(
+                user = user!!,
+                card = editingCard,
+                onDismiss = {
                     showCreateCardDialog = false
                     editingCard = null
+                },
+                onSave = { newCard ->
+                    scope.launch {
+                        authRepository.createCard(user!!.uid, newCard)
+                        if (selectedTab == "Quick Access") {
+                            authRepository.toggleQuickAccess(user!!.uid, newCard.id, true)
+                        }
+                        showCreateCardDialog = false
+                        editingCard = null
+                    }
                 }
-            }
-        )
-    }
+            )
+        }
 
-    if (activeCard != null && user != null) {
-        CardTransmissionScreen(
-            card = activeCard!!,
-            username = user!!.username,
-            onDismiss = { activeCard = null }
-        )
-    }
+        if (activeCard != null && user != null) {
+            CardTransmissionScreen(
+                card = activeCard!!,
+                username = user!!.username,
+                onDismiss = { activeCard = null }
+            )
+        }
     }
 }
 
@@ -305,6 +330,7 @@ fun SwitcherItem(text: String, isSelected: Boolean, onClick: () -> Unit) {
     }
 }
 
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun CardContent(
     cards: List<Card>,
@@ -315,8 +341,15 @@ fun CardContent(
     onEditCard: (Card) -> Unit,
     onDeleteCard: (Card) -> Unit,
     onToggleQuickAccess: (Card) -> Unit,
+    onReorderCards: (List<String>) -> Unit,
     viewMode: String
 ) {
+    var isEditOrderMode by remember { mutableStateOf(false) }
+
+    LaunchedEffect(viewMode) {
+        isEditOrderMode = false
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         if (viewMode == "Quick Access") {
             // Quick Access View (Horizontal Pager or List)
@@ -338,10 +371,10 @@ fun CardContent(
                     transitionSpec = {
                         if (targetState == "All Cards") {
                             androidx.compose.animation.slideInHorizontally { width -> width } + androidx.compose.animation.fadeIn() togetherWith
-                            androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
+                                    androidx.compose.animation.slideOutHorizontally { width -> -width } + androidx.compose.animation.fadeOut()
                         } else {
                             androidx.compose.animation.slideInHorizontally { width -> -width } + androidx.compose.animation.fadeIn() togetherWith
-                            androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
+                                    androidx.compose.animation.slideOutHorizontally { width -> width } + androidx.compose.animation.fadeOut()
                         }
                     },
                     label = "Tab Animation"
@@ -368,92 +401,94 @@ fun CardContent(
                                         }
                                     }
                             }
-                            
-                            androidx.compose.foundation.layout.BoxWithConstraints(
+
+                            BoxWithConstraints(
                                 modifier = Modifier.fillMaxWidth(),
                                 contentAlignment = Alignment.Center
                             ) {
                                 val screenWidth = maxWidth
                                 val cardWidth = screenWidth // Full width
                                 val horizontalPadding = 0.dp
-                                
+
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    androidx.compose.foundation.lazy.LazyRow(
+
+
+                                    LazyRow(
                                         state = listState,
                                         flingBehavior = flingBehavior,
                                         modifier = Modifier
                                             .fillMaxWidth(),
                                         horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding)
+                                        contentPadding = PaddingValues(horizontal = horizontalPadding)
                                     ) {
-                                    items(cards.size) { index ->
-                                        val card = cards[index]
-                                        val scale by remember(index) {
-                                            derivedStateOf {
-                                                val currentItem = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
-                                                if (currentItem != null) {
-                                                    val viewportCenter = listState.layoutInfo.viewportEndOffset / 2f
-                                                    val itemCenter = currentItem.offset + currentItem.size / 2f
-                                                    val distance = kotlin.math.abs(viewportCenter - itemCenter)
-                                                    val maxDistance = viewportCenter 
-                                                    val scale = 1f - (distance / maxDistance) * 0.2f 
-                                                    scale.coerceIn(0.8f, 1f)
-                                                } else {
-                                                    0.8f 
+                                        items(cards.size) { index ->
+                                            val card = cards[index]
+                                            val scale by remember(index) {
+                                                derivedStateOf {
+                                                    val currentItem = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
+                                                    if (currentItem != null) {
+                                                        val viewportCenter = listState.layoutInfo.viewportEndOffset / 2f
+                                                        val itemCenter = currentItem.offset + currentItem.size / 2f
+                                                        val distance = kotlin.math.abs(viewportCenter - itemCenter)
+                                                        val maxDistance = viewportCenter
+                                                        val scale = 1f - (distance / maxDistance) * 0.2f
+                                                        scale.coerceIn(0.8f, 1f)
+                                                    } else {
+                                                        0.8f
+                                                    }
                                                 }
+                                            }
+
+    
+
+                                            Box {
+                                                CardItem(
+                                                    card = card,
+                                                    username = user.username,
+                                                    modifier = Modifier
+                                                        .width(cardWidth)
+                                                        .height(220.dp)
+                                                        .graphicsLayer {
+                                                            scaleX = scale
+                                                            scaleY = scale
+                                                            alpha = scale
+                                                        }
+                                                        .clickable(
+                                                            onClick = {
+                                                                onCardClick(card)
+                                                            }
+                                                        )
+                                                )
                                             }
                                         }
+                                    }
 
-                                        val interactionSource = remember { MutableInteractionSource() }
-                                        val isPressed by interactionSource.collectIsPressedAsState()
-                                        val pressScale by animateFloatAsState(if (isPressed) 1.05f else 1f)
+                                    if (cards.isNotEmpty()) {
+                                        Spacer(modifier = Modifier.height(120.dp))
 
-                                        CardItem(
-                                            card = card, 
-                                            username = user.username, 
-                                            modifier = Modifier
-                                                .width(cardWidth)
-                                                .height(220.dp)
-                                                .graphicsLayer {
-                                                    scaleX = scale * pressScale
-                                                    scaleY = scale * pressScale
-                                                    alpha = scale
+                                        androidx.compose.material3.FilledTonalButton(
+                                            onClick = {
+                                                if (currentCenteredIndex in cards.indices) {
+                                                    onCardClick(cards[currentCenteredIndex])
                                                 }
-                                                .clickable(
-                                                    interactionSource = interactionSource,
-                                                    indication = null,
-                                                    onClick = { onCardClick(card) }
-                                                )
-                                        )
+                                            },
+                                            modifier = Modifier
+                                                .height(50.dp),
+                                            shape = CircleShape,
+                                            colors = ButtonDefaults.filledTonalButtonColors(
+                                                containerColor = Color.Gray,
+                                                contentColor = Color.White
+                                            )
+                                        ) {
+                                            Text(
+                                                text = "Tap",
+                                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                            )
+                                        }
                                     }
                                 }
-
-                                if (cards.isNotEmpty()) {
-                                    Spacer(modifier = Modifier.height(120.dp))
-                                    
-                                    androidx.compose.material3.FilledTonalButton(
-                                        onClick = { 
-                                            if (currentCenteredIndex in cards.indices) {
-                                                onCardClick(cards[currentCenteredIndex]) 
-                                            }
-                                        },
-                                        modifier = Modifier
-                                            .height(50.dp),
-                                        shape = CircleShape,
-                                        colors = androidx.compose.material3.ButtonDefaults.filledTonalButtonColors(
-                                            containerColor = Color.Gray,
-                                            contentColor = Color.White
-                                        )
-                                    ) {
-                                        Text(
-                                            text = "Tap",
-                                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                                        )
-                                    }
-                                }
-                            }
                             }
                         }
                     } else {
@@ -482,6 +517,17 @@ fun CardContent(
                 onToggleQuickAccess = onToggleQuickAccess
             )
         }
+
+        if (isEditOrderMode) {
+            ReorderOverlay(
+                cards = cards,
+                onSave = { newOrder ->
+                    onReorderCards(newOrder)
+                    isEditOrderMode = false
+                },
+                onCancel = { isEditOrderMode = false }
+            )
+        }
     }
 }
 
@@ -489,6 +535,126 @@ fun CardContent(
 @Composable
 fun HistoryContent() {
     HistoryScreen()
+}
+
+
+
+@Composable
+fun ReorderOverlay(
+    cards: List<Card>,
+    onSave: (List<String>) -> Unit,
+    onCancel: () -> Unit
+) {
+    var currentOrder by remember { mutableStateOf(cards) }
+    var selectedIndex by remember { mutableStateOf<Int?>(null) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.9f))
+            .clickable(enabled = true) {}, // Block clicks
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Tap two cards to swap",
+                style = MaterialTheme.typography.titleLarge.copy(color = Color.White, fontWeight = FontWeight.Bold),
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+
+            androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
+                columns = androidx.compose.foundation.lazy.grid.GridCells.Fixed(3),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                items(currentOrder.size, key = { index -> currentOrder[index].id }) { index ->
+                    val card = currentOrder[index]
+                    val isSelected = selectedIndex == index
+
+                    Box(
+                        modifier = Modifier
+                            .aspectRatio(1.6f) // Card aspect ratio
+                            .clip(RoundedCornerShape(8.dp))
+                            .border(
+                                width = if (isSelected) 3.dp else 0.dp,
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .clickable {
+                                if (selectedIndex == null) {
+                                    selectedIndex = index
+                                } else {
+                                    if (selectedIndex != index) {
+                                        // Swap
+                                        val newList = currentOrder.toMutableList()
+                                        java.util.Collections.swap(newList, selectedIndex!!, index)
+                                        currentOrder = newList
+                                        selectedIndex = null
+                                    } else {
+                                        // Deselect
+                                        selectedIndex = null
+                                    }
+                                }
+                            }
+                    ) {
+                        // Mini Card Representation
+                        Surface(
+                            color = if (card.designId.isNotEmpty()) Color.White else Color(card.backgroundColor),
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            if (card.imageUrl.isNotEmpty()) {
+                                AsyncImage(
+                                    model = card.imageUrl,
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            } else {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Text(
+                                        text = card.name.take(2).uppercase(),
+                                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                    )
+                                }
+                            }
+                        }
+
+                        // Overlay to dim if not selected (optional, but good for focus)
+                        if (selectedIndex != null && selectedIndex != index) {
+                            Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.3f)))
+                        }
+                    }
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                androidx.compose.material3.OutlinedButton(
+                    onClick = onCancel,
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White)
+                ) {
+                    Text("Cancel")
+                }
+
+                androidx.compose.material3.Button(
+                    onClick = { onSave(currentOrder.map { it.id }) }
+                ) {
+                    Text("Save Order")
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -500,5 +666,3 @@ fun HistoryScreen() {
         Text(text = "History Screen", style = MaterialTheme.typography.headlineMedium)
     }
 }
-
-
