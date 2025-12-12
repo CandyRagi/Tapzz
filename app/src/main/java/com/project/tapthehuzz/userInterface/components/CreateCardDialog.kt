@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -62,6 +63,45 @@ fun CreateCardDialog(
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
+
+                // Profile Picture Preview
+                Box(contentAlignment = Alignment.BottomEnd) {
+                    if (imageUrl.isNotEmpty()) {
+                        AsyncImage(
+                            model = imageUrl,
+                            contentDescription = "Profile",
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .border(1.dp, Color.Gray, CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                         Box(
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .background(Color.Gray)
+                        )
+                    }
+                    
+                    // Sync PFP Button
+                    IconButton(
+                        onClick = { imageUrl = user.pfp },
+                        modifier = Modifier
+                            .size(24.dp)
+                            .background(MaterialTheme.colorScheme.primary, CircleShape)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person, // Using Person icon as "Sync/Use Profile"
+                            contentDescription = "Sync PFP",
+                            tint = Color.White,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
                     value = cardName,

@@ -151,4 +151,28 @@ class AuthRepository {
             Result.failure(e)
         }
     }
+
+    suspend fun deleteCard(userId: String, cardId: String): Result<Unit> {
+        return try {
+            firestore.collection("users").document(userId).collection("cards")
+                .document(cardId).delete().await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun toggleQuickAccess(userId: String, cardId: String, addToQuickAccess: Boolean): Result<Unit> {
+        return try {
+            val userRef = firestore.collection("users").document(userId)
+            if (addToQuickAccess) {
+                userRef.update("quickAccessList", com.google.firebase.firestore.FieldValue.arrayUnion(cardId)).await()
+            } else {
+                userRef.update("quickAccessList", com.google.firebase.firestore.FieldValue.arrayRemove(cardId)).await()
+            }
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

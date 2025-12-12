@@ -15,6 +15,7 @@ data class User(
     val whatsappLink: String = "",
     val bruzzList: List<String> = emptyList(),
     val huzzList: List<String> = emptyList(),
+    val quickAccessList: List<String> = emptyList(),
     val tapHistory: List<TapHistoryItem> = emptyList()
 )
 
