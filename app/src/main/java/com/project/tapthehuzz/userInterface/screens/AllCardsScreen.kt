@@ -1,6 +1,7 @@
 package com.project.tapthehuzz.userInterface.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,7 +10,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,12 +23,15 @@ import androidx.compose.ui.unit.dp
 import com.project.tapthehuzz.data.model.Card
 import com.project.tapthehuzz.userInterface.components.EmptyStateCard
 
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun AllCardsScreen(
     cards: List<Card>,
     username: String,
     onCardClick: (Card) -> Unit,
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    onEditCard: (Card) -> Unit,
+    onSyncPfp: (Card) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategoryFilter by remember { mutableStateOf("All") }
@@ -179,11 +185,43 @@ fun AllCardsScreen(
                 contentPadding = PaddingValues(bottom = 24.dp)
             ) {
                 items(filteredCards) { card ->
-                    CardItem(
-                        card = card,
-                        username = username,
-                        onClick = { onCardClick(card) }
-                    )
+                    var showMenu by remember { mutableStateOf(false) }
+                    Box {
+                        CardItem(
+                            card = card,
+                            username = username,
+                            onClick = { onCardClick(card) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(220.dp)
+                                .combinedClickable(
+                                    onClick = { onCardClick(card) },
+                                    onLongClick = { showMenu = true }
+                                )
+                        )
+                        
+                        DropdownMenu(
+                            expanded = showMenu,
+                            onDismissRequest = { showMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Edit Details") },
+                                onClick = {
+                                    onEditCard(card)
+                                    showMenu = false
+                                },
+                                leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = null) }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Sync Latest PFP") },
+                                onClick = {
+                                    onSyncPfp(card)
+                                    showMenu = false
+                                },
+                                leadingIcon = { Icon(Icons.Filled.Person, contentDescription = null) }
+                            )
+                        }
+                    }
                 }
             }
         }

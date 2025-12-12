@@ -1,6 +1,7 @@
 package com.project.tapthehuzz.userInterface.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.runtime.*
 import androidx.compose.foundation.clickable
 import androidx.compose.animation.togetherWith
@@ -68,6 +69,7 @@ fun HomeScreen(onProfileClick: () -> Unit) {
     var user by remember { mutableStateOf<User?>(null) }
     var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
     var showCreateCardDialog by remember { mutableStateOf(false) }
+    var editingCard by remember { mutableStateOf<Card?>(null) }
     var activeCard by remember { mutableStateOf<Card?>(null) }
     val authRepository = remember { AuthRepository() }
     val scope = rememberCoroutineScope()
@@ -184,7 +186,22 @@ fun HomeScreen(onProfileClick: () -> Unit) {
                     cards = cards,
                     username = user?.username ?: "User",
                     onCardClick = { activeCard = it },
-                    onAddClick = { showCreateCardDialog = true },
+                    onAddClick = { 
+                        editingCard = null
+                        showCreateCardDialog = true 
+                    },
+                    onEditCard = { card ->
+                        editingCard = card
+                        showCreateCardDialog = true
+                    },
+                    onSyncPfp = { card ->
+                        if (user != null) {
+                            val updatedCard = card.copy(imageUrl = user!!.pfp)
+                            scope.launch {
+                                authRepository.createCard(user!!.uid, updatedCard)
+                            }
+                        }
+                    },
                     viewMode = selectedTab
                 )
             }
@@ -195,11 +212,16 @@ fun HomeScreen(onProfileClick: () -> Unit) {
     if (showCreateCardDialog && user != null) {
         CreateCardDialog(
             user = user!!,
-            onDismiss = { showCreateCardDialog = false },
-            onCreate = { newCard ->
+            card = editingCard,
+            onDismiss = { 
+                showCreateCardDialog = false 
+                editingCard = null
+            },
+            onSave = { newCard ->
                 scope.launch {
                     authRepository.createCard(user!!.uid, newCard)
                     showCreateCardDialog = false
+                    editingCard = null
                 }
             }
         )
@@ -250,6 +272,8 @@ fun CardContent(
     username: String, 
     onCardClick: (Card) -> Unit,
     onAddClick: () -> Unit,
+    onEditCard: (Card) -> Unit,
+    onSyncPfp: (Card) -> Unit,
     viewMode: String
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -388,7 +412,9 @@ fun CardContent(
                         cards = cards,
                         username = username,
                         onCardClick = onCardClick,
-                        onAddClick = onAddClick
+                        onAddClick = onAddClick,
+                        onEditCard = onEditCard,
+                        onSyncPfp = onSyncPfp
                     )
                 }
             }
@@ -400,119 +426,152 @@ fun CardContent(
 fun CardItem(
     card: Card, 
     username: String, 
-    modifier: Modifier = Modifier.fillMaxWidth().height(200.dp),
+    modifier: Modifier = Modifier.fillMaxWidth().height(220.dp),
     onClick: () -> Unit
 ) {
     Surface(
         modifier = modifier
             .clickable { onClick() },
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(16.dp),
         color = if (card.designId.isNotEmpty()) Color.White else Color(card.backgroundColor),
-        shadowElevation = 0.dp // Flat design
+        shadowElevation = 8.dp,
+        tonalElevation = 4.dp,
+        border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.3f)) // Added outline
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Background Design
-            if (card.designId == "design_one") {
+            val painter = when (card.designId) {
+                "design_one" -> androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one)
+                "design_two" -> androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two)
+                "design_three" -> androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three)
+                "design_abstract" -> androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_abstract)
+                "design_modern" -> androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_modern)
+                "design_premium" -> androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_premium)
+                else -> null
+            }
+
+            if (painter != null) {
                 androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-            } else if (card.designId == "design_two") {
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-            } else if (card.designId == "design_three") {
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three),
+                    painter = painter,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
             }
-            // Card Name (Top Left)
-            Surface(
-                color = Color.Black,
-                shape = RoundedCornerShape(8.dp),
+            
+            // Overlay for readability (optional, subtle gradient)
+            Box(
                 modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(20.dp)
-            ) {
-                Text(
-                    text = card.name,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    ),
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
-
-            // Card Number (Top Right)
-            Surface(
-                color = Color.Black,
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(20.dp)
-            ) {
-                Text(
-                    text = ".... ${card.cardNumber.takeLast(4)}",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    ),
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
-
-            // Profile Picture (Center)
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Surface(
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(CircleShape),
-                    color = Color.Black // Dark background for pop
-                ) {
-                    if (card.imageUrl.isNotEmpty()) {
-                        AsyncImage(
-                            model = card.imageUrl,
-                            contentDescription = "Card Image",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Filled.Person,
-                            contentDescription = "Card Image",
-                            modifier = Modifier.padding(12.dp),
-                            tint = Color.White
-                        )
-                    }
-                }
-                
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // User Name (Below PFP)
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color.Black
-                ) {
-                    Text(
-                        text = username,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
+                    .fillMaxSize()
+                    .background(
+                        androidx.compose.ui.graphics.Brush.verticalGradient(
+                            colors = listOf(Color.Black.copy(alpha = 0.1f), Color.Black.copy(alpha = 0.4f))
                         )
                     )
+            )
+
+            // Card Content
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Top Row: Heading and Card Name
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text(
+                        text = "Tap The Huzz",
+                        style = MaterialTheme.typography.headlineSmall.copy( // Adjusted size
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 20.sp,
+                            color = Color.White,
+                            shadow = androidx.compose.ui.graphics.Shadow(
+                                color = Color.Black.copy(alpha = 0.5f),
+                                blurRadius = 2f
+                            )
+                        )
+                    )
+                    Text(
+                        text = card.name,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = Color.White.copy(alpha = 0.9f),
+                            shadow = androidx.compose.ui.graphics.Shadow(
+                                color = Color.Black.copy(alpha = 0.5f),
+                                blurRadius = 2f
+                            )
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Card Number
+                Text(
+                    text = card.cardNumber.chunked(4).joinToString(" "), // Decreased space between groups
+                    style = MaterialTheme.typography.headlineMedium.copy( 
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 22.sp, // Smaller font size
+                        color = Color.White,
+                        shadow = androidx.compose.ui.graphics.Shadow(
+                            color = Color.Black.copy(alpha = 0.5f),
+                            blurRadius = 4f
+                        ),
+                        letterSpacing = 2.sp // Decreased letter spacing
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Bottom Row: Name and Expiry (Simulated)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Column {
+                        Text(
+                            text = "CARD HOLDER",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = Color.White.copy(alpha = 0.7f),
+                                fontSize = 10.sp
+                            )
+                        )
+                        Text(
+                            text = username.uppercase(), // Username below CARD HOLDER
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color.White,
+                                shadow = androidx.compose.ui.graphics.Shadow(
+                                    color = Color.Black.copy(alpha = 0.5f),
+                                    blurRadius = 2f
+                                )
+                            )
+                        )
+                    }
+
+                    // Profile Picture (Small, like a hologram or ID)
+                    Surface(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color.White.copy(alpha = 0.5f), CircleShape),
+                        color = Color.White.copy(alpha = 0.2f)
+                    ) {
+                        if (card.imageUrl.isNotEmpty()) {
+                            AsyncImage(
+                                model = card.imageUrl,
+                                contentDescription = "Profile",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
                 }
             }
         }

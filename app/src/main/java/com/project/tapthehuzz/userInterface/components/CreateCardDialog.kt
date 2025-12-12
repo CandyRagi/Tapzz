@@ -28,16 +28,17 @@ import kotlin.random.Random
 @Composable
 fun CreateCardDialog(
     user: User,
+    card: Card? = null,
     onDismiss: () -> Unit,
-    onCreate: (Card) -> Unit
+    onSave: (Card) -> Unit
 ) {
-    var cardName by remember { mutableStateOf("") }
-    var cardLink by remember { mutableStateOf("") }
-    var cardCategory by remember { mutableStateOf("") }
-    var customCategory by remember { mutableStateOf("") }
-    var selectedColor by remember { mutableStateOf(Color.White) }
-    var selectedDesign by remember { mutableStateOf("") }
-    var imageUrl by remember { mutableStateOf(user.pfp) } // Default to user PFP
+    var cardName by remember { mutableStateOf(card?.name ?: "") }
+    var cardLink by remember { mutableStateOf(card?.link ?: "") }
+    var cardCategory by remember { mutableStateOf(if (card != null && card.category !in listOf("Social", "Game", "GitHub", "Business")) "Custom" else card?.category ?: "") }
+    var customCategory by remember { mutableStateOf(if (card != null && card.category !in listOf("Social", "Game", "GitHub", "Business")) card.category else "") }
+    var selectedColor by remember { mutableStateOf(if (card != null) Color(card.backgroundColor) else Color.White) }
+    var selectedDesign by remember { mutableStateOf(card?.designId ?: "") }
+    var imageUrl by remember { mutableStateOf(card?.imageUrl ?: user.pfp) }
 
     val colors = listOf(
         Color.White, Color(0xFFE1BEE7), Color(0xFFC5CAE9),
@@ -57,7 +58,7 @@ fun CreateCardDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Create Card",
+                    text = if (card == null) "Create Card" else "Edit Card",
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
@@ -258,8 +259,8 @@ fun CreateCardDialog(
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = {
-                            val cardId = UUID.randomUUID().toString().substring(0, 8)
-                            val cardNumber = (10000000..99999999).random().toString()
+                            val cardId = card?.id ?: UUID.randomUUID().toString().substring(0, 8)
+                            val cardNumber = card?.cardNumber ?: List(12) { (0..9).random() }.joinToString("")
                             val newCard = Card(
                                 id = cardId,
                                 userId = user.uid,
@@ -271,11 +272,11 @@ fun CreateCardDialog(
                                 category = if (cardCategory == "Custom") customCategory.ifEmpty { "Custom" } else cardCategory.ifEmpty { "Uncategorized" },
                                 designId = selectedDesign
                             )
-                            onCreate(newCard)
+                            onSave(newCard)
                         },
                         enabled = cardName.isNotEmpty() && cardLink.isNotEmpty()
                     ) {
-                        Text("Create")
+                        Text(if (card == null) "Create" else "Save")
                     }
                 }
             }
