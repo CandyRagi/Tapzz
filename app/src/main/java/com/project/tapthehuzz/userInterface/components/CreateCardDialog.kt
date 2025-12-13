@@ -10,6 +10,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,14 +40,8 @@ fun CreateCardDialog(
     var cardLink by remember { mutableStateOf(card?.link ?: "") }
     var cardCategory by remember { mutableStateOf(if (card != null && card.category !in listOf("Social", "Game", "GitHub", "Business")) "Custom" else card?.category ?: "") }
     var customCategory by remember { mutableStateOf(if (card != null && card.category !in listOf("Social", "Game", "GitHub", "Business")) card.category else "") }
-    var selectedColor by remember { mutableStateOf(if (card != null) Color(card.backgroundColor) else Color.White) }
     var selectedDesign by remember { mutableStateOf(card?.designId ?: "") }
     var imageUrl by remember { mutableStateOf(card?.imageUrl ?: user.pfp) }
-
-    val colors = listOf(
-        Color.White, Color(0xFFE1BEE7), Color(0xFFC5CAE9),
-        Color(0xFFB2DFDB), Color(0xFFFFCCBC), Color(0xFFF0F4C3)
-    )
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -191,99 +188,42 @@ fun CreateCardDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text("Background Color", style = MaterialTheme.typography.labelLarge)
-                Row(
+                Text("Background Design", style = MaterialTheme.typography.labelLarge)
+                
+                val designs = listOf(
+                    "design_one" to com.project.tapthehuzz.R.drawable.card_design_one,
+                    "design_two" to com.project.tapthehuzz.R.drawable.card_design_two,
+                    "design_three" to com.project.tapthehuzz.R.drawable.card_design_three
+                )
+
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                        .height(200.dp) // Increased height to accommodate 2:1 aspect ratio cards
+                        .padding(vertical = 8.dp)
                 ) {
-                    colors.forEach { color ->
+                    items(designs) { (designId, drawableId) ->
                         Box(
                             modifier = Modifier
-                                .size(32.dp)
-                                .clip(CircleShape)
-                                .background(color)
+                                .aspectRatio(2f) // 2:1 Aspect Ratio
+                                .clip(RoundedCornerShape(8.dp))
                                 .border(
-                                    width = if (selectedColor == color && selectedDesign.isEmpty()) 2.dp else 0.dp,
+                                    width = if (selectedDesign == designId) 2.dp else 0.dp,
                                     color = MaterialTheme.colorScheme.primary,
-                                    shape = CircleShape
+                                    shape = RoundedCornerShape(8.dp)
                                 )
-                                .clickable { 
-                                    selectedColor = color 
-                                    selectedDesign = "" // Reset design when color is picked
-                                }
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text("Background Design", style = MaterialTheme.typography.labelLarge)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    // Design One
-                    Box(
-                        modifier = Modifier
-                            .size(80.dp, 50.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(
-                                width = if (selectedDesign == "design_one") 2.dp else 0.dp,
-                                color = MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(8.dp)
+                                .clickable { selectedDesign = designId }
+                        ) {
+                            androidx.compose.foundation.Image(
+                                painter = androidx.compose.ui.res.painterResource(id = drawableId),
+                                contentDescription = designId,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
                             )
-                            .clickable { selectedDesign = "design_one" }
-                    ) {
-                        androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_one),
-                            contentDescription = "Design One",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    
-                    // Design Two
-                    Box(
-                        modifier = Modifier
-                            .size(80.dp, 50.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(
-                                width = if (selectedDesign == "design_two") 2.dp else 0.dp,
-                                color = MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .clickable { selectedDesign = "design_two" }
-                    ) {
-                        androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_two),
-                            contentDescription = "Design Two",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-
-                    // Design Three
-                    Box(
-                        modifier = Modifier
-                            .size(80.dp, 50.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(
-                                width = if (selectedDesign == "design_three") 2.dp else 0.dp,
-                                color = MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .clickable { selectedDesign = "design_three" }
-                    ) {
-                        androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(id = com.project.tapthehuzz.R.drawable.card_design_three),
-                            contentDescription = "Design Three",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
+                        }
                     }
                 }
 
@@ -306,7 +246,7 @@ fun CreateCardDialog(
                                 userId = user.uid,
                                 name = cardName,
                                 link = cardLink,
-                                backgroundColor = selectedColor.toArgb().toLong(),
+                                backgroundColor = Color.White.toArgb().toLong(),
                                 imageUrl = imageUrl,
                                 cardNumber = cardNumber,
                                 category = if (cardCategory == "Custom") customCategory.ifEmpty { "Custom" } else cardCategory.ifEmpty { "Uncategorized" },
