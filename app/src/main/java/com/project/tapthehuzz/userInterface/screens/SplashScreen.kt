@@ -15,6 +15,14 @@ import androidx.compose.ui.unit.dp
 import com.project.tapthehuzz.R
 import com.project.tapthehuzz.data.repository.AuthRepository
 import kotlinx.coroutines.delay
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Text
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun SplashScreen(onNavigateToNext: (String) -> Unit) {
@@ -35,11 +43,25 @@ fun SplashScreen(onNavigateToNext: (String) -> Unit) {
             .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.tap_the_huzz_circle_logo),
-            contentDescription = "Logo",
-            modifier = Modifier.size(200.dp),
-            contentScale = androidx.compose.ui.layout.ContentScale.Fit
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.tap_the_huzz_circle_logo),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(CircleShape),
+                contentScale = androidx.compose.ui.layout.ContentScale.Fit
+            )
+            Text(
+                text = "TapTheHuzz",
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 16.dp)
+            )
+        }
     }
 }
