@@ -33,7 +33,7 @@ fun SplashScreen(onNavigateToNext: (String) -> Unit) {
         if (authRepository.getCurrentUser() != null) {
             onNavigateToNext("home")
         } else {
-            onNavigateToNext("sign_in")
+            onNavigateToNext("signIn")
         }
     }
 

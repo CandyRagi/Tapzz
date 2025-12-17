@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="icon_background">#050510</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <string name="app_name">TapTheHuzz Wear</string>
+    <string name="default_web_client_id" translatable="false">211781287654-i9brmll2ep548qcrsmttas4d5m54gl2n.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">211781287654</string>
+    <string name="google_api_key" translatable="false">AIzaSyBXmDolhpkBg55sHsiyhKoKN3S7wba-4F0</string>
+    <string name="google_app_id" translatable="false">1:211781287654:android:253c4ea1ab71e759954527</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBXmDolhpkBg55sHsiyhKoKN3S7wba-4F0</string>
+    <string name="google_storage_bucket" translatable="false">tapthehuzz.firebasestorage.app</string>
+    <string name="project_id" translatable="false">tapthehuzz</string>
+</resources>

@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/drawable_tap_the_huzz_circle_logo.png.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/drawable/tap_the_huzz_circle_logo.png"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.project.tapthehuzz.wear-debug-68:/xml_apduservice.xml.flat",
+        "source": "com.project.tapthehuzz.wear-main-70:/xml/apduservice.xml"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-xxhdpi/ic_launcher_round.webp"
+    }
+]
