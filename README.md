@@ -21,4 +21,4 @@ It's an NFC app to share your socials (Insta, Snap, whatever) with just a tap. P
 5.  **TAP.**
 6.  Profit. 📈
 
-Don't be dry. Get TapTheHuzz. 💧
+Don't be dry. Get TapTheHuzz. 
