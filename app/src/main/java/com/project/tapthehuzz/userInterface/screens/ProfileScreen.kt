@@ -28,7 +28,7 @@ import com.project.tapthehuzz.userInterface.components.SocialLinkDialog
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileScreen(onBackClick: () -> Unit) {
+fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
     val authRepository = remember { AuthRepository() }
     var user by remember { mutableStateOf<User?>(null) }
     var showEditDialog by remember { mutableStateOf(false) }
@@ -228,6 +228,29 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                         )
                     }
                 }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Sign Out Button
+                Button(
+                    onClick = {
+                        authRepository.signOut()
+                        onSignOut()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        contentColor = MaterialTheme.colorScheme.onErrorContainer
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        text = "Sign Out",
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
             }
         }
 
@@ -371,6 +394,8 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                             }
                         }
                     )
+                    
+
                 }
             }
         }

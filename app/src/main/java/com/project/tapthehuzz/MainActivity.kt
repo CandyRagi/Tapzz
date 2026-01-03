@@ -137,7 +137,12 @@ fun MainApp() {
             composable(Screen.History.route) { HistoryScreen() }
             composable(Screen.Profile.route) {
                 ProfileScreen(
-                    onBackClick = { navController.popBackStack() }
+                    onBackClick = { navController.popBackStack() },
+                    onSignOut = {
+                        navController.navigate("signIn") {
+                            popUpTo(0) { inclusive = true }
+                        }
+                    }
                 )
             }
         }

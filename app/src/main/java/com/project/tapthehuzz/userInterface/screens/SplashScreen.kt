@@ -56,7 +56,7 @@ fun SplashScreen(onNavigateToNext: (String) -> Unit) {
                 contentScale = androidx.compose.ui.layout.ContentScale.Fit
             )
             Text(
-                text = "TapTheHuzz",
+                text = "TAPZZ",
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
