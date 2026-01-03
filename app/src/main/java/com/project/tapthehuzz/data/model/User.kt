@@ -1,5 +1,7 @@
 package com.project.tapthehuzz.data.model
 
+
+// The is the user model Class (Similar to Card Model Devs can add or remove details)
 data class User(
     val uid: String = "",
     val email: String = "",
@@ -19,8 +21,10 @@ data class User(
     val tapHistory: List<TapHistoryItem> = emptyList()
 )
 
+
+// I haven't Implemeted History Feature yet But it will be coming soon
 data class TapHistoryItem(
     val location: String = "",
     val time: Long = 0,
-    val linkType: String = "" // e.g., "taphuzz profile", "insta profile", "snap chat profile"
+    val linkType: String = ""
 )

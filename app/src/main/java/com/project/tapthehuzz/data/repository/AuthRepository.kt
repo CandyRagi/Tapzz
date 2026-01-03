@@ -17,8 +17,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 import com.project.tapthehuzz.BuildConfig
 
+
+// All the places where user authentication is required before actions is handled by AuthRepo
 class AuthRepository {
 
+    // Firebase Authentication (Email Signup's for now but will be implementing google authentication Directly)
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -31,6 +34,7 @@ class AuthRepository {
         }
     }
 
+    // Basic Signin  and Signup Feature (Can ask for more details on login)
     suspend fun signUp(email: String, password: String, username: String): Result<Unit> {
         return try {
             val authResult = auth.createUserWithEmailAndPassword(email, password).await()
@@ -78,6 +82,8 @@ class AuthRepository {
             Result.failure(e)
         }
     }
+
+    // Saving image on cloudinary (Just Basic Api Call Read Documentation At https://cloudinary.com/documentation/image_upload_api_reference)
 
     suspend fun uploadImageToCloudinary(context: Context, imageUri: android.net.Uri): String? {
         return withContext(Dispatchers.IO) {
@@ -141,6 +147,12 @@ class AuthRepository {
             }
         }
     }
+
+
+
+    // Card Updating and creating functions (Basic Firebase Api  calls)
+
+
 
     suspend fun createCard(userId: String, card: com.project.tapthehuzz.data.model.Card): Result<Unit> {
         return try {

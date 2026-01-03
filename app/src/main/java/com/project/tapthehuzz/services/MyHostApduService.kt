@@ -6,6 +6,8 @@ import android.util.Log
 import com.project.tapthehuzz.utils.CardNfcManager
 import java.util.Arrays
 
+
+
 class MyHostApduService : HostApduService() {
 
     // Standard APDU Commands
@@ -125,7 +127,7 @@ class MyHostApduService : HostApduService() {
         val len = fullPayload.size
         val lenBytes = byteArrayOf((len shr 8).toByte(), (len and 0xFF).toByte())
         
-        // Note: We do NOT append SELECT_OK_SW here because it's file content, not an APDU response.
+        // We do NOT append SELECT_OK_SW here because it's file content, not an APDU response.
         // The SW is appended in processCommandApdu when returning the data.
         return lenBytes + fullPayload
     }
