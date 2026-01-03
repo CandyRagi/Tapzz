@@ -65,412 +65,411 @@
 35-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:14:9-41
 36        android:supportsRtl="true"
 36-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:15:9-35
-37        android:testOnly="true"
-38        android:theme="@android:style/Theme.DeviceDefault" >
-38-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:16:9-59
-39        <uses-library
-39-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:17:9-19:39
-40            android:name="com.google.android.wearable"
-40-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:18:13-55
-41            android:required="true" />
-41-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:19:13-36
-42
-43        <!--
-44               Set to true if your app is Standalone, that is, it does not require the handheld
-45               app to run.
-46        -->
-47        <meta-data
-47-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:25:9-27:36
-48            android:name="com.google.android.wearable.standalone"
-48-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:26:13-66
-49            android:value="true" />
-49-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:27:13-33
-50
-51        <service
-51-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:29:9-40:19
-52            android:name="com.project.tapthehuzz.wear.services.WearHostApduService"
-52-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:30:13-57
-53            android:exported="true"
-53-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:31:13-36
-54            android:permission="android.permission.BIND_NFC_SERVICE" >
-54-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:32:13-69
-55            <intent-filter>
-55-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:33:13-35:29
-56                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
-56-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:34:17-93
-56-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:34:25-90
-57            </intent-filter>
-58
-59            <meta-data
-59-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:37:13-39:55
-60                android:name="android.nfc.cardemulation.host_apdu_service"
-60-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:38:17-75
-61                android:resource="@xml/apduservice" />
-61-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:39:17-52
-62        </service>
-63>
-64        <activity
-64-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:42:9-51:20
-65            android:name="com.project.tapthehuzz.wear.presentation.WearApp"
-65-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:43:13-49
-66            android:exported="true"
-66-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:44:13-36
-67            android:theme="@android:style/Theme.DeviceDefault" >
-67-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:45:13-63
-68            <intent-filter>
-68-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:46:13-50:29
-69                <action android:name="android.intent.action.MAIN" />
-69-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:47:17-69
-69-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:47:25-66
-70
-71                <category android:name="android.intent.category.LAUNCHER" />
-71-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:49:17-77
-71-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:49:27-74
-72            </intent-filter>
-73        </activity>
-74        <activity
-74-->[androidx.compose.ui:ui-tooling-android:1.7.5] /home/candy/.gradle/caches/8.13/transforms/e3b2f7d837d7a6a6a61e444d65492cf2/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
-75            android:name="androidx.compose.ui.tooling.PreviewActivity"
-75-->[androidx.compose.ui:ui-tooling-android:1.7.5] /home/candy/.gradle/caches/8.13/transforms/e3b2f7d837d7a6a6a61e444d65492cf2/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
-76            android:exported="true" />
-76-->[androidx.compose.ui:ui-tooling-android:1.7.5] /home/candy/.gradle/caches/8.13/transforms/e3b2f7d837d7a6a6a61e444d65492cf2/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
-77        <activity
-77-->[androidx.compose.ui:ui-test-manifest:1.7.5] /home/candy/.gradle/caches/8.13/transforms/7e9bac6c537512b591324cc86e83349d/transformed/ui-test-manifest-1.7.5/AndroidManifest.xml:23:9-25:39
-78            android:name="androidx.activity.ComponentActivity"
-78-->[androidx.compose.ui:ui-test-manifest:1.7.5] /home/candy/.gradle/caches/8.13/transforms/7e9bac6c537512b591324cc86e83349d/transformed/ui-test-manifest-1.7.5/AndroidManifest.xml:24:13-63
-79            android:exported="true" />
-79-->[androidx.compose.ui:ui-test-manifest:1.7.5] /home/candy/.gradle/caches/8.13/transforms/7e9bac6c537512b591324cc86e83349d/transformed/ui-test-manifest-1.7.5/AndroidManifest.xml:25:13-36
-80        <activity
-80-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:29:9-46:20
-81            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
-81-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:30:13-80
-82            android:excludeFromRecents="true"
-82-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:31:13-46
-83            android:exported="true"
-83-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:32:13-36
-84            android:launchMode="singleTask"
-84-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:33:13-44
-85            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-85-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:34:13-72
-86            <intent-filter>
-86-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:35:13-45:29
-87                <action android:name="android.intent.action.VIEW" />
-87-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:17-69
-87-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:25-66
-88
-89                <category android:name="android.intent.category.DEFAULT" />
-89-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:17-76
-89-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:27-73
-90                <category android:name="android.intent.category.BROWSABLE" />
-90-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:17-78
-90-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:27-75
-91
-92                <data
-92-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:41:17-44:51
-93                    android:host="firebase.auth"
-93-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:42:21-49
-94                    android:path="/"
-94-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:43:21-37
-95                    android:scheme="genericidp" />
-95-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:44:21-48
-96            </intent-filter>
-97        </activity>
-98        <activity
-98-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:47:9-64:20
-99            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
-99-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:48:13-79
-100            android:excludeFromRecents="true"
-100-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:49:13-46
-101            android:exported="true"
-101-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:50:13-36
-102            android:launchMode="singleTask"
-102-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:51:13-44
-103            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-103-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:52:13-72
-104            <intent-filter>
-104-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:53:13-63:29
-105                <action android:name="android.intent.action.VIEW" />
-105-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:17-69
-105-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:25-66
-106
-107                <category android:name="android.intent.category.DEFAULT" />
-107-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:17-76
-107-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:27-73
-108                <category android:name="android.intent.category.BROWSABLE" />
-108-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:17-78
-108-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:27-75
-109
-110                <data
-110-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:41:17-44:51
-111                    android:host="firebase.auth"
-111-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:42:21-49
-112                    android:path="/"
-112-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:43:21-37
-113                    android:scheme="recaptcha" />
-113-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:44:21-48
-114            </intent-filter>
-115        </activity>
-116
-117        <service
-117-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:66:9-72:19
-118            android:name="com.google.firebase.components.ComponentDiscoveryService"
-118-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:67:13-84
-119            android:directBootAware="true"
-119-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:32:13-43
-120            android:exported="false" >
-120-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:68:13-37
-121            <meta-data
-121-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:69:13-71:85
-122                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
-122-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:70:17-109
-123                android:value="com.google.firebase.components.ComponentRegistrar" />
-123-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:71:17-82
-124            <meta-data
-124-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:17:13-19:85
-125                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
-125-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:18:17-122
-126                android:value="com.google.firebase.components.ComponentRegistrar" />
-126-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:19:17-82
-127            <meta-data
-127-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:20:13-22:85
-128                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-128-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:21:17-111
-129                android:value="com.google.firebase.components.ComponentRegistrar" />
-129-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:22:17-82
-130            <meta-data
-130-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:37:13-39:85
-131                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
-131-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:38:17-139
-132                android:value="com.google.firebase.components.ComponentRegistrar" />
-132-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:39:17-82
-133            <meta-data
-133-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:15:13-17:85
-134                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
-134-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:16:17-130
-135                android:value="com.google.firebase.components.ComponentRegistrar" />
-135-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:17:17-82
-136            <meta-data
-136-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:18:13-20:85
-137                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
-137-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:19:17-127
-138                android:value="com.google.firebase.components.ComponentRegistrar" />
-138-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:20:17-82
-139            <meta-data
-139-->[com.google.firebase:firebase-common-ktx:21.0.0] /home/candy/.gradle/caches/8.13/transforms/6520cfdcb9fda63fa3f8943224b6af90/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:12:13-14:85
-140                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
-140-->[com.google.firebase:firebase-common-ktx:21.0.0] /home/candy/.gradle/caches/8.13/transforms/6520cfdcb9fda63fa3f8943224b6af90/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:13:17-116
-141                android:value="com.google.firebase.components.ComponentRegistrar" />
-141-->[com.google.firebase:firebase-common-ktx:21.0.0] /home/candy/.gradle/caches/8.13/transforms/6520cfdcb9fda63fa3f8943224b6af90/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:14:17-82
-142            <meta-data
-142-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:35:13-37:85
-143                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
-143-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:36:17-109
-144                android:value="com.google.firebase.components.ComponentRegistrar" />
-144-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:37:17-82
-145        </service>
-146
-147        <receiver
-147-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:29:9-33:20
-148            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-148-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:30:13-85
-149            android:enabled="true"
-149-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:31:13-35
-150            android:exported="false" >
-150-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:32:13-37
-151        </receiver>
-152
-153        <service
-153-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:35:9-38:40
-154            android:name="com.google.android.gms.measurement.AppMeasurementService"
-154-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:36:13-84
-155            android:enabled="true"
-155-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:37:13-35
-156            android:exported="false" />
-156-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:38:13-37
-157        <service
-157-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:39:9-43:72
-158            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
-158-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:40:13-87
-159            android:enabled="true"
-159-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:41:13-35
-160            android:exported="false"
-160-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:42:13-37
-161            android:permission="android.permission.BIND_JOB_SERVICE" />
-161-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:43:13-69
-162
-163        <property
-163-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:30:9-32:61
-164            android:name="android.adservices.AD_SERVICES_CONFIG"
-164-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:31:13-65
-165            android:resource="@xml/ga_ad_services_config" />
-165-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:32:13-58
-166
-167        <service
-167-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:24:9-32:19
-168            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
-168-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:25:13-94
-169            android:enabled="true"
-169-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:26:13-35
-170            android:exported="false" >
-170-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:27:13-37
-171            <meta-data
-171-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:29:13-31:104
-172                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
-172-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:30:17-76
-173                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
-173-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:31:17-101
-174        </service>
-175
-176        <activity
-176-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:34:9-41:20
-177            android:name="androidx.credentials.playservices.HiddenActivity"
-177-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:35:13-76
-178            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-178-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:36:13-87
-179            android:enabled="true"
-179-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:37:13-35
-180            android:exported="false"
-180-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:38:13-37
-181            android:fitsSystemWindows="true"
-181-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:39:13-45
-182            android:theme="@style/Theme.Hidden" >
-182-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:40:13-48
-183        </activity>
-184        <activity
-184-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:23:9-27:75
-185            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
-185-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:24:13-93
-186            android:excludeFromRecents="true"
-186-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:25:13-46
-187            android:exported="false"
-187-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:26:13-37
-188            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-188-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:27:13-72
-189        <!--
-190            Service handling Google Sign-In user revocation. For apps that do not integrate with
-191            Google Sign-In, this service will never be started.
-192        -->
-193        <service
-193-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:33:9-37:51
-194            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
-194-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:34:13-89
-195            android:exported="true"
-195-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:35:13-36
-196            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
-196-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:36:13-107
-197            android:visibleToInstantApps="true" />
-197-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:37:13-48
-198
-199        <provider
-199-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:23:9-28:39
-200            android:name="com.google.firebase.provider.FirebaseInitProvider"
-200-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:24:13-77
-201            android:authorities="com.project.tapthehuzz.firebaseinitprovider"
-201-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:25:13-72
-202            android:directBootAware="true"
-202-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:26:13-43
-203            android:exported="false"
-203-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:27:13-37
-204            android:initOrder="100" />
-204-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:28:13-36
-205        <provider
-205-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
-206            android:name="androidx.startup.InitializationProvider"
-206-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
-207            android:authorities="com.project.tapthehuzz.androidx-startup"
-207-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
-208            android:exported="false" >
-208-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
-209            <meta-data
-209-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
-210                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-210-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
-211                android:value="androidx.startup" />
-211-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
-212            <meta-data
-212-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/candy/.gradle/caches/8.13/transforms/cc469628b78711883b5318c3c8bf5d2c/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
-213                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-213-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/candy/.gradle/caches/8.13/transforms/cc469628b78711883b5318c3c8bf5d2c/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
-214                android:value="androidx.startup" />
-214-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/candy/.gradle/caches/8.13/transforms/cc469628b78711883b5318c3c8bf5d2c/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
-215            <meta-data
-215-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
-216                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-216-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
-217                android:value="androidx.startup" />
-217-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
-218        </provider>
-219
-220        <uses-library
-220-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] /home/candy/.gradle/caches/8.13/transforms/ebcc67f253a3f05e0eaf7aee5c90af87/transformed/ads-adservices-1.0.0-beta05/AndroidManifest.xml:23:9-25:40
-221            android:name="android.ext.adservices"
-221-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] /home/candy/.gradle/caches/8.13/transforms/ebcc67f253a3f05e0eaf7aee5c90af87/transformed/ads-adservices-1.0.0-beta05/AndroidManifest.xml:24:13-50
-222            android:required="false" />
-222-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] /home/candy/.gradle/caches/8.13/transforms/ebcc67f253a3f05e0eaf7aee5c90af87/transformed/ads-adservices-1.0.0-beta05/AndroidManifest.xml:25:13-37
-223
-224        <activity
-224-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:9-173
-225            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-225-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:19-85
-226            android:exported="false"
-226-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:146-170
-227            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-227-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:86-145
-228
-229        <meta-data
-229-->[com.google.android.gms:play-services-basement:18.4.0] /home/candy/.gradle/caches/8.13/transforms/58e6c4654bc788f5aa5ef4a63cbe5232/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
-230            android:name="com.google.android.gms.version"
-230-->[com.google.android.gms:play-services-basement:18.4.0] /home/candy/.gradle/caches/8.13/transforms/58e6c4654bc788f5aa5ef4a63cbe5232/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
-231            android:value="@integer/google_play_services_version" />
-231-->[com.google.android.gms:play-services-basement:18.4.0] /home/candy/.gradle/caches/8.13/transforms/58e6c4654bc788f5aa5ef4a63cbe5232/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
-232
-233        <receiver
-233-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
-234            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-234-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
-235            android:directBootAware="false"
-235-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
-236            android:enabled="true"
-236-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
-237            android:exported="true"
-237-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
-238            android:permission="android.permission.DUMP" >
-238-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
-239            <intent-filter>
-239-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
-240                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-240-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-240-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
-241            </intent-filter>
-242            <intent-filter>
-242-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
-243                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-243-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-243-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
-244            </intent-filter>
-245            <intent-filter>
-245-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
-246                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-246-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-246-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
-247            </intent-filter>
-248            <intent-filter>
-248-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
-249                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-249-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-249-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
-250            </intent-filter>
-251        </receiver> <!-- The activities will be merged into the manifest of the hosting app. -->
-252        <activity
-252-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:14:9-18:65
-253            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
-253-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:15:13-93
-254            android:exported="false"
-254-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:16:13-37
-255            android:stateNotNeeded="true"
-255-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:17:13-42
-256            android:theme="@style/Theme.PlayCore.Transparent" />
-256-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:18:13-62
-257    </application>
-258
-259</manifest>
+37        android:theme="@android:style/Theme.DeviceDefault" >
+37-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:16:9-59
+38        <uses-library
+38-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:17:9-19:39
+39            android:name="com.google.android.wearable"
+39-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:18:13-55
+40            android:required="true" />
+40-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:19:13-36
+41
+42        <!--
+43               Set to true if your app is Standalone, that is, it does not require the handheld
+44               app to run.
+45        -->
+46        <meta-data
+46-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:25:9-27:36
+47            android:name="com.google.android.wearable.standalone"
+47-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:26:13-66
+48            android:value="true" />
+48-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:27:13-33
+49
+50        <service
+50-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:29:9-40:19
+51            android:name="com.project.tapthehuzz.wear.services.WearHostApduService"
+51-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:30:13-57
+52            android:exported="true"
+52-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:31:13-36
+53            android:permission="android.permission.BIND_NFC_SERVICE" >
+53-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:32:13-69
+54            <intent-filter>
+54-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:33:13-35:29
+55                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+55-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:34:17-93
+55-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:34:25-90
+56            </intent-filter>
+57
+58            <meta-data
+58-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:37:13-39:55
+59                android:name="android.nfc.cardemulation.host_apdu_service"
+59-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:38:17-75
+60                android:resource="@xml/apduservice" />
+60-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:39:17-52
+61        </service>
+62>
+63        <activity
+63-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:42:9-51:20
+64            android:name="com.project.tapthehuzz.wear.presentation.WearApp"
+64-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:43:13-49
+65            android:exported="true"
+65-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:44:13-36
+66            android:theme="@android:style/Theme.DeviceDefault" >
+66-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:45:13-63
+67            <intent-filter>
+67-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:46:13-50:29
+68                <action android:name="android.intent.action.MAIN" />
+68-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:47:17-69
+68-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:47:25-66
+69
+70                <category android:name="android.intent.category.LAUNCHER" />
+70-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:49:17-77
+70-->/home/candy/Desktop/TapTheHuzz/wear/src/main/AndroidManifest.xml:49:27-74
+71            </intent-filter>
+72        </activity>
+73        <activity
+73-->[androidx.compose.ui:ui-tooling-android:1.7.5] /home/candy/.gradle/caches/8.13/transforms/e3b2f7d837d7a6a6a61e444d65492cf2/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+74            android:name="androidx.compose.ui.tooling.PreviewActivity"
+74-->[androidx.compose.ui:ui-tooling-android:1.7.5] /home/candy/.gradle/caches/8.13/transforms/e3b2f7d837d7a6a6a61e444d65492cf2/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+75            android:exported="true" />
+75-->[androidx.compose.ui:ui-tooling-android:1.7.5] /home/candy/.gradle/caches/8.13/transforms/e3b2f7d837d7a6a6a61e444d65492cf2/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+76        <activity
+76-->[androidx.compose.ui:ui-test-manifest:1.7.5] /home/candy/.gradle/caches/8.13/transforms/7e9bac6c537512b591324cc86e83349d/transformed/ui-test-manifest-1.7.5/AndroidManifest.xml:23:9-25:39
+77            android:name="androidx.activity.ComponentActivity"
+77-->[androidx.compose.ui:ui-test-manifest:1.7.5] /home/candy/.gradle/caches/8.13/transforms/7e9bac6c537512b591324cc86e83349d/transformed/ui-test-manifest-1.7.5/AndroidManifest.xml:24:13-63
+78            android:exported="true" />
+78-->[androidx.compose.ui:ui-test-manifest:1.7.5] /home/candy/.gradle/caches/8.13/transforms/7e9bac6c537512b591324cc86e83349d/transformed/ui-test-manifest-1.7.5/AndroidManifest.xml:25:13-36
+79        <activity
+79-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:29:9-46:20
+80            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+80-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:30:13-80
+81            android:excludeFromRecents="true"
+81-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:31:13-46
+82            android:exported="true"
+82-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:32:13-36
+83            android:launchMode="singleTask"
+83-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:33:13-44
+84            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+84-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:34:13-72
+85            <intent-filter>
+85-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:35:13-45:29
+86                <action android:name="android.intent.action.VIEW" />
+86-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:17-69
+86-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:25-66
+87
+88                <category android:name="android.intent.category.DEFAULT" />
+88-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:17-76
+88-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:27-73
+89                <category android:name="android.intent.category.BROWSABLE" />
+89-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:17-78
+89-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:27-75
+90
+91                <data
+91-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:41:17-44:51
+92                    android:host="firebase.auth"
+92-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:42:21-49
+93                    android:path="/"
+93-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:43:21-37
+94                    android:scheme="genericidp" />
+94-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:44:21-48
+95            </intent-filter>
+96        </activity>
+97        <activity
+97-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:47:9-64:20
+98            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+98-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:48:13-79
+99            android:excludeFromRecents="true"
+99-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:49:13-46
+100            android:exported="true"
+100-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:50:13-36
+101            android:launchMode="singleTask"
+101-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:51:13-44
+102            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+102-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:52:13-72
+103            <intent-filter>
+103-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:53:13-63:29
+104                <action android:name="android.intent.action.VIEW" />
+104-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:17-69
+104-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:25-66
+105
+106                <category android:name="android.intent.category.DEFAULT" />
+106-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:17-76
+106-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:27-73
+107                <category android:name="android.intent.category.BROWSABLE" />
+107-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:17-78
+107-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:27-75
+108
+109                <data
+109-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:41:17-44:51
+110                    android:host="firebase.auth"
+110-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:42:21-49
+111                    android:path="/"
+111-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:43:21-37
+112                    android:scheme="recaptcha" />
+112-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:44:21-48
+113            </intent-filter>
+114        </activity>
+115
+116        <service
+116-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:66:9-72:19
+117            android:name="com.google.firebase.components.ComponentDiscoveryService"
+117-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:67:13-84
+118            android:directBootAware="true"
+118-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:32:13-43
+119            android:exported="false" >
+119-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:68:13-37
+120            <meta-data
+120-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:69:13-71:85
+121                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+121-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:70:17-109
+122                android:value="com.google.firebase.components.ComponentRegistrar" />
+122-->[com.google.firebase:firebase-auth:23.1.0] /home/candy/.gradle/caches/8.13/transforms/9f1b0c0614b77c0d8df640d7031405ba/transformed/firebase-auth-23.1.0/AndroidManifest.xml:71:17-82
+123            <meta-data
+123-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:17:13-19:85
+124                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+124-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:18:17-122
+125                android:value="com.google.firebase.components.ComponentRegistrar" />
+125-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:19:17-82
+126            <meta-data
+126-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:20:13-22:85
+127                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+127-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:21:17-111
+128                android:value="com.google.firebase.components.ComponentRegistrar" />
+128-->[com.google.firebase:firebase-firestore:25.1.1] /home/candy/.gradle/caches/8.13/transforms/99c87031aec12f0a15606a26cbfd8fe4/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:22:17-82
+129            <meta-data
+129-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:37:13-39:85
+130                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+130-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:38:17-139
+131                android:value="com.google.firebase.components.ComponentRegistrar" />
+131-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:39:17-82
+132            <meta-data
+132-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:15:13-17:85
+133                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
+133-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:16:17-130
+134                android:value="com.google.firebase.components.ComponentRegistrar" />
+134-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:17:17-82
+135            <meta-data
+135-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:18:13-20:85
+136                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+136-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:19:17-127
+137                android:value="com.google.firebase.components.ComponentRegistrar" />
+137-->[com.google.firebase:firebase-installations:18.0.0] /home/candy/.gradle/caches/8.13/transforms/20fd939764e83be2759efe5f1e555a19/transformed/firebase-installations-18.0.0/AndroidManifest.xml:20:17-82
+138            <meta-data
+138-->[com.google.firebase:firebase-common-ktx:21.0.0] /home/candy/.gradle/caches/8.13/transforms/6520cfdcb9fda63fa3f8943224b6af90/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:12:13-14:85
+139                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+139-->[com.google.firebase:firebase-common-ktx:21.0.0] /home/candy/.gradle/caches/8.13/transforms/6520cfdcb9fda63fa3f8943224b6af90/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:13:17-116
+140                android:value="com.google.firebase.components.ComponentRegistrar" />
+140-->[com.google.firebase:firebase-common-ktx:21.0.0] /home/candy/.gradle/caches/8.13/transforms/6520cfdcb9fda63fa3f8943224b6af90/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:14:17-82
+141            <meta-data
+141-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:35:13-37:85
+142                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+142-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:36:17-109
+143                android:value="com.google.firebase.components.ComponentRegistrar" />
+143-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:37:17-82
+144        </service>
+145
+146        <receiver
+146-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:29:9-33:20
+147            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+147-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:30:13-85
+148            android:enabled="true"
+148-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:31:13-35
+149            android:exported="false" >
+149-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:32:13-37
+150        </receiver>
+151
+152        <service
+152-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:35:9-38:40
+153            android:name="com.google.android.gms.measurement.AppMeasurementService"
+153-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:36:13-84
+154            android:enabled="true"
+154-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:37:13-35
+155            android:exported="false" />
+155-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:38:13-37
+156        <service
+156-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:39:9-43:72
+157            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+157-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:40:13-87
+158            android:enabled="true"
+158-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:41:13-35
+159            android:exported="false"
+159-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:42:13-37
+160            android:permission="android.permission.BIND_JOB_SERVICE" />
+160-->[com.google.android.gms:play-services-measurement:22.1.2] /home/candy/.gradle/caches/8.13/transforms/72707bc4d0aa0ec927c369a8f021abc4/transformed/play-services-measurement-22.1.2/AndroidManifest.xml:43:13-69
+161
+162        <property
+162-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:30:9-32:61
+163            android:name="android.adservices.AD_SERVICES_CONFIG"
+163-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:31:13-65
+164            android:resource="@xml/ga_ad_services_config" />
+164-->[com.google.android.gms:play-services-measurement-api:22.1.2] /home/candy/.gradle/caches/8.13/transforms/bcaf6586d90b7318e213535cc7bfaae2/transformed/play-services-measurement-api-22.1.2/AndroidManifest.xml:32:13-58
+165
+166        <service
+166-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:24:9-32:19
+167            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
+167-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:25:13-94
+168            android:enabled="true"
+168-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:26:13-35
+169            android:exported="false" >
+169-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:27:13-37
+170            <meta-data
+170-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:29:13-31:104
+171                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
+171-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:30:17-76
+172                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
+172-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:31:17-101
+173        </service>
+174
+175        <activity
+175-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:34:9-41:20
+176            android:name="androidx.credentials.playservices.HiddenActivity"
+176-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:35:13-76
+177            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+177-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:36:13-87
+178            android:enabled="true"
+178-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:37:13-35
+179            android:exported="false"
+179-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:38:13-37
+180            android:fitsSystemWindows="true"
+180-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:39:13-45
+181            android:theme="@style/Theme.Hidden" >
+181-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] /home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/AndroidManifest.xml:40:13-48
+182        </activity>
+183        <activity
+183-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:23:9-27:75
+184            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+184-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:24:13-93
+185            android:excludeFromRecents="true"
+185-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:25:13-46
+186            android:exported="false"
+186-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:26:13-37
+187            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+187-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:27:13-72
+188        <!--
+189            Service handling Google Sign-In user revocation. For apps that do not integrate with
+190            Google Sign-In, this service will never be started.
+191        -->
+192        <service
+192-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:33:9-37:51
+193            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+193-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:34:13-89
+194            android:exported="true"
+194-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:35:13-36
+195            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+195-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:36:13-107
+196            android:visibleToInstantApps="true" />
+196-->[com.google.android.gms:play-services-auth:20.7.0] /home/candy/.gradle/caches/8.13/transforms/7c010fe1eaadf9916ea72915ef42f19c/transformed/play-services-auth-20.7.0/AndroidManifest.xml:37:13-48
+197
+198        <provider
+198-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:23:9-28:39
+199            android:name="com.google.firebase.provider.FirebaseInitProvider"
+199-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:24:13-77
+200            android:authorities="com.project.tapthehuzz.firebaseinitprovider"
+200-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:25:13-72
+201            android:directBootAware="true"
+201-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:26:13-43
+202            android:exported="false"
+202-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:27:13-37
+203            android:initOrder="100" />
+203-->[com.google.firebase:firebase-common:21.0.0] /home/candy/.gradle/caches/8.13/transforms/7fabbc9d306450a6c3a33aa76e764317/transformed/firebase-common-21.0.0/AndroidManifest.xml:28:13-36
+204        <provider
+204-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+205            android:name="androidx.startup.InitializationProvider"
+205-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+206            android:authorities="com.project.tapthehuzz.androidx-startup"
+206-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+207            android:exported="false" >
+207-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+208            <meta-data
+208-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+209                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+209-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+210                android:value="androidx.startup" />
+210-->[androidx.emoji2:emoji2:1.3.0] /home/candy/.gradle/caches/8.13/transforms/eb3fbb450d5441cb5f905cc8df89d77a/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+211            <meta-data
+211-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/candy/.gradle/caches/8.13/transforms/cc469628b78711883b5318c3c8bf5d2c/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
+212                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+212-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/candy/.gradle/caches/8.13/transforms/cc469628b78711883b5318c3c8bf5d2c/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
+213                android:value="androidx.startup" />
+213-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/candy/.gradle/caches/8.13/transforms/cc469628b78711883b5318c3c8bf5d2c/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
+214            <meta-data
+214-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+215                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+215-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+216                android:value="androidx.startup" />
+216-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+217        </provider>
+218
+219        <uses-library
+219-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] /home/candy/.gradle/caches/8.13/transforms/ebcc67f253a3f05e0eaf7aee5c90af87/transformed/ads-adservices-1.0.0-beta05/AndroidManifest.xml:23:9-25:40
+220            android:name="android.ext.adservices"
+220-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] /home/candy/.gradle/caches/8.13/transforms/ebcc67f253a3f05e0eaf7aee5c90af87/transformed/ads-adservices-1.0.0-beta05/AndroidManifest.xml:24:13-50
+221            android:required="false" />
+221-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] /home/candy/.gradle/caches/8.13/transforms/ebcc67f253a3f05e0eaf7aee5c90af87/transformed/ads-adservices-1.0.0-beta05/AndroidManifest.xml:25:13-37
+222
+223        <activity
+223-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:9-173
+224            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+224-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:19-85
+225            android:exported="false"
+225-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:146-170
+226            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+226-->[com.google.android.gms:play-services-base:18.5.0] /home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:86-145
+227
+228        <meta-data
+228-->[com.google.android.gms:play-services-basement:18.4.0] /home/candy/.gradle/caches/8.13/transforms/58e6c4654bc788f5aa5ef4a63cbe5232/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
+229            android:name="com.google.android.gms.version"
+229-->[com.google.android.gms:play-services-basement:18.4.0] /home/candy/.gradle/caches/8.13/transforms/58e6c4654bc788f5aa5ef4a63cbe5232/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
+230            android:value="@integer/google_play_services_version" />
+230-->[com.google.android.gms:play-services-basement:18.4.0] /home/candy/.gradle/caches/8.13/transforms/58e6c4654bc788f5aa5ef4a63cbe5232/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
+231
+232        <receiver
+232-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+233            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+233-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+234            android:directBootAware="false"
+234-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+235            android:enabled="true"
+235-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+236            android:exported="true"
+236-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+237            android:permission="android.permission.DUMP" >
+237-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+238            <intent-filter>
+238-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+239                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+239-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+239-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+240            </intent-filter>
+241            <intent-filter>
+241-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+242                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+242-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+242-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+243            </intent-filter>
+244            <intent-filter>
+244-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+245                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+245-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+245-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+246            </intent-filter>
+247            <intent-filter>
+247-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+248                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+248-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+248-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/candy/.gradle/caches/8.13/transforms/289102308a554d2c92bbe6c772fc9d0d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+249            </intent-filter>
+250        </receiver> <!-- The activities will be merged into the manifest of the hosting app. -->
+251        <activity
+251-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:14:9-18:65
+252            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+252-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:15:13-93
+253            android:exported="false"
+253-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:16:13-37
+254            android:stateNotNeeded="true"
+254-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:17:13-42
+255            android:theme="@style/Theme.PlayCore.Transparent" />
+255-->[com.google.android.play:core-common:2.0.3] /home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/AndroidManifest.xml:18:13-62
+256    </application>
+257
+258</manifest>
