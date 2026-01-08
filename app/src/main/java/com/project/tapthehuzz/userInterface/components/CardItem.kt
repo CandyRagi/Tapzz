@@ -27,6 +27,7 @@ import coil.compose.AsyncImage
 import com.project.tapthehuzz.R
 import com.project.tapthehuzz.data.model.Card
 
+// Basic Card Item Design
 val creditCardFont = FontFamily(
     Font(R.font.share_tech_mono)
 )
@@ -65,8 +66,7 @@ fun CardItem(
                     modifier = Modifier.fillMaxSize()
                 )
             }
-            
-            // Overlay for readability (optional, subtle gradient)
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -77,14 +77,13 @@ fun CardItem(
                     )
             )
 
-            // Card Content
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(24.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                // Top Row: Heading and Card Name
+
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.Top,
@@ -116,26 +115,26 @@ fun CardItem(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // Card Number
+
                 Text(
-                    text = card.cardNumber.chunked(4).joinToString(" "), // Decreased space between groups
+                    text = card.cardNumber.chunked(4).joinToString(" "),
                     style = MaterialTheme.typography.headlineMedium.copy( 
-                        fontFamily = creditCardFont, // Custom font
-                        fontWeight = FontWeight.Normal, // Regular weight for this font usually looks bold enough, or keep bold if needed
-                        fontSize = 22.sp, // Smaller font size
+                        fontFamily = creditCardFont,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 22.sp,
                         color = Color.White,
                         shadow = Shadow(
                             color = Color.Black.copy(alpha = 0.5f),
                             blurRadius = 4f
                         ),
-                        letterSpacing = 2.sp // Decreased letter spacing
+                        letterSpacing = 2.sp
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Bottom Row: Name and Expiry (Simulated)
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -162,7 +161,6 @@ fun CardItem(
                         )
                     }
 
-                    // Profile Picture (Small, like a hologram or ID)
                     Surface(
                         modifier = Modifier
                             .size(40.dp)

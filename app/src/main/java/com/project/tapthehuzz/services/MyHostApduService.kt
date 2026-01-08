@@ -7,7 +7,7 @@ import com.project.tapthehuzz.utils.CardNfcManager
 import java.util.Arrays
 
 
-
+// Data Prepration files for proper connection between 2 phones ( or NFC compatible device )
 class MyHostApduService : HostApduService() {
 
     // Standard APDU Commands
@@ -16,12 +16,13 @@ class MyHostApduService : HostApduService() {
     private val UNKNOWN_CMD_SW = hexStringToByteArray("0000")
 
     // The NDEF Application ID (D2760000850101)
+    // Every sticker that wants to store NDEF data (like a website link) "works" under this ID
+    // I am using Host card Emulation to make my phone behave like a Sticker
     private val NDEF_ID = hexStringToByteArray("D2760000850101")
     
     // Capability Container (CC) file
     private val CC_FILE = hexStringToByteArray("000F20003B00340406E10404000000")
-    
-    // The actual NDEF file containing your URL
+
     private var ndefUriBytes = byteArrayOf()
 
     override fun onDeactivated(reason: Int) {
