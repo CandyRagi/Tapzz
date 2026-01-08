@@ -16,12 +16,12 @@
         "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.project.tapthehuzz.wear-debug-68:/xml_apduservice.xml.flat",
-        "source": "com.project.tapthehuzz.wear-main-70:/xml/apduservice.xml"
-    },
-    {
         "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xxxhdpi_ic_launcher.webp.flat",
         "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/xml_apduservice.xml.flat",
+        "source": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-main-70:/xml/apduservice.xml"
     },
     {
         "merged": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/mipmap-xxhdpi_ic_launcher.webp.flat",

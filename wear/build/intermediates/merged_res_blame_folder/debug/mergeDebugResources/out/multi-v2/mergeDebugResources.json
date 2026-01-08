@@ -2834,6 +2834,363 @@
             ]
         },
         {
+            "outputFile": "com.project.tapthehuzz.wear-debug-68:/values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/0cf9f66d014fab34dc220fe90db1a5ba/transformed/core-1.13.1/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "3,5,6,12,13,23,24,31,32,33,34,35,36,37,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,63,64,65,107,108,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,134,139,140,141,142,143,144,145,190,206,207,212,215,220,234,235",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "211,327,399,778,843,1630,1699,2185,2255,2323,2395,2465,2526,2600,3059,3120,3181,3243,3307,3369,3430,3498,3598,3658,3724,3797,3866,3923,3975,4249,4321,4397,6901,6936,7080,7135,7198,7253,7311,7369,7430,7493,7550,7601,7651,7712,7769,7835,7869,7904,8327,8694,8761,8833,8902,8971,9045,9117,13403,14176,14293,14560,14853,15120,15949,16021",
+                        "endLines": "3,5,6,12,13,23,24,31,32,33,34,35,36,37,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,63,64,65,107,108,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,134,139,140,141,142,143,144,145,190,206,210,212,218,220,234,235",
+                        "endColumns": "59,71,87,64,65,68,62,69,67,71,69,60,73,72,60,60,61,63,61,60,67,99,59,65,72,68,56,51,61,71,75,64,34,34,54,62,54,57,57,60,62,56,50,49,60,56,65,33,34,34,69,66,71,68,68,73,71,87,70,116,12,109,12,128,71,66",
+                        "endOffsets": "266,394,482,838,904,1694,1757,2250,2318,2390,2460,2521,2595,2668,3115,3176,3238,3302,3364,3425,3493,3593,3653,3719,3792,3861,3918,3970,4032,4316,4392,4457,6931,6966,7130,7193,7248,7306,7364,7425,7488,7545,7596,7646,7707,7764,7830,7864,7899,7934,8392,8756,8828,8897,8966,9040,9112,9200,13469,14288,14489,14665,15049,15244,16016,16083"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/58e6c4654bc788f5aa5ef4a63cbe5232/transformed/play-services-basement-18.4.0/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "133,156",
+                        "startColumns": "4,4",
+                        "startOffsets": "8259,10364",
+                        "endColumns": "67,166",
+                        "endOffsets": "8322,10526"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/46f99d58bde9d70b6eb7f9507f0daef4/transformed/play-services-base-18.5.0/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "14,15,16,17,18,19,20,21,148,149,150,151,152,153,154,155,157,158,159,160,161,162,163,164,165",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "909,999,1079,1169,1259,1339,1420,1500,9324,9429,9610,9735,9842,10022,10145,10261,10531,10719,10824,11005,11130,11305,11453,11516,11578",
+                        "endColumns": "89,79,89,89,79,80,79,79,104,180,124,106,179,122,115,102,187,104,180,124,174,147,62,61,78",
+                        "endOffsets": "994,1074,1164,1254,1334,1415,1495,1575,9424,9605,9730,9837,10017,10140,10256,10359,10714,10819,11000,11125,11300,11448,11511,11573,11652"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/9a3f7df333346721a6b6c12a8a6acd8a/transformed/media-1.0.0/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "25,26,28,59,60,61,62,132,211,213,214,219,221",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "1762,1851,1969,4037,4090,4143,4196,8199,14494,14670,14792,15054,15249",
+                        "endColumns": "88,70,72,52,52,52,52,59,65,121,60,65,66",
+                        "endOffsets": "1846,1917,2037,4085,4138,4191,4244,8254,14555,14787,14848,15115,15311"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/78c5c0b07321231269e310718f1a1b74/transformed/savedstate-1.2.1/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "129",
+                        "startColumns": "4",
+                        "startOffsets": "8042",
+                        "endColumns": "53",
+                        "endOffsets": "8091"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/d13f84ba42359c7f7880b82a208b48ce/transformed/coil-base-2.5.0/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "99",
+                        "startColumns": "4",
+                        "startOffsets": "6446",
+                        "endColumns": "49",
+                        "endOffsets": "6491"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/eca8a6ac40e852fd8a02a03cc70923b3/transformed/activity-1.9.3/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "110,128",
+                        "startColumns": "4,4",
+                        "startOffsets": "7038,7982",
+                        "endColumns": "41,59",
+                        "endOffsets": "7075,8037"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/9e7fb40b79dd7b7194ff1031162d0ac0/transformed/recyclerview-1.3.2/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "4,38,39,40,41,42,43,106",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "271,2673,2732,2780,2836,2911,2987,6835",
+                        "endColumns": "55,58,47,55,74,75,71,65",
+                        "endOffsets": "322,2727,2775,2831,2906,2982,3054,6896"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/b5fe4b24dbe55d8341a86209c05b7439/transformed/customview-poolingcontainer-1.0.0/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "105,109",
+                        "startColumns": "4,4",
+                        "startOffsets": "6781,6971",
+                        "endColumns": "53,66",
+                        "endOffsets": "6830,7033"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/2d9609bd21643b2026184e288fb57f29/transformed/credentials-1.2.0-rc01/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "135,136",
+                        "startColumns": "4,4",
+                        "startOffsets": "8397,8479",
+                        "endColumns": "81,83",
+                        "endOffsets": "8474,8558"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/98d6ca8d741c56c52ab642ea18d059ec/transformed/ui-graphics-release/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "102",
+                        "startColumns": "4",
+                        "startOffsets": "6609",
+                        "endColumns": "65",
+                        "endOffsets": "6670"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/4f0a61c11ebb84c145e96c4f37711400/transformed/lifecycle-runtime-release/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "127",
+                        "startColumns": "4",
+                        "startOffsets": "7939",
+                        "endColumns": "42",
+                        "endOffsets": "7977"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/593dbbae0da158bf16efff8147da5f73/transformed/browser-1.4.0/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "8,9,10,11,29,30,166,171,172,173",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "529,587,653,716,2042,2113,11657,12094,12161,12240",
+                        "endColumns": "57,65,62,61,70,71,67,66,78,68",
+                        "endOffsets": "582,648,711,773,2108,2180,11720,12156,12235,12304"
+                    }
+                },
+                {
+                    "source": "/home/candy/Desktop/TapTheHuzz/wear/src/main/res/values/colors.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1",
+                        "startColumns": "-1,-1,-1",
+                        "startOffsets": "-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "7,22,27",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "487,1580,1922",
+                        "endColumns": "41,49,46",
+                        "endOffsets": "524,1625,1964"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/17480067b268ec346bd49b1e6773c8d3/transformed/credentials-play-services-auth-1.2.0-rc01/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "222",
+                        "startColumns": "4",
+                        "startOffsets": "15316",
+                        "endLines": "225",
+                        "endColumns": "12",
+                        "endOffsets": "15534"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/f4e85790a9468d01085fb817579681ec/transformed/foundation-release/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "194,195",
+                        "startColumns": "4,4",
+                        "startOffsets": "13647,13703",
+                        "endColumns": "55,54",
+                        "endOffsets": "13698,13753"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/5ca781979931f90927f397cd267bdc8d/transformed/startup-runtime-1.1.1/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "137",
+                        "startColumns": "4",
+                        "startOffsets": "8563",
+                        "endColumns": "82",
+                        "endOffsets": "8641"
+                    }
+                },
+                {
+                    "source": "/home/candy/Desktop/TapTheHuzz/wear/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "47",
+                        "endOffsets": "98"
+                    },
+                    "to": {
+                        "startLines": "138",
+                        "startColumns": "4",
+                        "startOffsets": "8646",
+                        "endColumns": "47",
+                        "endOffsets": "8689"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/c25848ffe9181439342a3406172e964e/transformed/lifecycle-viewmodel-release/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "130",
+                        "startColumns": "4",
+                        "startOffsets": "8096",
+                        "endColumns": "49",
+                        "endOffsets": "8141"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/b2fe975f14e38cb289291a1b76015c1e/transformed/core-common-2.0.3/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "226",
+                        "startColumns": "4",
+                        "startOffsets": "15539",
+                        "endLines": "233",
+                        "endColumns": "8",
+                        "endOffsets": "15944"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/c9e73f4aa2c6f0cb20cbb4512ed023bf/transformed/coordinatorlayout-1.0.0/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "2,236",
+                        "startColumns": "4,4",
+                        "startOffsets": "150,16088",
+                        "endLines": "2,238",
+                        "endColumns": "60,12",
+                        "endOffsets": "206,16228"
+                    }
+                },
+                {
+                    "source": "/home/candy/.gradle/caches/8.13/transforms/e2e1ebabde0fd054f2a3df8da87da6d7/transformed/ui-release/res/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,100,101,103,104,131,146,147,167,168,170,179,180,181,182,184,185,186,187,188,189,191,192,193,196,199,202",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "4462,4521,4580,4640,4700,4760,4820,4880,4940,5000,5060,5120,5180,5239,5299,5359,5419,5479,5539,5599,5659,5719,5779,5839,5898,5958,6018,6077,6136,6195,6254,6313,6372,6496,6554,6675,6726,8146,9205,9270,11725,11791,12036,12826,12878,12938,13000,13125,13175,13229,13275,13321,13363,13474,13521,13557,13758,13870,13981",
+                        "endLines": "66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,100,101,103,104,131,146,147,167,168,170,179,180,181,182,184,185,186,187,188,189,191,192,193,198,201,205",
+                        "endColumns": "58,58,59,59,59,59,59,59,59,59,59,59,58,59,59,59,59,59,59,59,59,59,59,58,59,59,58,58,58,58,58,58,73,57,54,50,54,52,64,53,65,100,57,51,59,61,53,49,53,45,45,41,39,46,35,89,12,12,12",
+                        "endOffsets": "4516,4575,4635,4695,4755,4815,4875,4935,4995,5055,5115,5175,5234,5294,5354,5414,5474,5534,5594,5654,5714,5774,5834,5893,5953,6013,6072,6131,6190,6249,6308,6367,6441,6549,6604,6721,6776,8194,9265,9319,11786,11887,12089,12873,12933,12995,13049,13170,13224,13270,13316,13358,13398,13516,13552,13642,13865,13976,14171"
+                    }
+                },
+                {
+                    "source": "/home/candy/Desktop/TapTheHuzz/wear/build/generated/res/processDebugGoogleServices/values/values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "169,174,175,176,177,178,183",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "11892,12309,12391,12495,12604,12724,13054",
+                        "endColumns": "143,81,103,108,119,101,70",
+                        "endOffsets": "12031,12386,12490,12599,12719,12821,13120"
+                    }
+                }
+            ]
+        },
+        {
             "outputFile": "/home/candy/.gradle/daemon/8.13/com.project.tapthehuzz.wear-debug-68:/values_values.arsc.flat",
             "map": [
                 {

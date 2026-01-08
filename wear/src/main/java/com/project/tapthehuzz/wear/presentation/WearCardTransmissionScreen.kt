@@ -152,4 +152,4 @@ fun WearCardTransmissionScreen(
             )
         }
     }
-}a
+}
