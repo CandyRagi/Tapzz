@@ -193,7 +193,8 @@ fun CreateCardDialog(
                 val designs = listOf(
                     "design_one" to com.project.tapthehuzz.R.drawable.card_design_one,
                     "design_two" to com.project.tapthehuzz.R.drawable.card_design_two,
-                    "design_three" to com.project.tapthehuzz.R.drawable.card_design_three
+                    "design_three" to com.project.tapthehuzz.R.drawable.card_design_three,
+                    "design_four" to com.project.tapthehuzz.R.drawable.card_design_four
                 )
 
                 LazyVerticalGrid(

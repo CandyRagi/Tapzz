@@ -1,5 +1,7 @@
 package com.project.tapthehuzz.userInterface.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -24,13 +26,19 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.project.tapthehuzz.data.model.Card
 import com.project.tapthehuzz.data.model.User
 import com.project.tapthehuzz.userInterface.components.CardItem
 import com.project.tapthehuzz.userInterface.components.EmptyStateCard
+import com.project.tapthehuzz.userInterface.theme.GlassBorder
+import com.project.tapthehuzz.userInterface.theme.GlassSurface
+import com.project.tapthehuzz.userInterface.theme.GlassSurfaceLight
+import com.project.tapthehuzz.userInterface.theme.AccentRed
 import androidx.compose.ui.text.font.FontWeight
 import kotlinx.coroutines.launch
 
@@ -69,20 +77,25 @@ fun AllCardsScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
+
+
         // Search Bar and Add Button Row
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                ,
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Search Bar
+            // Glassmorphic Search Bar
             Surface(
                 modifier = Modifier
                     .weight(1f)
-                    .height(50.dp),
+                    .height(52.dp)
+                    .border(
+                        width = 1.dp,
+                        color = GlassBorder,
+                        shape = RoundedCornerShape(16.dp)
+                    ),
                 shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                color = GlassSurface.copy(alpha = 0.6f)
             ) {
                 TextField(
                     value = searchQuery,
@@ -91,7 +104,9 @@ fun AllCardsScreen(
                     placeholder = {
                         Text(
                             "Search cards...",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f))
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                            )
                         )
                     },
                     leadingIcon = {
@@ -115,26 +130,35 @@ fun AllCardsScreen(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Filter Button
+            // Glassmorphic Filter Button
             Box {
                 Surface(
                     shape = CircleShape,
-                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    color = GlassSurfaceLight.copy(alpha = 0.7f),
                     modifier = Modifier
-                        .size(50.dp)
+                        .size(52.dp)
+                        .border(
+                            width = 1.dp,
+                            color = GlassBorder,
+                            shape = CircleShape
+                        )
+                        .clip(CircleShape)
                         .clickable { showFilterMenu = true }
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.List, // Using List icon as filter/sort
+                        imageVector = Icons.Filled.List,
                         contentDescription = "Filter Cards",
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.padding(12.dp)
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(14.dp)
                     )
                 }
 
                 DropdownMenu(
                     expanded = showFilterMenu,
-                    onDismissRequest = { showFilterMenu = false }
+                    onDismissRequest = { showFilterMenu = false },
+                    modifier = Modifier
+                        .background(GlassSurface)
+                        .border(1.dp, GlassBorder, RoundedCornerShape(12.dp))
                 ) {
                     val filterOptions = listOf("All", "Social", "Game", "GitHub", "Business", "Custom", "Uncategorized")
                     filterOptions.forEach { option ->
@@ -145,7 +169,7 @@ fun AllCardsScreen(
                                 showFilterMenu = false
                             },
                             leadingIcon = if (selectedCategoryFilter == option) {
-                                { Icon(Icons.Filled.Check, contentDescription = "Selected") }
+                                { Icon(Icons.Filled.Check, contentDescription = "Selected", tint = AccentRed) }
                             } else null
                         )
                     }
@@ -154,24 +178,25 @@ fun AllCardsScreen(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Add Button
+            // Glassmorphic Add Button with Accent
             Surface(
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary,
+                color = AccentRed,
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(52.dp)
+                    .clip(CircleShape)
                     .clickable { onAddClick() }
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Add Card",
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.padding(12.dp)
+                    tint = Color.White,
+                    modifier = Modifier.padding(14.dp)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         if (filteredCards.isEmpty()) {
             Box(
@@ -198,12 +223,12 @@ fun AllCardsScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(top = 16.dp, bottom = 24.dp)
+                contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp)
             ) {
                 items(filteredCards) { card ->
                     val interactionSource = remember { MutableInteractionSource() }
                     val isPressed by interactionSource.collectIsPressedAsState()
-                    val scale by animateFloatAsState(if (isPressed) 1.05f else 1f)
+                    val scale by animateFloatAsState(if (isPressed) 1.02f else 1f)
 
                     Box {
                         CardItem(
@@ -229,27 +254,49 @@ fun AllCardsScreen(
         }
     }
 
+    // Glassmorphic Bottom Sheet
     if (cardForMenu != null) {
         ModalBottomSheet(
             onDismissRequest = { cardForMenu = null },
-            sheetState = sheetState
+            sheetState = sheetState,
+            containerColor = GlassSurface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+            dragHandle = {
+                Box(
+                    modifier = Modifier
+                        .padding(vertical = 12.dp)
+                        .width(40.dp)
+                        .height(4.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(GlassBorder)
+                )
+            }
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 32.dp)
+                    .border(
+                        width = 1.dp,
+                        brush = Brush.verticalGradient(
+                            colors = listOf(GlassBorder, Color.Transparent)
+                        ),
+                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+                    )
             ) {
                 Text(
                     text = cardForMenu!!.name,
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
                 )
                 
-                HorizontalDivider()
+                HorizontalDivider(color = GlassBorder)
 
                 ListItem(
                     headlineContent = { Text("Edit Details") },
                     leadingContent = { Icon(Icons.Filled.Edit, contentDescription = null) },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     modifier = Modifier.clickable {
                         onEditCard(cardForMenu!!)
                         scope.launch { sheetState.hide() }.invokeOnCompletion { 
@@ -261,7 +308,14 @@ fun AllCardsScreen(
                 val isInQuickAccess = cardForMenu!!.id in user.quickAccessList
                 ListItem(
                     headlineContent = { Text(if (isInQuickAccess) "Remove from Quick Access" else "Add to Quick Access") },
-                    leadingContent = { Icon(if (isInQuickAccess) Icons.Filled.Star else Icons.Filled.StarBorder, contentDescription = null) },
+                    leadingContent = { 
+                        Icon(
+                            if (isInQuickAccess) Icons.Filled.Star else Icons.Filled.StarBorder, 
+                            contentDescription = null,
+                            tint = if (isInQuickAccess) AccentRed else MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     modifier = Modifier.clickable {
                         onToggleQuickAccess(cardForMenu!!)
                         scope.launch { sheetState.hide() }.invokeOnCompletion { 
@@ -273,6 +327,7 @@ fun AllCardsScreen(
                 ListItem(
                     headlineContent = { Text("Delete", color = MaterialTheme.colorScheme.error) },
                     leadingContent = { Icon(Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     modifier = Modifier.clickable {
                         onDeleteCard(cardForMenu!!)
                         scope.launch { sheetState.hide() }.invokeOnCompletion { 

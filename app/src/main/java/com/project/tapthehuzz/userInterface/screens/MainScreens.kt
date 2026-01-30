@@ -77,6 +77,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.withStyle
 import com.project.tapthehuzz.R
 
 import com.project.tapthehuzz.userInterface.components.CardItem
@@ -161,7 +162,13 @@ fun HomeScreen(onProfileClick: () -> Unit) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = " RIZZ Wallet",
+                            text = androidx.compose.ui.text.buildAnnotatedString {
+                                append(" ")
+                                withStyle(style = androidx.compose.ui.text.SpanStyle(color = Color.Red)) {
+                                    append("RIZZ")
+                                }
+                                append(" Wallet")
+                            },
                             style = MaterialTheme.typography.headlineLarge.copy(
                                 fontWeight = FontWeight.ExtraBold,
                                 letterSpacing = (0).sp,

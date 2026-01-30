@@ -1,5 +1,7 @@
 package com.project.tapthehuzz.userInterface.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -16,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -25,6 +28,10 @@ import com.project.tapthehuzz.data.model.User
 import com.project.tapthehuzz.data.repository.AuthRepository
 import com.project.tapthehuzz.userInterface.components.EditProfileDialog
 import com.project.tapthehuzz.userInterface.components.SocialLinkDialog
+import com.project.tapthehuzz.userInterface.theme.GlassBorder
+import com.project.tapthehuzz.userInterface.theme.GlassSurface
+import com.project.tapthehuzz.userInterface.theme.GlassSurfaceLight
+import com.project.tapthehuzz.userInterface.theme.AccentRed
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,8 +50,11 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
         val currentUser = authRepository.getCurrentUser()
         if (currentUser != null) {
             com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users")
-                .document(currentUser.uid).get().addOnSuccessListener { document ->
-                    user = document.toObject(User::class.java)
+                .document(currentUser.uid).addSnapshotListener { snapshot, e ->
+                    if (e != null) return@addSnapshotListener
+                    if (snapshot != null && snapshot.exists()) {
+                        user = snapshot.toObject(User::class.java)
+                    }
                 }
         }
     }
@@ -105,6 +115,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
             onDismissRequest = { showUnlinkDialog = false },
             title = { Text("Unlink Account") },
             text = { Text("Are you sure you want to unlink $selectedPlatform?") },
+            containerColor = GlassSurface,
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -134,7 +145,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                         showUnlinkDialog = false
                     }
                 ) {
-                    Text("Unlink", color = MaterialTheme.colorScheme.error)
+                    Text("Unlink", color = AccentRed)
                 }
             },
             dismissButton = {
@@ -157,29 +168,49 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
+                // Glassmorphic Back Button
+                Surface(
                     modifier = Modifier
-                        .clickable { onBackClick() }
-                        .padding(8.dp),
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
+                        .padding(start = 10.dp)
+                        .size(40.dp)
+                        .border(1.dp, GlassBorder, CircleShape)
+                        .clip(CircleShape)
+                        .clickable { onBackClick() },
+                    shape = CircleShape,
+                    color = GlassSurface.copy(alpha = 0.6f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        modifier = Modifier.padding(10.dp),
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
 
-                Icon(
-                    imageVector = Icons.Filled.Edit,
-                    contentDescription = "Edit",
+                // Glassmorphic Edit Button
+                Surface(
                     modifier = Modifier
-                        .clickable { showEditDialog = true }
-                        .padding(8.dp),
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
+                        .padding(end = 10.dp)
+                        .size(40.dp)
+                        .border(1.dp, GlassBorder, CircleShape)
+                        .clip(CircleShape)
+                        .clickable { showEditDialog = true },
+                    shape = CircleShape,
+                    color = GlassSurface.copy(alpha = 0.6f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = "Edit",
+                        modifier = Modifier.padding(10.dp),
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                // Profile Picture
+                // Glassmorphic Profile Picture Container
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
@@ -187,8 +218,9 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                     Surface(
                         modifier = Modifier
                             .size(120.dp)
+                            .border(2.dp, GlassBorder, CircleShape)
                             .clip(CircleShape),
-                        color = MaterialTheme.colorScheme.surfaceVariant
+                        color = GlassSurface
                     ) {
                         if (user != null && user!!.pfp.isNotEmpty()) {
                             AsyncImage(
@@ -210,18 +242,20 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Name
+                // Glassmorphic Name Badge
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
                     Surface(
-                        modifier = Modifier.clip(RoundedCornerShape(8.dp)),
-                        color = MaterialTheme.colorScheme.surfaceVariant
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .border(1.dp, GlassBorder, RoundedCornerShape(12.dp)),
+                        color = GlassSurfaceLight.copy(alpha = 0.7f)
                     ) {
                         Text(
                             text = user?.username ?: "Loading...",
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.headlineSmall.copy(
                                 fontWeight = FontWeight.Bold
                             )
@@ -231,7 +265,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Sign Out Button
+                // Glassmorphic Sign Out Button
                 Button(
                     onClick = {
                         authRepository.signOut()
@@ -241,8 +275,8 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                         .fillMaxWidth()
                         .height(50.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                        contentColor = MaterialTheme.colorScheme.onErrorContainer
+                        containerColor = AccentRed.copy(alpha = 0.8f),
+                        contentColor = Color.White
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -256,12 +290,19 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Accounts Section
+        // Glassmorphic Accounts Section
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f),
-            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                .weight(1f)
+                .border(
+                    width = 1.dp,
+                    brush = Brush.verticalGradient(
+                        colors = listOf(GlassBorder, Color.Transparent)
+                    ),
+                    shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
+                ),
+            color = GlassSurface.copy(alpha = 0.6f),
             shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
         ) {
             Column(
@@ -300,7 +341,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                         }
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     // Snapchat
                     SocialAccountItem(
@@ -319,7 +360,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                         }
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     // Facebook
                     SocialAccountItem(
@@ -338,7 +379,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                         }
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     // Valorant
                     SocialAccountItem(
@@ -357,7 +398,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                         }
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     // Discord
                     SocialAccountItem(
@@ -376,7 +417,7 @@ fun ProfileScreen(onBackClick: () -> Unit, onSignOut: () -> Unit) {
                         }
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     // WhatsApp
                     SocialAccountItem(
@@ -409,68 +450,77 @@ fun SocialAccountItem(
     link: String,
     onLinkClick: () -> Unit
 ) {
-    Row(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onLinkClick() }
-            .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            .border(1.dp, GlassBorder, RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(16.dp))
+            .clickable { onLinkClick() },
+        shape = RoundedCornerShape(16.dp),
+        color = GlassSurfaceLight.copy(alpha = 0.4f)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Surface(
-                shape = CircleShape,
-                color = Color.White,
-                modifier = Modifier.size(40.dp),
-                shadowElevation = 2.dp
-            ) {
-                AsyncImage(
-                    model = iconUrl,
-                    contentDescription = name,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp),
-                    contentScale = ContentScale.Fit
-                )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = name,
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
-            )
-        }
-
-        if (link.isNotEmpty()) {
-            Surface(
-                shape = RoundedCornerShape(50),
-                color = MaterialTheme.colorScheme.primaryContainer
-            ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                    verticalAlignment = Alignment.CenterVertically
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Surface(
+                    shape = CircleShape,
+                    color = Color.White,
+                    modifier = Modifier.size(40.dp)
                 ) {
-                    Text(
-                        text = "Linked",
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
+                    AsyncImage(
+                        model = iconUrl,
+                        contentDescription = name,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        contentScale = ContentScale.Fit
                     )
                 }
-            }
-        } else {
-            Surface(
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.surface,
-                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-                modifier = Modifier.size(32.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Link Account",
-                    modifier = Modifier.padding(6.dp),
-                    tint = MaterialTheme.colorScheme.onSurface
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
                 )
+            }
+
+            if (link.isNotEmpty()) {
+                Surface(
+                    shape = RoundedCornerShape(50),
+                    color = AccentRed.copy(alpha = 0.2f),
+                    modifier = Modifier.border(1.dp, AccentRed.copy(alpha = 0.5f), RoundedCornerShape(50))
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Linked",
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = AccentRed
+                            )
+                        )
+                    }
+                }
+            } else {
+                Surface(
+                    shape = CircleShape,
+                    color = GlassSurfaceLight,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, GlassBorder),
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Link Account",
+                        modifier = Modifier.padding(6.dp),
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
         }
     }

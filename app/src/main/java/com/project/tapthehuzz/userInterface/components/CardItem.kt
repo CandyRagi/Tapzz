@@ -52,6 +52,7 @@ fun CardItem(
                 "design_one" -> painterResource(id = R.drawable.card_design_one)
                 "design_two" -> painterResource(id = R.drawable.card_design_two)
                 "design_three" -> painterResource(id = R.drawable.card_design_three)
+                "design_four" -> painterResource(id = R.drawable.card_design_four)
                 "design_abstract" -> painterResource(id = R.drawable.card_design_abstract)
                 "design_modern" -> painterResource(id = R.drawable.card_design_modern)
                 "design_premium" -> painterResource(id = R.drawable.card_design_premium)
