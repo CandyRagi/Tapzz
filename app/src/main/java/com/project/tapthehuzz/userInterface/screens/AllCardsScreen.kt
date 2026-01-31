@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.project.tapthehuzz.data.model.Card
 import com.project.tapthehuzz.data.model.User
 import com.project.tapthehuzz.userInterface.components.CardItem
@@ -262,16 +263,7 @@ fun AllCardsScreen(
             containerColor = GlassSurface,
             contentColor = MaterialTheme.colorScheme.onSurface,
             shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-            dragHandle = {
-                Box(
-                    modifier = Modifier
-                        .padding(vertical = 12.dp)
-                        .width(40.dp)
-                        .height(4.dp)
-                        .clip(RoundedCornerShape(2.dp))
-                        .background(GlassBorder)
-                )
-            }
+            dragHandle = null
         ) {
             Column(
                 modifier = Modifier
@@ -285,56 +277,116 @@ fun AllCardsScreen(
                         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
                     )
             ) {
-                Text(
-                    text = cardForMenu!!.name,
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 12.dp)
+                        .width(40.dp)
+                        .height(4.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(GlassBorder)
                 )
-                
-                HorizontalDivider(color = GlassBorder)
+                Column(
+                    modifier = Modifier.padding(horizontal = 24.dp)
+                ) {
+                    Text(
+                        text = cardForMenu!!.name,
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 32.sp
+                        ),
+                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
+                    )
 
-                ListItem(
-                    headlineContent = { Text("Edit Details") },
-                    leadingContent = { Icon(Icons.Filled.Edit, contentDescription = null) },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                    modifier = Modifier.clickable {
-                        onEditCard(cardForMenu!!)
-                        scope.launch { sheetState.hide() }.invokeOnCompletion { 
-                            if (!sheetState.isVisible) cardForMenu = null 
-                        }
+                    val category = cardForMenu!!.category.ifEmpty { "Uncategorized" }
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = GlassSurfaceLight.copy(alpha = 0.3f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, GlassBorder),
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    ) {
+                        Text(
+                            text = category,
+                            style = MaterialTheme.typography.labelMedium,
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
-                )
+                }
                 
-                val isInQuickAccess = cardForMenu!!.id in user.quickAccessList
-                ListItem(
-                    headlineContent = { Text(if (isInQuickAccess) "Remove from Quick Access" else "Add to Quick Access") },
-                    leadingContent = { 
-                        Icon(
-                            if (isInQuickAccess) Icons.Filled.Star else Icons.Filled.StarBorder, 
-                            contentDescription = null,
-                            tint = if (isInQuickAccess) AccentRed else MaterialTheme.colorScheme.onSurface
-                        ) 
-                    },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                    modifier = Modifier.clickable {
-                        onToggleQuickAccess(cardForMenu!!)
-                        scope.launch { sheetState.hide() }.invokeOnCompletion { 
-                            if (!sheetState.isVisible) cardForMenu = null 
-                        }
+                HorizontalDivider(color = GlassBorder, modifier = Modifier.padding(bottom = 16.dp))
+
+                Column(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Edit Button
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = GlassSurfaceLight.copy(alpha = 0.1f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, GlassBorder),
+                        modifier = Modifier.clip(RoundedCornerShape(16.dp))
+                            .clickable {
+                                onEditCard(cardForMenu!!)
+                                scope.launch { sheetState.hide() }.invokeOnCompletion { 
+                                    if (!sheetState.isVisible) cardForMenu = null 
+                                }
+                            }
+                    ) {
+                        ListItem(
+                            headlineContent = { Text("Edit Details", fontWeight = FontWeight.SemiBold) },
+                            leadingContent = { Icon(Icons.Filled.Edit, contentDescription = null) },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
                     }
-                )
-                
-                ListItem(
-                    headlineContent = { Text("Delete", color = MaterialTheme.colorScheme.error) },
-                    leadingContent = { Icon(Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                    modifier = Modifier.clickable {
-                        onDeleteCard(cardForMenu!!)
-                        scope.launch { sheetState.hide() }.invokeOnCompletion { 
-                            if (!sheetState.isVisible) cardForMenu = null 
-                        }
+
+                    // Quick Access Button
+                    val isInQuickAccess = cardForMenu!!.id in user.quickAccessList
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = GlassSurfaceLight.copy(alpha = 0.1f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, GlassBorder),
+                         modifier = Modifier.clip(RoundedCornerShape(16.dp))
+                            .clickable {
+                                onToggleQuickAccess(cardForMenu!!)
+                                scope.launch { sheetState.hide() }.invokeOnCompletion { 
+                                    if (!sheetState.isVisible) cardForMenu = null 
+                                }
+                            }
+                    ) {
+                        ListItem(
+                            headlineContent = { Text(if (isInQuickAccess) "Remove from Quick Access" else "Add to Quick Access", fontWeight = FontWeight.SemiBold) },
+                            leadingContent = { 
+                                Icon(
+                                    if (isInQuickAccess) Icons.Filled.Star else Icons.Filled.StarBorder, 
+                                    contentDescription = null,
+                                    tint = if (isInQuickAccess) AccentRed else MaterialTheme.colorScheme.onSurface
+                                ) 
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
                     }
-                )
+
+                    // Delete Button
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = AccentRed.copy(alpha = 0.1f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, AccentRed.copy(alpha = 0.3f)),
+                         modifier = Modifier.clip(RoundedCornerShape(16.dp))
+                            .clickable {
+                                onDeleteCard(cardForMenu!!)
+                                scope.launch { sheetState.hide() }.invokeOnCompletion { 
+                                    if (!sheetState.isVisible) cardForMenu = null 
+                                }
+                            }
+                    ) {
+                        ListItem(
+                            headlineContent = { Text("Delete", color = AccentRed, fontWeight = FontWeight.SemiBold) },
+                            leadingContent = { Icon(Icons.Filled.Delete, contentDescription = null, tint = AccentRed) },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                    }
+                }
             }
         }
     }

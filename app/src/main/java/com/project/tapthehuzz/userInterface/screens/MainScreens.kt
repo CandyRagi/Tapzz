@@ -462,6 +462,7 @@ fun CardContent(
                                                             scaleY = scale
                                                             alpha = scale
                                                         }
+                                                        .clip(RoundedCornerShape(16.dp))
                                                         .clickable(
                                                             onClick = {
                                                                 onCardClick(card)
